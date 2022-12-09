@@ -1,0 +1,59 @@
+import LogoGrande from 'assets/Logo.png';
+import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import {Container, Progresso, PorcentagemProgresso, BotaoComecar } from './styles'; 
+
+function Entrar() {
+        const [filled, setFilled] = useState(0);
+        const [estaCorrendo, setEstaCorrendo] = useState(false);
+        const navigate = useNavigate();
+
+        function olaUsuario(){
+            alert("Olá, seja bem-vindo ao Alura-Geek! Clique no botão para começar")
+        }
+
+        function aoEnviar(){ 
+            if(filled === 100) { 
+                navigate('/home')
+            } else {
+                alert("erro")   
+            }
+        }
+
+        useEffect(() => {
+            setEstaCorrendo(true)
+            if(filled < 100 && estaCorrendo){
+                setTimeout(() => setFilled(prev => prev += 2), 5) 
+                console.log(filled)
+            }
+        },[filled, estaCorrendo]); 
+ 
+    return (
+        <>
+                <Container onLoad={olaUsuario}>
+                    <img 
+                        src={LogoGrande} 
+                        alt="Logo do Alura Geek"
+                    />
+                    <Progresso>
+                        <div style={{
+                           height: "100%",
+                           width: `${filled}%`,
+                           backgroundColor: "#2A7AE4",
+                           transition:"width 0.6s"
+                        }}>
+                        </div>
+                        <PorcentagemProgresso>{filled}%</PorcentagemProgresso>
+                    </Progresso>
+
+                        <BotaoComecar 
+                            onClick={aoEnviar} 
+                            type="submit"
+                            >Começar</BotaoComecar>
+                </Container>
+        </>
+    )
+    
+}
+
+export default Entrar;
