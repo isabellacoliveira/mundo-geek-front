@@ -9,14 +9,28 @@ function MeuPerfil(){
     const navigate = useNavigate(); 
 
     function fotoDoPerfil(){
-        alert("em produção...")
+        sweetAlert("em produção...")
     }
 
     function deslogar(){
         // essa função deve passar o status de logado para deslogado 
         // se der , perguntar se o usuário deseja mesmo sair se sim, deslogar ele da conta
         // se não, continuar logado 
-        console.log("Tem certeza que deseja sair?")
+        sweetAlert({
+            title: "Você tem certeza?",
+            text: "Tem certeza que deseja sair da sua conta?",
+            icon: "warning",
+            buttons: ["Não!", "Sim"]
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                sweetAlert("Você foi desconectado", {
+                icon: "success",
+              });
+            } else {
+                sweetAlert("Você continua logado");
+            }
+          });
     }
 
     return (

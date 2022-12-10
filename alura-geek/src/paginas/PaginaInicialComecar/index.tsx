@@ -9,15 +9,13 @@ function Entrar() {
         const navigate = useNavigate();
 
         function olaUsuario(){
-            alert("Olá, seja bem-vindo ao Alura-Geek! Clique no botão para começar")
+            sweetAlert("Olá, seja bem-vindo ao Alura-Geek! Clique no botão para começar")
         }
 
         function aoEnviar(){ 
             if(filled === 100) { 
                 navigate('/home')
-            } else {
-                alert("erro")   
-            }
+            } 
         }
 
         useEffect(() => {

@@ -8,7 +8,7 @@ export default function Cadastro(){
     const[usuario, setUsuario] = useState<ICadastroUsuario[]>([]); 
 
     function cadastraUsuario(){
-        alert("sucesso")
+        sweetAlert("sucesso")
         // const senha = document.querySelector('#senha');
         // const confirmacaoDaSenha = document.querySelector('#confirmaSenha');
 

@@ -11,7 +11,7 @@ const FaleConosco = () => {
 
     function mensagemEnviada(evento: React.FormEvent<HTMLFormElement>){
         evento.preventDefault()
-        alert("sua mensagem foi enviada!")
+        sweetAlert("sucesso", "sua mensagem foi enviada!", "success")
         setNomeDoUsuarioNoFaleConosco(""); 
         setMensagem("");
 
