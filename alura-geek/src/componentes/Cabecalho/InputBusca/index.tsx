@@ -4,7 +4,7 @@ import Lupa from 'assets/lupa.png';
 
 const InputBusca = () => {
     function fazBusca(){
-        alert("insira sua pesquisa e aperte 'enter' para pesquisar")
+        sweetAlert("insira sua pesquisa e aperte 'enter' para pesquisar")
     }
     const [ fazAparecer, setFazAparecer ] = useState(true);
     

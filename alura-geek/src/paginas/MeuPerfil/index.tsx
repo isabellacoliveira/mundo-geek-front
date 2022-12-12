@@ -2,7 +2,6 @@ import Footer from "componentes/Rodape";
 import perfil from 'assets/perfil.png'; 
 import { CabecalhoMeuPerfil, Perfil, PerfilImagem, IconeSair, BotaoVoltar} from './styles'; 
 import Sair from 'assets/sair.png';
-import { deflateRaw } from "zlib";
 import { useNavigate } from "react-router-dom";
 
 function MeuPerfil(){

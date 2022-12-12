@@ -1,4 +1,5 @@
 import FaleConosco from "componentes/FaleConosco";
+import ProdutosFiltrados from "componentes/ProdutosPorCategoria";
 import Footer from "componentes/Rodape";
 import {BannerTodo, BannerHero,  VerConsole, Titulo1, Titulo2} from './styles';
 
@@ -18,7 +19,8 @@ function PaginaPrincipal(){
                         </VerConsole>
                     </BannerHero>
                 </BannerTodo>
-                <div>Aqui ficarão todos os produtos separados por categoria</div>
+                
+                <ProdutosFiltrados />
                 <FaleConosco/>
                 <Footer />
             </>
