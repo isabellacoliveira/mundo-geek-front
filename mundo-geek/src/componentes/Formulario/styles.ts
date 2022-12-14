@@ -79,3 +79,4 @@ export const InputsDaPagina = styled.input`
 			color: #A2A2A2;
 	}
 `
+

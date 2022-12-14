@@ -1,27 +1,45 @@
 import { CadastroNovoProduto, InputsDaPagina } from './styles'; 
-import {useEffect, useState} from 'react'; 
+import React, { useEffect, useState} from 'react'; 
 import axios from 'axios';
 import ICategorias from 'types/ICategorias';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Formulario = () => {
-    const[novoProdutoAdicionado, setNovoProdutoAdicionado] = useState<ICategorias[]>([]); 
+    const navigate = useNavigate(); 
+    const[imagemDoProduto, setImagemDoProduto] = useState(""); 
+    const[categoriaDoProduto, setCategoriaDoProduto] = useState(""); 
+    const[categoriasMapeadas , setCategoriasMapeadas] = useState<ICategorias[]>([]); 
+    const[nomeDoProduto, setNomeDoProduto] = useState(""); 
+    const[precoDoProduto, setPrecoDoProduto] = useState(""); 
+    const[descricaoDoProduto, setDescricaoDoProduto] = useState(""); 
 
     let config = {
         headers: {
-          'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkEiLCJpYXQiOjE2NzA4NjcyNDUsImV4cCI6MTY3MTIxMjg0NX0.Z5PvZfatWUujT0ElVUl6h2WnYNn5prqC_aTSiNvYp4s'
+          'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjcxMDI0MDkwLCJleHAiOjE2NzEzNjk2OTB9.zXz0EeL3YyD4ZkczgqE-104aG2ErF_z628eU-Sleae0'
         }
       }
     
-      useEffect(() => {
-        axios.get<ICategorias[]>('http://localhost:3001/usuarios', config)
+    const aoSubmeterForm = () => {        
+        axios.post<ICategorias>('http://localhost:3001/categorias', {
+            titulo: categoriaDoProduto
+        }, config, 
+        )
+        .then(() => {
+            sweetAlert("Produto cadastrado com sucesso.")
+            navigate('/home')
+        })
+    }
+
+    useEffect(() => {
+        axios.get<ICategorias[]>('http://localhost:3001/categorias', config)
         .then(resposta => {
-            setNovoProdutoAdicionado(resposta.data)
+            setCategoriasMapeadas(resposta.data)
         })
         .catch(erro => {
             console.log(erro)
         })
     },[])
-
+  
     return (
         <CadastroNovoProduto>
         <p>Adicionar novo produto</p>
@@ -30,18 +48,17 @@ const Formulario = () => {
             required
             type="text"
         />
-        {/* <select placeholder="Categorias" 
-                required={true}
-        >
-            <option key='default' value=''>Selecione uma categoria</option>
-            {categorias.map((categoria) => (
-                <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
-            ))} 
-         </select> */}
-        <select>
-        {novoProdutoAdicionado.map(categoria => <option key={categoria.titulo}>{categoria.titulo}</option>)}
+          <InputsDaPagina
+            placeholder="Adicione uma nova categoria ou selecione uma"
+            type="text"
+            onChange={evento => setCategoriaDoProduto(evento.target.value)}
+
+        />
+
+        <select> 
+            {categoriasMapeadas.map(categoria => <option key={categoria.titulo}>{categoria.titulo}</option>)} 
         </select>
-       
+
         <InputsDaPagina
             placeholder="Nome do produto"
             required
@@ -58,9 +75,11 @@ const Formulario = () => {
             type="text"
         />
             <button
-                type="submit"
-            >Adicionar Produto</button>			
+                type="button"
+                onClick={() => aoSubmeterForm()}
+            >Adicionar Produto</button>		
     </CadastroNovoProduto>
+    
     )
 }
 

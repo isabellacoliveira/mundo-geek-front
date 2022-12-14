@@ -16,6 +16,7 @@ const NavBar = () => {
     const navigate = useNavigate(); 
     const [ fazAparecer, setFazAparecer ] = useState(true);
     const [nomeDoUsuarioLogado, setNomeDoUsuarioLogado] = useState<ICadastroUsuario[]>([]);
+    const[taLogado, setTaLogado] = useState(false); 
 
     function mostraCarrinho(){
         setFazAparecer(!fazAparecer)
@@ -49,7 +50,7 @@ const NavBar = () => {
 				</Link>
 				<TrocaLado>
 					<InputBusca />
-					{pathname === "/home" ||
+                    {pathname === "/home" ||
 					pathname === "/cadastrarproduto" ? <BotaoLogin /> : (
 						<LoginCarrinhoPerfil>
                                 <DivCarrinhoPerfil>
@@ -75,6 +76,7 @@ const NavBar = () => {
 										/>
                                         {/* percorrer o array que possui o nome dos usuarios cadastrados na api */}
                                         {/* {nomeDoUsuarioLogado.map(nomeDoUsuario => <h1>{nomeDoUsuario.nome}</h1>)} */}
+                                        {/* {nomeDoUsuarioLogado} */}
 									</PerfilUsuario>
                                  </DivCarrinhoPerfil>
 						</LoginCarrinhoPerfil>

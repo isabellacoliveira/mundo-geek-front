@@ -1,6 +1,8 @@
 export interface IUsuario {
+    id?: number, 
     email?: string, 
-    token?: string  
+    token?: string, 
+    nome?: string
 }
 
 export interface IContexto extends IUsuario {
@@ -11,3 +13,6 @@ export interface IContexto extends IUsuario {
 export interface IAutenticacaoProvider {
     children: JSX.Element; 
 }
+
+// const token = json serialize
+// const user = jwtDecode(!token) as IUsuario

@@ -1,5 +1,5 @@
-import Carrinho from "componentes/Cabecalho/Carrinho";
 import FaleConosco from "componentes/FaleConosco";
+import ProdutoCard from "componentes/ProdutosPorCategoria/ProdutoCard";
 import ProdutosFiltrados from "componentes/ProdutosPorCategoria";
 import Footer from "componentes/Rodape";
 import {BannerTodo, BannerHero,  VerConsole, Titulo1, Titulo2} from './styles';
@@ -22,6 +22,7 @@ function PaginaPrincipal(){
                     </BannerHero>
                 </BannerTodo>
                 
+                {/* fazer um map aqui para que sejam retornadas as categorias com seus respectivos produtos  */}
                 <ProdutosFiltrados />
                 <FaleConosco/>
                 <Footer />

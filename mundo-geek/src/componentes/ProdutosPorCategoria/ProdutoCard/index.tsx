@@ -1,5 +1,5 @@
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { BotaoVerProduto, CardDoProduto, LinkParaOutraPagina, DivImgBotao, ImagemMais, NomeDoProduto, PrecoDoProduto, DivPrecoEditar, ImagemLapis } from './styles';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { BotaoVerProduto, LinkParaOutraPagina, DivImgBotao, ImagemMais, NomeDoProduto, PrecoDoProduto, DivPrecoEditar, ImagemLapis } from './styles';
 import Teste from 'assets/teste.jpg';
 import Mais from 'assets/mais.png';
 import { useEffect, useState } from 'react';
@@ -7,32 +7,24 @@ import IProdutos from 'types/IProdutos';
 import axios from 'axios';
 import Lapis from 'assets/editar.png'; 
 
-// interface Props {
-//     produto: {
-//         id: number, 
-//         nome: string, 
-//         // ..... 
-//     }
-// }
-
-// {produto}: Props
-
 export default function ProdutoCard(){
     const {pathname} = useLocation(); 
     const [produtosPorCategoria , setProdutosPorCategoria] = useState<IProdutos[]>([]);
     const navigate = useNavigate();
+    const parametros = useParams(); 
 
     function paraEditarProduto(){
         navigate('/editar/produto')
     }
+
     let config = {
         headers: {
-          'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkEiLCJpYXQiOjE2NzA4NjcyNDUsImV4cCI6MTY3MTIxMjg0NX0.Z5PvZfatWUujT0ElVUl6h2WnYNn5prqC_aTSiNvYp4s'
+          'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjcxMDI0MDkwLCJleHAiOjE2NzEzNjk2OTB9.zXz0EeL3YyD4ZkczgqE-104aG2ErF_z628eU-Sleae0'
         }
       }
 
     useEffect(() => {
-        axios.get<IProdutos[], any>('http://localhost:3001/produtos/1', config)
+        axios.get<IProdutos[], any>(`http://localhost:3001/produtos/1`, config)
         .then(resposta => {
             setProdutosPorCategoria(resposta.data.results)
         })
@@ -48,23 +40,17 @@ export default function ProdutoCard(){
 
     return(
         <>
-        <LinkParaOutraPagina>
-            {/* <Link to={`/produto/${produto.id}`} /> */}
-        </LinkParaOutraPagina>
-
-        <CardDoProduto>
+        {/* {produtosPorCategoria?.map(produto => 
+             <CardDoProduto>
                     <img 
                         src={Teste}
                         // className={styles.ImagemDeCapaDoProduto}
-                        // src={`/assets/Produtos/${produto.id}/capa.png`}
+                        // src={produto.imagem}
                         alt="imagem de capa do post"
                     />
-                 {produtosPorCategoria?.map(produto => <NomeDoProduto>{produto.nome}</NomeDoProduto>)}
             <NomeDoProduto>Teste</NomeDoProduto>
            <DivPrecoEditar>
-            <PrecoDoProduto>
-                    {/* {produto.preco} */}
-                    ola
+            <PrecoDoProduto> 9.00
                 </PrecoDoProduto>
                 <ImagemLapis>
                 {pathname === '/perfil' ?  <ImagemMais
@@ -92,6 +78,12 @@ export default function ProdutoCard(){
             </DivImgBotao>
           
         </CardDoProduto>
+        )} */}
+        <LinkParaOutraPagina>
+            {/* <Link to={`/produto/${produto.id}`} /> */}
+        </LinkParaOutraPagina>
+
+       
        
         </>
         )

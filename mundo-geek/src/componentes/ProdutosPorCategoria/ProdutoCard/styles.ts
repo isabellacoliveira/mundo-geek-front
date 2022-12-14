@@ -18,34 +18,6 @@ export const BotaoVerProduto = styled.button`
     }
 `
 
-export const CardDoProduto = styled.div`
-    flex-direction: row;
-    background-color: #E5E5E5;
-    margin: 0 auto;
-    background-color: #A9A9A9;
-    border-radius: 10px 10px 10px 10px;
-    padding: 10px;
-    margin-bottom: 20px;
-
-    @media (max-width: 900px){
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0px;
-        gap: 8px;
-    }
-
-    img{
-        border-radius: 8px;
-    }
-
-    &:hover {
-        transform: translateY(-4px);
-        cursor: pointer;
-    }
-`
-
-
 export const LinkParaOutraPagina = styled.div `
     text-decoration: none;
 `
@@ -83,4 +55,30 @@ export const ImagemMais = styled.img`
 export const ImagemLapis = styled.div` 
     width: 50%; 
     padding-left: 70px;
+`
+export const CardDoProduto = styled.div`
+    flex-direction: row;
+    background-color: #E5E5E5;
+    margin: 0 auto;
+    background-color: #A9A9A9;
+    border-radius: 10px 10px 10px 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+
+    @media (max-width: 900px){
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 8px;
+    }
+
+    img{
+        border-radius: 8px;
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        cursor: pointer;
+    }
 `

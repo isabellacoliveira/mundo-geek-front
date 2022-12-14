@@ -9,17 +9,16 @@ export const AutenticadoProvider = ({children}: IAutenticacaoProvider) => {
 
     useEffect(() => {
         const usuarioLogado = getUsuarioNoLocalStorage(); 
-
         if(usuarioLogado){
             setUsuarioLogado(usuarioLogado)
         }
-    }, []); 
+    }, []);
 
     async function autenticado (email: string, senha: string){
         const resposta = await ConviteDeLogin(email, senha)
 
         // se ela der certo 
-        const certo = {token: resposta.token, email }
+        const certo = {token: resposta.token}
         setUsuarioLogado(certo)
         setUsuarioNoLocalStorage(certo)
     }
@@ -36,4 +35,3 @@ export const AutenticadoProvider = ({children}: IAutenticacaoProvider) => {
             </CriaUsuarioContext.Provider>
     )
 }
-

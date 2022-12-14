@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import {useEffect, useState} from 'react'; 
 import axios from "axios";
 import { ICadastroUsuario } from "types/ICadastroUsuario";
-import ProdutoCard from "componentes/ProdutoCard";
 
 function MeuPerfil(){
     const navigate = useNavigate(); 
@@ -67,10 +66,7 @@ function MeuPerfil(){
                             alt="perfil da pessoa"
                             onClick={fotoDoPerfil} 
                         />
-                        {/* colocar aqui o nome inserido pelo usuário no login  */}
-                        <h1>
-                            {nomeDoUsuarioLogado.map(nomeDoUsuario => <h5>{nomeDoUsuario.nome}</h5>)}
-                        </h1>
+                      
                         <IconeSair 
                             src={Sair}
                             alt="icone de sair"
@@ -79,18 +75,7 @@ function MeuPerfil(){
                     </CabecalhoMeuPerfil>
                     <h1>Meus Produtos</h1>
                     <ListaDeProdutosIndividual>
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
-                        <ProdutoCard />
+                  
                     </ListaDeProdutosIndividual>
                     
                 </Perfil>

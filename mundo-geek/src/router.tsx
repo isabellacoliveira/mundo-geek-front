@@ -1,4 +1,5 @@
 import NavBar from "componentes/Cabecalho";
+import ProdutoCard from "componentes/ProdutosPorCategoria/ProdutoCard";
 import { AutenticadoProvider } from "contextos/AutenticacaoProvider/Autenticacao";
 import CadastraProduto from "paginas/CadastrarProduto";
 import EditarProduto from "paginas/EditarProduto";
@@ -18,7 +19,7 @@ function Administrador(){
 				<Routes>
 					<Route path="/" element={<Entrar />} />
 					<Route path="/" element={<NavBar />}>
-						<Route path="/homeadm" element={<PaginaPrincipal />} />
+						<Route path="/home" element={<PaginaPrincipal />} />
 						<Route path="/perfil" element={<MeuPerfil />} />
 						<Route path="/editar/produto" element={<EditarProduto />} />
 						<Route path="/cadastro/produto" element={<CadastraProduto />}/>

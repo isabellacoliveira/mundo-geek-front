@@ -1,9 +1,11 @@
 import FaleConosco from "componentes/FaleConosco";
 import Footer from "componentes/Rodape";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BotaoCadastraProduto, ListaDeProdutos, Produtos, Titulo } from "./styles";
 
 function TodosOsProdutos(){
+	const {pathname} = useLocation(); 
+
     return (
 		<>
             <Produtos>
@@ -12,9 +14,10 @@ function TodosOsProdutos(){
 					to="/cadastro/produto"
                     className="textoBotao"
 				>
-					<BotaoCadastraProduto>
+					{pathname === "/produtos" ? <BotaoCadastraProduto>
 						Adicionar Produto
-					</BotaoCadastraProduto>
+					</BotaoCadastraProduto> : ''}
+					
 				</Link>
 			</Produtos>
 			<ListaDeProdutos>

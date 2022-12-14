@@ -7,9 +7,10 @@ function App() {
 
   return (
         <>
-        {/* {autenticacao.email === null ?  <AdministradorRoutes /> : <ClienteRoutes />} */}
-        {autenticacao.email !== "adasdfadf@gmail.com" ? <AdministradorRoutes /> : <ClienteRoutes /> }
-
+        {/* {!autenticacao.email ?  } */}
+        {/* <AdministradorRoutes /> */}
+        <ClienteRoutes />
+        {/* {autenticacao.email !== "adasdfadf@gmail.com" ? <AdministradorRoutes /> : <ClienteRoutes /> } */}
         </>
   );
 }
