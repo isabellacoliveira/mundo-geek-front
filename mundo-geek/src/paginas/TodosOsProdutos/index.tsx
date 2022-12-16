@@ -1,27 +1,38 @@
 import FaleConosco from "componentes/FaleConosco";
+import ListaCategorias from "componentes/ProdutosPorCategoria/ListaProdutos";
 import Footer from "componentes/Rodape";
-import { Link, useLocation } from "react-router-dom";
-import { BotaoCadastraProduto, ListaDeProdutos, Produtos, Titulo } from "./styles";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+	BotaoCadastraProduto,
+	ListaDeProdutos,
+	Produtos,
+	Titulo,
+} from "./styles";
 
-function TodosOsProdutos(){
-	const {pathname} = useLocation(); 
+function TodosOsProdutos() {
+	const { pathname } = useLocation();
+	const navigate = useNavigate();
 
-    return (
+	function vaiParaAdm() {
+		navigate("/administracao/categorias/novo");
+	}
+
+	return (
 		<>
-            <Produtos>
-            <Titulo>Todos os produtos</Titulo>
-				<Link
-					to="/cadastro/produto"
-                    className="textoBotao"
-				>
-					{pathname === "/produtos" ? <BotaoCadastraProduto>
-						Adicionar Produto
-					</BotaoCadastraProduto> : ''}
-					
-				</Link>
+			<Produtos>
+				<Titulo>Todos os produtos</Titulo>
+
+				{/* se o usuario for um adm esse botao aparece  */}
+				{pathname === "/produtos" ? (
+					<BotaoCadastraProduto onClick={vaiParaAdm}>
+						Administração
+					</BotaoCadastraProduto>
+				) : (
+					""
+				)}
 			</Produtos>
 			<ListaDeProdutos>
-				{/* dar um map nos produtos e exibir aqui  */}
+				<ListaCategorias />
 			</ListaDeProdutos>
 			<FaleConosco />
 			<Footer />
@@ -29,4 +40,4 @@ function TodosOsProdutos(){
 	);
 }
 
-export default TodosOsProdutos; 
+export default TodosOsProdutos;

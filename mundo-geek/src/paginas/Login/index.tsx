@@ -1,18 +1,16 @@
 import { message } from "antd";
+import { Carregando } from "componentes/Carregando";
 import FaleConosco from "componentes/FaleConosco";
 import Footer from "componentes/Rodape";
-import { useAutenticacao } from "contextos/AutenticacaoProvider/useAutenticacao";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CadastroInicioSessao } from "./styles";
-// import {useState, useContext} from 'react';
-// import { CriaUsuarioContext } from "contextos/Autenticacao"; 
-// import ILogin from "types/ILogin";
-
 
 export default function LoginUsuario(){
     const [email, setEmail] = useState<string>('');
     const [senha, setSenha] = useState<string>('');
+    const[carregando, setCarregando] = useState(false); 
 
     const autenticacao = useAutenticacao()
     const navigate = useNavigate();
@@ -21,13 +19,20 @@ export default function LoginUsuario(){
         evento: React.FormEvent<HTMLFormElement>){
         console.log('evento', evento)
         evento.preventDefault(); 
+
+        setCarregando(true)
+
         try {
             await autenticacao.autenticado(email, senha)
             navigate('/perfil')
         } catch (error) {
             message.error('Email ou senha inválidos')
+        } finally {
+            setCarregando(false)
         }
     }
+
+    if(carregando) return <Carregando />
 
     return(
         <>      

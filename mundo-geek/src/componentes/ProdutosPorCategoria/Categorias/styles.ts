@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const ListaDeProdutos = styled.ul`
     display: flex;
-    /* justify-content: center; */
     flex-wrap: wrap;
     padding-top: 50px;
     padding-bottom: 50px;

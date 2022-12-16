@@ -13,9 +13,9 @@ export function getUsuarioNoLocalStorage() {
         return null
     }
 
-    const user = JSON.parse(json); 
-
-    return user ?? null; 
+    const usuario = JSON.parse(json);     
+    return usuario ?? null; 
+    
 }
 
 export async function ConviteDeLogin (email: string, senha: string){
@@ -31,7 +31,7 @@ export async function ConviteDeLogin (email: string, senha: string){
 export function decodificador(){
     const token = localStorage.getItem('u'); 
     const usuarioToken = JWT_decote(token!) as IUsuario; 
-    console.log(usuarioToken)
-    const nomeDoUsuario = usuarioToken.email; 
-    console.log(nomeDoUsuario)
+    const nomeDoUsuario = usuarioToken.nome; 
+
+    return nomeDoUsuario
 } 

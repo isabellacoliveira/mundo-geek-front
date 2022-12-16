@@ -25,6 +25,7 @@ export const ListaDeProdutos = styled.ul`
 @media (min-width: 744px) {
         padding: 4rem 6rem 3rem 9rem;
 }
+
 `
 
 export const BotaoCadastraProduto = styled.div `

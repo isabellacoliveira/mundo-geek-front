@@ -1,0 +1,114 @@
+import Footer from "componentes/Rodape";
+import { useNavigate } from "react-router-dom";
+import {useState, useEffect} from 'react'; 
+import ICategorias from "types/ICategorias";
+import { Api } from "contextos/AutenticacaoProvider/services/api";
+import IProdutos from "types/IProdutos";
+import { CadastroNovoProduto, Categorias, InputsDaPagina } from "../../styles";
+
+export default function CadastraNovoProduto() {
+    const navigate = useNavigate();
+	const [imagemDoProduto, setImagemDoProduto] = useState("");
+	const [categoriaDoProduto, setCategoriaDoProduto] = useState("");
+	const [categoriasMapeadas, setCategoriasMapeadas] = useState<ICategorias[]>([]);
+	const [nomeDoProduto, setNomeDoProduto] = useState("");
+	const [precoDoProduto, setPrecoDoProduto] = useState("");
+	const [descricaoDoProduto, setDescricaoDoProduto] = useState("");
+
+	let config = {
+		headers: {
+			Authorization:
+				"Bearer " +
+				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjcxMDI0MDkwLCJleHAiOjE2NzEzNjk2OTB9.zXz0EeL3YyD4ZkczgqE-104aG2ErF_z628eU-Sleae0",
+		},
+	};
+
+	const aoSubmeterForm = () => {
+		Api.post<ICategorias>(
+				"/categorias",
+				{
+					titulo: categoriaDoProduto,
+				},
+				config
+			)
+
+        Api.post<IProdutos>(
+                "/produtos",
+                {
+                    nome: nomeDoProduto,
+                    descricao: descricaoDoProduto,
+                    preco: precoDoProduto,
+                    imagem: imagemDoProduto
+                }, config
+        )
+        .then(() => {
+            sweetAlert("Produto cadastrado com sucesso.");
+            navigate("/home");
+        });
+	};
+
+	useEffect(() => {
+		Api
+			.get<ICategorias[]>("categorias", config)
+			.then((resposta) => {
+				setCategoriasMapeadas(resposta.data);
+			})
+			.catch((erro) => {
+				console.log(erro);
+			});
+	}, []);
+
+	return (
+		<>
+			<CadastroNovoProduto>
+				<p>Adicionar novo produto</p>
+				<InputsDaPagina
+					placeholder="Insira a URL da imagem"
+					required
+					type="text"
+					onChange={(evento) =>
+						setImagemDoProduto(evento.target.value)
+					}
+				/>
+
+				<Categorias>
+					<div>
+						<select>
+							{categoriasMapeadas.map((categoria) => (
+								<option key={categoria.titulo}>
+									{categoria.titulo}
+								</option>
+							))}
+						</select>
+					</div>
+				</Categorias>
+				<InputsDaPagina
+					placeholder="Nome do produto"
+					required
+					type="text"
+					onChange={(evento) => setNomeDoProduto(evento.target.value)}
+				/>
+				<InputsDaPagina
+					placeholder="Preço do produto (ex: R$ 0.00)"
+					required
+					type="text"
+					onChange={(evento) =>
+						setPrecoDoProduto(evento.target.value)
+					}
+				/>
+				<InputsDaPagina
+					placeholder="Descrição do produto"
+					required
+					type="text"
+					onChange={(evento) =>
+						setDescricaoDoProduto(evento.target.value)
+					}
+				/>
+				<button type="button" onClick={() => aoSubmeterForm()}>
+					Adicionar Produto
+				</button>
+			</CadastroNovoProduto>
+			<Footer />
+		</>
+	);
+}

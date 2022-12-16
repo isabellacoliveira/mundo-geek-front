@@ -2,8 +2,8 @@ import { CadastroDoUsuario, InputGlobal } from "./styles";
 import {useState} from 'react'; 
 import FaleConosco from "componentes/FaleConosco";
 import Footer from "componentes/Rodape";
-import { ICadastroUsuario } from "types/ICadastroUsuario";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Api } from "contextos/AutenticacaoProvider/services/api";
 
 export default function Cadastro(){
     const[nomeDoUsuario, setNomeDoUsuario] = useState("");
@@ -11,7 +11,7 @@ export default function Cadastro(){
     const[email, setEmail] = useState("");
     const[senhaDoUsuario, setSenhaDoUsuario] = useState("");
     const[confirmacaoDaSenhaDoUsuario, setConfirmacaoDaSenhaDoUsuario] = useState("");
-    const[cadastroDoUsuario, setCadastroDoUsuario] = useState<ICadastroUsuario[]>([]); 
+    const navigate = useNavigate(); 
   
     function cadastraUsuario(evento: React.FormEvent<HTMLFormElement>){
         evento.preventDefault()
@@ -31,8 +31,8 @@ export default function Cadastro(){
         formData.append('email', email)
         formData.append('senha', senhaDoUsuario)
 
-        axios.request({
-            url:  'http://localhost:3001/usuarios',
+        Api.request({
+            url:  '/usuarios',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -47,6 +47,7 @@ export default function Cadastro(){
             setSenhaDoUsuario('')
             setConfirmacaoDaSenhaDoUsuario('')
             sweetAlert('usuario cadastrado com sucesso!')
+            navigate('/login')
         })
         .catch(erro => sweetAlert(erro))
     }

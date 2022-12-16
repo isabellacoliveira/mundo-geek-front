@@ -4,5 +4,6 @@ export default interface IProdutos {
     preco: number, 
     imagem: string, 
     id: number,
-    quantidade: number
+    quantidade: number,
+    categoria: number
 }

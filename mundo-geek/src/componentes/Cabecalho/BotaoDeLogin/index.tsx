@@ -7,7 +7,8 @@ const BotaoLogin = () => {
     return(
         <BotaoDeLogin>
             <Link to="/login" className="BotaoLogin">
-               {pathname === '/cadastrarproduto' ? <Link to="/produtos" className="BotaoLogin">Menu Administrador</Link> : "Login "}
+               {pathname === '/cadastrarproduto' ? 
+                    <Link to="/produtos" className="BotaoLogin">Menu Administrador</Link> : "Login "}
             </Link>
         </BotaoDeLogin>
     )

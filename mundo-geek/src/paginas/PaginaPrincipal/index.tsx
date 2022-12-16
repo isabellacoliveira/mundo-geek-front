@@ -1,8 +1,7 @@
 import FaleConosco from "componentes/FaleConosco";
-import ProdutoCard from "componentes/ProdutosPorCategoria/ProdutoCard";
-import ProdutosFiltrados from "componentes/ProdutosPorCategoria";
 import Footer from "componentes/Rodape";
 import {BannerTodo, BannerHero,  VerConsole, Titulo1, Titulo2} from './styles';
+import ListaCategorias from "componentes/ProdutosPorCategoria/ListaProdutos";
 
 function PaginaPrincipal(){
     const ScrollTo = () => {
@@ -21,9 +20,9 @@ function PaginaPrincipal(){
                         </VerConsole>
                     </BannerHero>
                 </BannerTodo>
-                
-                {/* fazer um map aqui para que sejam retornadas as categorias com seus respectivos produtos  */}
-                <ProdutosFiltrados />
+
+                {/* <ProdutosFiltrados /> */}
+                <ListaCategorias />
                 <FaleConosco/>
                 <Footer />
             </>

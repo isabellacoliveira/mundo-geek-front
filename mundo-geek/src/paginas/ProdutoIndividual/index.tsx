@@ -1,5 +1,4 @@
 import FaleConosco from "componentes/FaleConosco";
-import ProdutoCard from "componentes/ProdutosPorCategoria/ProdutoCard";
 import Footer from "componentes/Rodape";
 import { useParams } from "react-router-dom";
 import { ConteudoDoProduto, DivDaImagem, GrupoProdutosSimilares, 

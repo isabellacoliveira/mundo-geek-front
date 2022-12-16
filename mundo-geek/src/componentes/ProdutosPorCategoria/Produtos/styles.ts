@@ -73,12 +73,13 @@ export const CardDoProduto = styled.div`
         gap: 8px;
     }
 
-    img{
-        border-radius: 8px;
-    }
-
     &:hover {
         transform: translateY(-4px);
         cursor: pointer;
     }
+`
+
+export const ImagemProduto = styled.img` 
+    width: 200px;
+    height: 200px;
 `

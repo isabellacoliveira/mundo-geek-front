@@ -1,6 +1,5 @@
 import {  FuncoesCarrinho, InformacoesProduto, 
-    ItensParaComprar, NomePreco, Quantidade, RemoveItem, Sacola } from "./styles";
-import sacola from 'assets/sacola.png';
+    ItensParaComprar, NomePreco, Quantidade, RemoveItem } from "./styles";
 import remocao from 'assets/remover.png';
 import swal from "sweetalert";
 import { CarrinhoDiv } from "../styles";
@@ -10,10 +9,6 @@ export default function CarrinhoDeCompras(){
     function deletarProduto(){
         // essa função removerá um produto do carrinho (api)
         swal("em produção")
-    }
-
-    function comprarProduto(){
-        swal("em breve...")
     }
 
     return(
