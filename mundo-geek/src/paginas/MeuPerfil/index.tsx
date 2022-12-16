@@ -5,10 +5,12 @@ import { CabecalhoMeuPerfil, Perfil, PerfilImagem,
 import Sair from "assets/sair.png";
 import { useNavigate } from "react-router-dom";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import { message } from "antd";
 
 function MeuPerfil() {
 	const navigate = useNavigate();
-	const { nomeDoUsuario } = useAutenticacao();
+	const { usuario } = useAutenticacao();
+    const autenticacao = useAutenticacao()
 
 	function fotoDoPerfil() {
 		sweetAlert("em produção...");
@@ -22,6 +24,12 @@ function MeuPerfil() {
 			buttons: ["Não!", "Sim"],
 		}).then((willDelete) => {
 			if (willDelete) {
+				try {
+				 	autenticacao.logout()
+					navigate('/home')
+				} catch (error){
+					message.error('erro')
+				}
 				sweetAlert("Você foi desconectado", {
 					icon: "success",
 				});
@@ -29,6 +37,7 @@ function MeuPerfil() {
 				sweetAlert("Você continua logado");
 			}
 		});
+	
 	}
 
 	return (
@@ -43,7 +52,7 @@ function MeuPerfil() {
 						alt="perfil da pessoa"
 						onClick={fotoDoPerfil}
 					/>
-					<h1>Olá, {nomeDoUsuario}</h1>
+					<h1>Olá, {usuario?.nome}</h1>
 					<IconeSair
 						src={Sair}
 						alt="icone de sair"

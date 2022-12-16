@@ -1,3 +1,5 @@
+import ICategorias from "./ICategorias";
+
 export default interface IProdutos {
     nome: string, 
     descricao: string, 
@@ -5,5 +7,5 @@ export default interface IProdutos {
     imagem: string, 
     id: number,
     quantidade: number,
-    categoria: number
+    categorias: ICategorias[]
 }

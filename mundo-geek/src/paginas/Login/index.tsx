@@ -11,19 +11,18 @@ export default function LoginUsuario(){
     const [email, setEmail] = useState<string>('');
     const [senha, setSenha] = useState<string>('');
     const[carregando, setCarregando] = useState(false); 
+    const { login } = useAutenticacao()
 
-    const autenticacao = useAutenticacao()
     const navigate = useNavigate();
 
     async function aoFinalizar(email: string, senha: string, 
         evento: React.FormEvent<HTMLFormElement>){
-        console.log('evento', evento)
         evento.preventDefault(); 
 
         setCarregando(true)
 
         try {
-            await autenticacao.autenticado(email, senha)
+            await login(email, senha)
             navigate('/perfil')
         } catch (error) {
             message.error('Email ou senha inválidos')

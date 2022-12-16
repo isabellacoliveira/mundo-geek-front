@@ -14,6 +14,7 @@ import {
 } from "./styles";
 import Mais from "assets/mais.png";
 import Lapis from "assets/editar.png";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 interface ProdutoProps {
     produto: IProdutos
@@ -22,6 +23,7 @@ interface ProdutoProps {
 const Produto = ({produto}: ProdutoProps) => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
+    const { usuario } = useAutenticacao();
 
 	function paraEditarProduto() {
 		navigate("/editar/produto");
@@ -60,11 +62,12 @@ const Produto = ({produto}: ProdutoProps) => {
 							Ver Produto
 						</Link>
 					</BotaoVerProduto>
-					<ImagemMais
+                    {usuario && <ImagemMais
 						src={Mais}
 						alt="icone de mais"
 						onClick={adicionaNoCarrinho}
-					/>
+					/>}
+					
 				</DivImgBotao>
         </CardDoProduto>
         </>

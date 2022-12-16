@@ -5,6 +5,9 @@ import styled from 'styled-components';
 export const PerfilUsuario = styled.div`
     display: flex;
     flex-direction: row;
+    h2 {
+        padding-left: 10px;
+    }
 `
 
 export const DivCarrinhoPerfil = styled.div`

@@ -3,13 +3,11 @@ import AdministradorRoutes from "router";
 import ClienteRoutes from 'routes'; 
 
 function App() {
+  const { usuario } = useAutenticacao();
 
   return (
         <>
-        {/* {!autenticacao.email ?  } */}
-        <AdministradorRoutes />
-        {/* <ClienteRoutes /> */}
-        {/* {autenticacao.email !== "adasdfadf@gmail.com" ? <AdministradorRoutes /> : <ClienteRoutes /> } */}
+        {usuario !== undefined ? <ClienteRoutes /> :  <AdministradorRoutes /> }
         </>
   );
 }

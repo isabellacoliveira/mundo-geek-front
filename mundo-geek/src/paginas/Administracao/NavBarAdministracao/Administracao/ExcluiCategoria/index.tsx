@@ -9,16 +9,16 @@ import {
 	RemoverCategoria,
 } from "../../styles";
 import { Link as RouterLink } from 'react-router-dom'
+import { token } from "config/config";
 
 export default function CadastraNovaCategoria() {
     const [categoriasMapeadas, setCategoriasMapeadas] = useState<ICategorias[]>([]);
 
-	let config = {
+    let config = {
 		headers: {
 			Authorization:
-				"Bearer " +
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibm9tZSI6ImNsZWFuZSBldmVsaW4iLCJzb2JyZW5vbWUiOiJiYXRpc3RhIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjcxMTQ2NDQ2LCJleHAiOjE2NzE0OTIwNDZ9.kQ8klpiyqx7GRsXrHcKcKyocsnAfCQIuTWmetRtxq20",
-		},
+				`Bearer ${token()}`
+            },
 	};
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export default function CadastraNovaCategoria() {
 	}, []);
 
     const excluir = (categoriaAhSerExcluida: ICategorias) => {
-        Api.delete(`categorias/${categoriaAhSerExcluida.id}/`)
+        Api.delete(`categorias/${categoriaAhSerExcluida.id}/`, config)
             .then(() => {
                 const listaCategorias = categoriasMapeadas.filter(categoria => categoria.id !== categoriaAhSerExcluida.id)
                 setCategoriasMapeadas([...listaCategorias])
@@ -43,12 +43,6 @@ export default function CadastraNovaCategoria() {
 	return (
 		<>
 			<CadastroNovoProduto>
-				{/* <label className="editaNova">Nova Categoria</label>
-			<InputsDaPagina 
-                    type="text"
-                    placeholder="Digite a nova categoria"
-            ></InputsDaPagina>
-            <button>Adicionar Categoria</button> */}
                 <TableContainer component={Paper}>
             <Table>
                 <TableHead>

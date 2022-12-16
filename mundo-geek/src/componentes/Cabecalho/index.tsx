@@ -16,11 +16,12 @@ import perfil from "assets/perfil.png";
 import { useState } from "react";
 import { DivCarrinhoPerfil, PerfilUsuario } from "./Carrinho/styles";
 import CarrinhoDeCompras from "./Carrinho";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 const NavBar = () => {
-	const { pathname } = useLocation();
 	const navigate = useNavigate();
 	const [fazAparecer, setFazAparecer] = useState(true);
+	const { usuario } = useAutenticacao();
 
 	function mostraCarrinho() {
 		setFazAparecer(!fazAparecer);
@@ -38,10 +39,8 @@ const NavBar = () => {
 				</Link>
 				<TrocaLado>
 					<InputBusca />
-					{pathname === "/home" ||
-					pathname === "/cadastrarproduto" ? (
-						<BotaoLogin />
-					) : (
+					{!usuario ? (
+						<BotaoLogin /> ) : (
 						<LoginCarrinhoPerfil>
 							<DivCarrinhoPerfil>
 								<Carrinho
@@ -61,10 +60,12 @@ const NavBar = () => {
 										alt="icone do perfil"
 										onClick={vaiParaMeuPerfil}
 									/>
+									<h2>{usuario?.nome}</h2>
 								</PerfilUsuario>
 							</DivCarrinhoPerfil>
 						</LoginCarrinhoPerfil>
-					)}
+						) 
+					}
 				</TrocaLado>
 			</Cabecalho>
 			<Outlet />

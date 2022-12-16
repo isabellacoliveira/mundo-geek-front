@@ -1,9 +1,10 @@
-import { Api } from "./services/api";
 import { IUsuario } from "./types";
 import JWT_decote from 'jwt-decode';
 
-export function setUsuarioNoLocalStorage(usuario: IUsuario | null) {
+export function setUsuarioNoLocalStorage(usuario: IUsuario | null, token: string | null) {
     localStorage.setItem('u', JSON.stringify(usuario)); 
+    localStorage.setItem('token', JSON.stringify(token)); 
+    
 }
 
 export function getUsuarioNoLocalStorage() {
@@ -13,25 +14,21 @@ export function getUsuarioNoLocalStorage() {
         return null
     }
 
-    const usuario = JSON.parse(json);     
+    const usuario = JSON.parse(json); 
+        
     return usuario ?? null; 
     
 }
 
-export async function ConviteDeLogin (email: string, senha: string){
-    try{
-        const request = await Api.post('login', {email, senha});
-        return request.data; 
-
-    } catch (error) {
-        return null; 
-    }
-}
-
-export function decodificador(){
+export  function decodificador(){
     const token = localStorage.getItem('u'); 
-    const usuarioToken = JWT_decote(token!) as IUsuario; 
-    const nomeDoUsuario = usuarioToken.nome; 
+    
+    if(token){
+        const usuarioToken = JWT_decote(token!) as IUsuario; 
+        const nomeDoUsuario = usuarioToken.nome; 
+        const permissaoDoUsuario = usuarioToken.role; 
 
-    return nomeDoUsuario
+        return nomeDoUsuario && permissaoDoUsuario
+    }
+ 
 } 

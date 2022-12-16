@@ -1,7 +1,8 @@
 import FaleConosco from "componentes/FaleConosco";
 import ListaCategorias from "componentes/ProdutosPorCategoria/ListaProdutos";
 import Footer from "componentes/Rodape";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import { useNavigate } from "react-router-dom";
 import {
 	BotaoCadastraProduto,
 	ListaDeProdutos,
@@ -10,8 +11,9 @@ import {
 } from "./styles";
 
 function TodosOsProdutos() {
-	const { pathname } = useLocation();
 	const navigate = useNavigate();
+	const { usuario } = useAutenticacao();
+
 
 	function vaiParaAdm() {
 		navigate("/administracao/categorias/novo");
@@ -23,13 +25,11 @@ function TodosOsProdutos() {
 				<Titulo>Todos os produtos</Titulo>
 
 				{/* se o usuario for um adm esse botao aparece  */}
-				{pathname === "/produtos" ? (
+				{usuario && usuario.role === 'admin' && 
 					<BotaoCadastraProduto onClick={vaiParaAdm}>
 						Administração
 					</BotaoCadastraProduto>
-				) : (
-					""
-				)}
+				}
 			</Produtos>
 			<ListaDeProdutos>
 				<ListaCategorias />

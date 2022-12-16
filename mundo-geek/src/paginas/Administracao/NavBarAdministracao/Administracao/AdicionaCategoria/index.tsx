@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ICategorias from "types/ICategorias";
 import { CadastroNovoProduto } from "../../styles";
-import sweetAlert from 'sweetalert';
 import {useEffect} from 'react'; 
-import { Box, Button, TextField, Typography } from "@mui/material"
+import { token } from "config/config";
 
 // não está mostrando o alert 
 export default function EditarCategoriaAntiga(){
@@ -18,18 +17,10 @@ export default function EditarCategoriaAntiga(){
     let config = {
 		headers: {
 			Authorization:
-				"Bearer " +
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibm9tZSI6ImNsZWFuZSBldmVsaW4iLCJzb2JyZW5vbWUiOiJiYXRpc3RhIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjcxMTQ4MDMzLCJleHAiOjE2NzE0OTM2MzN9.3iTIW_bYOwhn2aMy0qVFDgdEn4Z5aIU4dbt3O5mNVm4",
-		},
+				`Bearer ${token}`
+            },
 	};
 
-    let config1 = {
-		headers: {
-			Authorization:
-				"Bearer " +
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibm9tZSI6ImNsZWFuZSBldmVsaW4iLCJzb2JyZW5vbWUiOiJiYXRpc3RhIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjcxMTQ4MDMzLCJleHAiOjE2NzE0OTM2MzN9.3iTIW_bYOwhn2aMy0qVFDgdEn4Z5aIU4dbt3O5mNVm4",
-		},
-	};
 
     useEffect(() => {
         if (parametros.id) {
@@ -44,7 +35,7 @@ export default function EditarCategoriaAntiga(){
         if (parametros.id) {
             Api.put<ICategorias>(`categorias/${parametros.id}/`, {
                 titulo: categoriaDoProduto
-            }, config1)
+            }, config)
                 .then(() => {
                     alert("Categoria atualizada com sucesso!")
                 })

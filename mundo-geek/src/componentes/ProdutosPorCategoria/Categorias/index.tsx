@@ -6,6 +6,7 @@ import Produto from "../Produtos";
 import { Cima, ListaDeProdutos, Titulos } from "./styles";
 import { Link, useLocation } from "react-router-dom";
 import IconeSeta from 'assets/iconeSeta.png';
+import { token } from "config/config";
 
 interface CategoriaProps {
 	categoria: ICategorias;
@@ -16,17 +17,21 @@ const Categoria = ({ categoria }: CategoriaProps) => {
 
 	let config = {
 		headers: {
-			Authorization:
+			'Authorization':
 				"Bearer " +
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibm9tZSI6ImNsZWFuZSBldmVsaW4iLCJzb2JyZW5vbWUiOiJiYXRpc3RhIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjcxMTI0MjY0LCJleHAiOjE2NzE0Njk4NjR9.QQn0Q9_3Og7vhsTdfy1k_hzU9bi3JYy85LzgIU1peUo",
-		},
+				token
+			},
 	};
 
 	useEffect(() => {
 		Api.get<ICategorias[], any>(`produtos/`, config).then((resposta) => {
 			setProdutos(resposta.data);
+			console.log(resposta)
 		});
 	}, [categoria.id]);
+
+
+
 
 	return (
 		<>
@@ -45,12 +50,8 @@ const Categoria = ({ categoria }: CategoriaProps) => {
 				{produtos &&
 					produtos.length > 0 &&
 					produtos?.map((item) => (
-						<Produto produto={item} key={item.id} />
+						<Produto produto={item} key={item.id}/>
 					))}
-				{/* .filter(
-							(resposta) =>
-								resposta.categorias.id === categoria.id
-						)} */}
 			</ListaDeProdutos>
 		</>
 	);

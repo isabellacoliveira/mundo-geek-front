@@ -63,6 +63,7 @@ export const Perfil = styled.img`
     border-radius: 50%;
     margin-left: 20px;
 
+
     &:hover {
         transform: translateY(-4px);
         cursor: pointer;

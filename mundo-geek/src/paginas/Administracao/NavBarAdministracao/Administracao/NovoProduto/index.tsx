@@ -5,6 +5,7 @@ import ICategorias from "types/ICategorias";
 import { Api } from "contextos/AutenticacaoProvider/services/api";
 import IProdutos from "types/IProdutos";
 import { CadastroNovoProduto, Categorias, InputsDaPagina } from "../../styles";
+import { token } from "config/config";
 
 export default function CadastraNovoProduto() {
     const navigate = useNavigate();
@@ -19,8 +20,8 @@ export default function CadastraNovoProduto() {
 		headers: {
 			Authorization:
 				"Bearer " +
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjcxMDI0MDkwLCJleHAiOjE2NzEzNjk2OTB9.zXz0EeL3YyD4ZkczgqE-104aG2ErF_z628eU-Sleae0",
-		},
+				token
+			},
 	};
 
 	const aoSubmeterForm = () => {
@@ -73,7 +74,10 @@ export default function CadastraNovoProduto() {
 
 				<Categorias>
 					<div>
-						<select>
+						<select 
+							multiple={true} 
+							size={2}
+							>
 							{categoriasMapeadas.map((categoria) => (
 								<option key={categoria.titulo}>
 									{categoria.titulo}

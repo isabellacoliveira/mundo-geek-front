@@ -1,14 +1,17 @@
 export interface IUsuario {
     id?: number, 
-    email?: string, 
-    token?: string, 
+    email?: string,  
     nome?: string, 
+    sobrenome?: string, 
+    role?: string, 
+    createdAt?: Date, 
+    updateAt?: Date, 
 }
 
-export interface IContexto extends IUsuario {
-    autenticado: (email: string, senha: string) => Promise<void>;
+export interface IContexto {
+    login: (email: string, senha: string) => void;
     logout: () => void; 
-    nomeDoUsuario: string | undefined
+    usuario: IUsuario | null | undefined;  
 }
 
 export interface IAutenticadoOuNao {

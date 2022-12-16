@@ -1,12 +1,12 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import { Api } from "./services/api";
 import { IContexto,  IAutenticacaoProvider, IUsuario} from "./types";
-import { ConviteDeLogin, decodificador, getUsuarioNoLocalStorage, setUsuarioNoLocalStorage } from "./util";
+import {  getUsuarioNoLocalStorage, setUsuarioNoLocalStorage } from "./util";
 
 export const CriaUsuarioContext = createContext<IContexto>({} as IContexto); 
 
 export const AutenticadoProvider = ({children}: IAutenticacaoProvider) => {
     const[usuario, setUsuario] = useState<IUsuario | null>(); 
-    const[nomeDoUsuario] = useState<string | undefined>(decodificador()); 
 
     useEffect(() => {
         const usuario = getUsuarioNoLocalStorage(); 
@@ -17,22 +17,28 @@ export const AutenticadoProvider = ({children}: IAutenticacaoProvider) => {
         
     }, []);
 
-    async function autenticado (email: string, senha: string){
-        const resposta = await ConviteDeLogin(email, senha)
+    async function login(email: string, senha: string){
+        try{
+            const response = await Api.post<{ token: string, usuario: IUsuario}>('login', {email, senha});
+            const user = response.data.usuario
+            const token = response.data.token
+            setUsuario(user)  
+            setUsuarioNoLocalStorage(user, token)
 
-        const certo = {token: resposta.token}
-        setUsuario(certo)  
-        setUsuarioNoLocalStorage(certo)
+        } catch (error) {
+            return null; 
+        }       
     }
 
     async function logout () {
         setUsuario(null)
-        setUsuarioNoLocalStorage(null)
+        setUsuarioNoLocalStorage(null, null)
+        localStorage.clear()
     }
 
     return (
  
-            <CriaUsuarioContext.Provider value={{...usuario, autenticado, logout, nomeDoUsuario }}>
+            <CriaUsuarioContext.Provider value={{usuario, login, logout }}>
                 {children}
             </CriaUsuarioContext.Provider>
     )

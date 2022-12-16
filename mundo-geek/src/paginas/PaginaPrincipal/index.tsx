@@ -20,8 +20,6 @@ function PaginaPrincipal(){
                         </VerConsole>
                     </BannerHero>
                 </BannerTodo>
-
-                {/* <ProdutosFiltrados /> */}
                 <ListaCategorias />
                 <FaleConosco/>
                 <Footer />
