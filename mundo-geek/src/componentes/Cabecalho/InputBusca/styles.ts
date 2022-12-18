@@ -14,7 +14,6 @@ export const InputDeBusca = styled.input`
         font-size: 14px;
         line-height: 16px;
         border: none;
-        background-image: url("https://icones.pro/wp-content/uploads/2021/06/icone-loupe-gris.png");
         background-size:  20px 20px;
         background-repeat: no-repeat;
         background-position: right;
@@ -44,7 +43,6 @@ export const IconePesquisa = styled.img`
         width: 20px;
         height: 20px;
         margin-left: 20px;
-        margin-top: 10px;
     }
     @media (min-width: 900px){
         display: none;
@@ -70,6 +68,9 @@ export const BarrinhaPequena = styled.input`
         }
         @media(max-width: 900px){
             width: 200px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            margin-left: 20px;
         }
         @media(min-width: 900px){
             display: none;

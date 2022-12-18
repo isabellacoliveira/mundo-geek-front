@@ -2,7 +2,7 @@ import Footer from "componentes/Rodape";
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from 'react'; 
 import ICategorias from "types/ICategorias";
-import { Api } from "contextos/AutenticacaoProvider/services/api";
+import { Api } from "services/api";
 import IProdutos from "types/IProdutos";
 import { CadastroNovoProduto, Categorias, InputsDaPagina } from "../../styles";
 import { token } from "config/config";
@@ -78,6 +78,7 @@ export default function CadastraNovoProduto() {
 							multiple={true} 
 							size={2}
 							>
+							{/* retornar input com type checkbox */}
 							{categoriasMapeadas.map((categoria) => (
 								<option key={categoria.titulo}>
 									{categoria.titulo}

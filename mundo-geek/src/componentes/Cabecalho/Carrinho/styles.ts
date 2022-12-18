@@ -40,8 +40,21 @@ export const RemoveItem = styled.img`
 `
 export const ItensParaComprar = styled.div`
     overflow: auto;
-    width: 270px;
-    height: 280px;
+
+
+    @media (max-width: 900px){
+        li{
+            width: 140px;
+            height: 270px;
+        }
+    }
+    @media (min-width: 900px){
+        li{
+            width: 270px;
+            height: 280px;
+        }
+    }
+    
 `
 
 export const FuncoesCarrinho = styled.div`
@@ -75,6 +88,8 @@ export const CarrinhoDiv = styled.div`
         list-style: none;
         margin-bottom: 10px;
     }
+
+   
 
     h3{
         display: flex;

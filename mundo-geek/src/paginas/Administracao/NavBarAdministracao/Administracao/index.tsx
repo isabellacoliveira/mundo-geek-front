@@ -22,11 +22,6 @@ export const Administracao = () => {
 				>
 					Categorias
 				</button>
-				<button
-					onClick={() => navigate("/administracao/categorias/editar/:id")}
-				>
-					Nova Categoria
-				</button>
 				<Outlet />
 			</Botoes>
 		</>

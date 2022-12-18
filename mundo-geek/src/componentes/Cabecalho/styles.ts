@@ -6,7 +6,6 @@ export const Cabecalho = styled.nav`
     flex-direction: row;
     display: flex;
     align-items: center;
-    padding-top: 25px;
     padding-bottom: 20px;
     width: 100%;
     background-color: #fff;
@@ -15,6 +14,10 @@ export const Cabecalho = styled.nav`
         align-items: center;
         justify-content: center;
         display: flex;
+    }
+    @media (min-width: 900px) {
+        padding-top: 25px;
+
     }
 `
 export const Logo = styled.img`
@@ -48,8 +51,9 @@ export const Carrinho = styled.img`
 
 export const TrocaLado = styled.div`
     @media (max-width: 900px){
-        flex-direction: row-reverse;
+        flex-direction: column;
         display: flex;
+        padding-top: 20px;
     }
 
     @media(min-width: 900px){
@@ -76,12 +80,21 @@ export const LoginCarrinhoPerfil = styled.div`
     }
 `
 export const CarrinhoDiv = styled.div`
-    margin-top: 50px;
-    width: 310px;
-    height: 400px;
     background-color: #E5E5E5;
     position: absolute;
     border-radius: 10px;
+
+    @media (max-width: 900px){
+          margin-top: 50px;
+          margin-right: 600px;
+          width: 200px;
+          height: 430px;
+    }
+    @media (min-width: 900px){
+          margin-top: 50px;
+          width: 310px;
+          height: 400px;
+    }
 
     li {
         list-style: none;

@@ -1,7 +1,36 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { Api } from "./services/api";
-import { IContexto,  IAutenticacaoProvider, IUsuario} from "./types";
+import { Api } from "../../services/api";
 import {  getUsuarioNoLocalStorage, setUsuarioNoLocalStorage } from "./util";
+
+export interface IUsuario {
+    id?: number, 
+    email?: string,  
+    nome?: string, 
+    sobrenome?: string, 
+    role?: string, 
+    createdAt?: Date, 
+    updateAt?: Date, 
+}
+
+export interface IContexto {
+    login: (email: string, senha: string) => void;
+    logout: () => void; 
+    usuario: IUsuario | null | undefined;  
+}
+
+export interface IAutenticadoOuNao {
+    hello: () => void; 
+}
+
+export interface IAutenticacaoProvider {
+    children: JSX.Element; 
+
+}
+
+export const useAutenticacao = () => {
+    const contexto  = useContext(CriaUsuarioContext)
+    return contexto 
+}
 
 export const CriaUsuarioContext = createContext<IContexto>({} as IContexto); 
 
@@ -44,7 +73,3 @@ export const AutenticadoProvider = ({children}: IAutenticacaoProvider) => {
     )
 }
 
-export const useAutenticacao = () => {
-    const contexto  = useContext(CriaUsuarioContext)
-    return contexto 
-}

@@ -20,12 +20,11 @@ export default function LoginUsuario(){
         evento.preventDefault(); 
 
         setCarregando(true)
-
         try {
             await login(email, senha)
             navigate('/perfil')
         } catch (error) {
-            message.error('Email ou senha inválidos')
+            message.error('Email ou senha inválidosssss')
         } finally {
             setCarregando(false)
         }

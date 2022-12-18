@@ -2,6 +2,7 @@ import FaleConosco from "componentes/FaleConosco";
 import Footer from "componentes/Rodape";
 import {BannerTodo, BannerHero,  VerConsole, Titulo1, Titulo2} from './styles';
 import ListaCategorias from "componentes/ProdutosPorCategoria/ListaProdutos";
+import { CardDoProduto } from "componentes/ProdutosPorCategoria/Produtos/styles";
 
 function PaginaPrincipal(){
     const ScrollTo = () => {

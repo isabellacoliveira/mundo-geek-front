@@ -224,13 +224,39 @@ export const DivDeleta = styled.div`
 export const Botoes = styled.div`
 	
     button{
-        width: 25%;
+        width: 33.33%;
         background-color: #4169E1;
         border: none;
         height: 40px;
     }
 
     
+`
+export const AdicionarCategoria = styled.div`
+	margin-bottom: 90px;
+	text-align: center;
+
+	
+
+	@media (min-width: 900px){
+		button{
+		width: 420px;
+	}
+	}
+
+	@media (max-width: 900px){
+		button{
+		width: 100px;
+		}
+		input{
+			width: 290px;
+		}
+	}
+
+	div{
+		display: block;
+		flex-direction: column;
+	}
 `
 
 

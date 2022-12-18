@@ -10,68 +10,108 @@ import {
 	PrecoDoProduto,
 	DivPrecoEditar,
 	ImagemLapis,
-    ImagemProduto,
+	ImagemProduto,
+	BotaoAdicionarAoCarrinho,
+	VerProduto,
 } from "./styles";
-import Mais from "assets/mais.png";
 import Lapis from "assets/editar.png";
+import { Button } from "react-bootstrap";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import { useCarrinho } from "contextos/CarrinhoProvider/CarrinhoContext";
+import { formatCurrency } from "componentes/Cabecalho/Carrinho/FormatCurency";
 
 interface ProdutoProps {
-    produto: IProdutos
+	produto: IProdutos;
 }
 
-const Produto = ({produto}: ProdutoProps) => {
-    const { pathname } = useLocation();
-    const navigate = useNavigate();
-    const { usuario } = useAutenticacao();
-
+const Produto = ({ produto }: ProdutoProps) => {
+	const { pathname } = useLocation();
+	const navigate = useNavigate();
+	const { usuario } = useAutenticacao();
+	const {
+		quantidadeDeItens,
+		aumentarQuantidadeCarrinho,
+		diminuirQuantidadeCarrinho,
+		removerDoCarrinho,
+	} = useCarrinho();
+	var quantidade = 0;
+	// var quantidade = ;
+	
 	function paraEditarProduto() {
 		navigate("/editar/produto");
 	}
 
-	function adicionaNoCarrinho() {
-		alert("produto adicionado ao carrinho");
+	function aumentarQuantidade(id: number, evento: React.FormEvent<HTMLFormElement>){
+		evento.preventDefault(); 
+		aumentarQuantidadeCarrinho(id)
 	}
-
-    return (
-        <>
-        <LinkParaOutraPagina>
-
-        </LinkParaOutraPagina>
-        <CardDoProduto>
-            <ImagemProduto src={produto.imagem} />
-            <NomeDoProduto>{produto.nome}</NomeDoProduto>
-            <DivPrecoEditar>
-                <PrecoDoProduto>{produto.preco}</PrecoDoProduto>
-                <ImagemLapis>
-                {pathname === "/perfil" ? (
+	return (
+		<>
+			<CardDoProduto>
+				<ImagemProduto src={produto.imagem} />
+				<NomeDoProduto>{produto.nome}</NomeDoProduto>
+				<DivPrecoEditar>
+					<PrecoDoProduto>
+						{formatCurrency(produto.preco)}
+					</PrecoDoProduto>
+					<ImagemLapis>
+						{pathname === "/perfil" ? (
 							<ImagemMais
 								src={Lapis}
 								alt="icone de edição"
 								onClick={paraEditarProduto}
 							/>
 						) : null}
-                </ImagemLapis>
-            </DivPrecoEditar>
-            <DivImgBotao>
+					</ImagemLapis>
+				</DivPrecoEditar>
+				<DivImgBotao>
 					<BotaoVerProduto>
-						<Link
-							to={"/produto/1"}
-							// to={`/produto/${produto.id}`}
-						>
-							Ver Produto
+						<Link to={`/produtos/${produto.id}`}>
+							<VerProduto>Ver Produto</VerProduto>
 						</Link>
+						{/* o botao de adicionar ao carrinho só deve aparecer quando a pessoa esta logada  */}
+						{usuario && quantidade === 0 ? (
+							<BotaoAdicionarAoCarrinho
+							// onClick={() => adicionaNoCarrinho}
+							>
+								+ Adicionar ao Carrinho
+							</BotaoAdicionarAoCarrinho>
+						) : (
+							<div
+								className="d-flex align-items-center flex-column"
+								style={{ gap: ".5rem" }}
+							>
+								<div
+									className="d-flex align-items-center justify-content-center"
+									style={{ gap: ".5rem" }}
+								>
+									<Button
+										onClick={() =>
+											aumentarQuantidade
+										}
+									>
+										-
+									</Button>
+									<div>
+										<span className="fs-3">
+											{quantidade}
+										</span>{" "}
+										no carrinho
+									</div>
+									{/* onClick={() => aumentarQuantidadeCarrinho(id)} */}
+									<Button>+</Button>
+								</div>
+								{/* onClick={() => removerDoCarrinho(id)} */}
+								<Button variant="danger" size="sm">
+									Remover
+								</Button>
+							</div>
+						)}
 					</BotaoVerProduto>
-                    {usuario && <ImagemMais
-						src={Mais}
-						alt="icone de mais"
-						onClick={adicionaNoCarrinho}
-					/>}
-					
 				</DivImgBotao>
-        </CardDoProduto>
-        </>
-    )     
-}
+			</CardDoProduto>
+		</>
+	);
+};
 
-export default Produto; 
+export default Produto;

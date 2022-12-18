@@ -7,7 +7,8 @@ function App() {
 
   return (
         <>
-        {usuario !== undefined ? <ClienteRoutes /> :  <AdministradorRoutes /> }
+        {usuario ? <ClienteRoutes /> :  <AdministradorRoutes /> }
+        {/* {!usuario ? <ClienteRoutes /> :  <AdministradorRoutes /> } */}
         </>
   );
 }

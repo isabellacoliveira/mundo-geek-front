@@ -1,5 +1,5 @@
-import { IUsuario } from "./types";
 import JWT_decote from 'jwt-decode';
+import { IUsuario } from './Autenticacao';
 
 export function setUsuarioNoLocalStorage(usuario: IUsuario | null, token: string | null) {
     localStorage.setItem('u', JSON.stringify(usuario)); 

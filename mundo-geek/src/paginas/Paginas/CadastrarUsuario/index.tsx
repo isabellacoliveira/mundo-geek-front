@@ -3,7 +3,7 @@ import {useState} from 'react';
 import FaleConosco from "componentes/FaleConosco";
 import Footer from "componentes/Rodape";
 import { useNavigate } from "react-router-dom";
-import { Api } from "contextos/AutenticacaoProvider/services/api";
+import { Api } from "services/api";
 
 export default function Cadastro(){
     const[nomeDoUsuario, setNomeDoUsuario] = useState("");
@@ -17,10 +17,8 @@ export default function Cadastro(){
         evento.preventDefault()
 
         if(confirmacaoDaSenhaDoUsuario.length !== senhaDoUsuario.length){
-            // evento.target.setCustomValidity('') as HTMLInputElement
             sweetAlert("as senhas devem ser iguais")
         } else {
-            // confirmacaoDaSenha.setCustomValidity('as senhas devem ser iguais')
             console.log("senhas iguais")
         }
 

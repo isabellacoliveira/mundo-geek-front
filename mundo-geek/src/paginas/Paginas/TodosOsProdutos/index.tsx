@@ -24,7 +24,6 @@ function TodosOsProdutos() {
 			<Produtos>
 				<Titulo>Todos os produtos</Titulo>
 
-				{/* se o usuario for um adm esse botao aparece  */}
 				{usuario && usuario.role === 'admin' && 
 					<BotaoCadastraProduto onClick={vaiParaAdm}>
 						Administração

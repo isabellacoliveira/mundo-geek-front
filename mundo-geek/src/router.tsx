@@ -1,24 +1,24 @@
 import NavBar from "componentes/Cabecalho";
 import { AutenticadoProvider } from "contextos/AutenticacaoProvider/Autenticacao";
+import { CarrinhoProvider } from "contextos/CarrinhoProvider/CarrinhoContext";
 import NavBarAdministracao from "paginas/Administracao/NavBarAdministracao";
 import { Administracao } from "paginas/Administracao/NavBarAdministracao/Administracao";
-import EditarCategoriaAntiga from "paginas/Administracao/NavBarAdministracao/Administracao/AdicionaCategoria";
+import EditarCategoriaAntiga from "paginas/Administracao/NavBarAdministracao/Administracao/AdicionaEditaCategoria";
 import EditarProdutoAntigo from "paginas/Administracao/NavBarAdministracao/Administracao/EditarProduto";
 import CadastraNovaCategoria from "paginas/Administracao/NavBarAdministracao/Administracao/ExcluiCategoria";
 import CadastraNovoProduto from "paginas/Administracao/NavBarAdministracao/Administracao/NovoProduto";
-import Cadastro from "paginas/CadastrarUsuario";
-import LoginUsuario from "paginas/Login";
-import MeuPerfil from "paginas/MeuPerfil";
-import NaoEncontrada from "paginas/NaoEncontrada";
-import Entrar from "paginas/PaginaInicialComecar";
-import PaginaPrincipal from "paginas/PaginaPrincipal";
-import ProdutoSelecionado from "paginas/ProdutoIndividual";
-import TodosOsProdutos from "paginas/TodosOsProdutos";
+import MeuPerfil from "paginas/Paginas/MeuPerfil";
+import NaoEncontrada from "paginas/Paginas/NaoEncontrada";
+import Entrar from "paginas/Paginas/PaginaInicialComecar";
+import PaginaPrincipal from "paginas/Paginas/PaginaPrincipal";
+import ProdutoSelecionado from "paginas/Paginas/ProdutoIndividual";
+import TodosOsProdutos from "paginas/Paginas/TodosOsProdutos";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function Administrador(){
     return (
 		<AutenticadoProvider>
+			<CarrinhoProvider>
 				<Router>
 				<Routes>
 					<Route path="/" element={<Entrar />} />
@@ -27,16 +27,10 @@ function Administrador(){
 						<Route path="/perfil" element={<MeuPerfil />} />
 						<Route path="*" element={<NaoEncontrada />} />
 						<Route path="/produtos" element={<TodosOsProdutos />} />
-						<Route path="/produto/:id/*" element={<ProdutoSelecionado />}/>
-						<Route path="/login" element={<LoginUsuario/>} />
+						<Route path="/produtos/:id" element={<ProdutoSelecionado />} />
 					</Route>
 
-					<Route path="/cadastro" element={<NavBar />}> 
-                        <Route path="usuario" element={<Cadastro />} />
-                    </Route> 
-
 					<Route path="/administracao" element={<NavBarAdministracao />} >
-
 						<Route path="categorias" element={<Administracao />}>
 							<Route path="novo" element={<CadastraNovaCategoria />} />
 							<Route path="editar/:id" element={<EditarCategoriaAntiga />} />
@@ -49,6 +43,7 @@ function Administrador(){
 					</Route>
 				</Routes>
 			</Router>
+			</CarrinhoProvider>
 		</AutenticadoProvider>
 		
 	);

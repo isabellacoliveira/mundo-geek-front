@@ -1,7 +1,7 @@
 import ICategorias from "types/ICategorias";
 import { useState, useEffect } from "react";
 import IProdutos from "types/IProdutos";
-import { Api } from "contextos/AutenticacaoProvider/services/api";
+import { Api } from "services/api";
 import Produto from "../Produtos";
 import { Cima, ListaDeProdutos, Titulos } from "./styles";
 import { Link, useLocation } from "react-router-dom";
@@ -19,12 +19,26 @@ const Categoria = ({ categoria }: CategoriaProps) => {
 		headers: {
 			'Authorization':
 				"Bearer " +
-				token
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tZSI6InVzdWFyaW8gYWRtaW4iLCJzb2JyZW5vbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3MTI4MjI2MCwiZXhwIjoxNjcxNjI3ODYwfQ.cfcxl5sbly7scDPUvRglDNR4NvxXT-RPcEKYhFd5Q4Q'
 			},
 	};
+	// let config = {
+	// 	headers: {
+	// 		'Authorization':
+	// 			"Bearer " +
+	// 			token
+	// 		},
+	// };
 
 	useEffect(() => {
-		Api.get<ICategorias[], any>(`produtos/`, config).then((resposta) => {
+		Api.get<ICategorias[], any>(`produtos/`, config)
+		// .then((resposta) => {
+		// 	// setProdutos(resposta.data)
+		// 	const listaProdutos = resposta.data.filter((categoria: ICategorias | undefined, produto: IProdutos | undefined) => categoria?.id === produto?.categorias?.id)
+		// 	setProdutos(listaProdutos)
+		// 	console.log(listaProdutos)
+		// });
+		.then((resposta) => {
 			setProdutos(resposta.data);
 			console.log(resposta)
 		});

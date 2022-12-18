@@ -17,6 +17,7 @@ import { useState } from "react";
 import { DivCarrinhoPerfil, PerfilUsuario } from "./Carrinho/styles";
 import CarrinhoDeCompras from "./Carrinho";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import { CarrinhoAba } from "./Carrinho/CarrinhoAba";
 
 const NavBar = () => {
 	const navigate = useNavigate();
@@ -43,16 +44,13 @@ const NavBar = () => {
 						<BotaoLogin /> ) : (
 						<LoginCarrinhoPerfil>
 							<DivCarrinhoPerfil>
-								<Carrinho
-									src={carrinho}
-									alt="icone do carrinho"
-									onClick={mostraCarrinho}
-								/>
+							<CarrinhoDeCompras />
 								{!fazAparecer ? (
 									<CarrinhoDiv>
-										<CarrinhoDeCompras />
+
 									</CarrinhoDiv>
 								) : null}
+								
 
 								<PerfilUsuario>
 									<Perfil

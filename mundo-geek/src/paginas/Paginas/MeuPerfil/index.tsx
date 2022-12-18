@@ -44,7 +44,7 @@ function MeuPerfil() {
 		<>
 			<Perfil>
 				<CabecalhoMeuPerfil>
-					<BotaoVoltar onClick={() => navigate(-1)}>
+					<BotaoVoltar onClick={() => navigate(-2)}>
 						{"< voltar"}
 					</BotaoVoltar>
 					<PerfilImagem
@@ -52,7 +52,8 @@ function MeuPerfil() {
 						alt="perfil da pessoa"
 						onClick={fotoDoPerfil}
 					/>
-					<h1>Olá, {usuario?.nome}</h1>
+					<h1> Olá  {usuario?.nome}
+					</h1>
 					<IconeSair
 						src={Sair}
 						alt="icone de sair"
@@ -60,7 +61,9 @@ function MeuPerfil() {
 					/>
 				</CabecalhoMeuPerfil>
 				<h1>Meus Produtos</h1>
-				<ListaDeProdutosIndividual></ListaDeProdutosIndividual>
+				<ListaDeProdutosIndividual>
+					
+				</ListaDeProdutosIndividual>
 			</Perfil>
 			<Footer />
 		</>

@@ -11,6 +11,8 @@ export const BotaoVerProduto = styled.button`
     border-radius: 0px 0px 10px 10px;
     padding-bottom: 10px;
     padding-left: 10px;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
         transform: translateY(-4px);
@@ -59,7 +61,7 @@ export const ImagemLapis = styled.div`
 export const CardDoProduto = styled.div`
     flex-direction: row;
     background-color: #E5E5E5;
-    margin: 0 auto;
+    margin-right: 20px;
     background-color: #A9A9A9;
     border-radius: 10px 10px 10px 10px;
     padding: 10px;
@@ -72,6 +74,22 @@ export const CardDoProduto = styled.div`
         padding: 0px;
         gap: 8px;
     }
+`
+
+export const ImagemProduto = styled.img` 
+    width: 200px;
+    height: 200px;
+`
+
+export const BotaoAdicionarAoCarrinho = styled.button`
+    background-color: #2A7AE4;
+    border: none;
+    font-size: 15px;
+    border-radius: 8px;
+    width: 190px;
+    height: 60px;
+    color: #fff;
+    margin-top: 15px;
 
     &:hover {
         transform: translateY(-4px);
@@ -79,7 +97,11 @@ export const CardDoProduto = styled.div`
     }
 `
 
-export const ImagemProduto = styled.img` 
-    width: 200px;
-    height: 200px;
+export const VerProduto = styled.div` 
+    text-decoration: none;
+
+    &:hover {
+        transform: translateY(-4px);
+        cursor: pointer;
+    }
 `
