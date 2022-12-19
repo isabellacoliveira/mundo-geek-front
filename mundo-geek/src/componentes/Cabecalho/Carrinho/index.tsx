@@ -1,18 +1,22 @@
-import {  FuncoesCarrinho, InformacoesProduto, 
-    ItensParaComprar, NomePreco, Quantidade, RemoveItem } from "./styles";
-import remocao from 'assets/remover.png';
-import swal from "sweetalert";
-import { CarrinhoDiv } from "../styles";
-import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap"
+import { Button, Container, Navbar as NavbarBs } from "react-bootstrap"
 import { useCarrinho } from "contextos/CarrinhoProvider/CarrinhoContext";
+import { useState } from "react";
 import { CarrinhoAba } from "./CarrinhoAba";
 
 export default function CarrinhoDeCompras(){
-	const {abrirCarrinho, quantidadeCarrinho} = useCarrinho(); 
+	const { quantidadeCarrinho} = useCarrinho(); 
+	const [ fazAparecer, setFazAparecer ] = useState(true);
+
+
+	function abreCarrinho(){
+		setFazAparecer(!fazAparecer)
+	}
 
     return (
 		<>
-			<NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
+			<NavbarBs sticky="top" className="bg-white shadow-sm mb-3"
+									onClick={abreCarrinho}
+									>
 				<Container>
 					<Button
 						style={{
@@ -24,7 +28,6 @@ export default function CarrinhoDeCompras(){
 							padding: "10px"
 						}}
 						variant="outline-primary"
-						onClick={abrirCarrinho}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -54,6 +57,7 @@ export default function CarrinhoDeCompras(){
 					</Button>
 				</Container>
 			</NavbarBs>
+			{/* {!fazAparecer ?  '' : <CarrinhoAba /> } */}
 		</>
 	);
 		

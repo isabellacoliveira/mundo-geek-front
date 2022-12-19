@@ -104,3 +104,10 @@ export const Quantidade = styled.div`
     display: flex;
     flex-direction: column;
 `
+export const DivCarrinho = styled.div` 
+    position: absolute;
+    background-color: #fff;
+    width: 320px;
+    height: 100%;
+
+`

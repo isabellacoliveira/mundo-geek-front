@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import {InputDeBusca, IconePesquisa, BarrinhaPequena, BotaoAparece} from './styles'; 
 import Lupa from 'assets/lupa.png'; 
+import swal from 'sweetalert';
 
 const InputBusca = () => {
     function fazBusca(){
-        sweetAlert("insira sua pesquisa e aperte 'enter' para pesquisar")
+        swal("insira sua pesquisa e aperte 'enter' para pesquisar")
     }
     const [ fazAparecer, setFazAparecer ] = useState(true);
     
@@ -14,7 +15,10 @@ const InputBusca = () => {
     
     return (
         <>
-            {fazAparecer ? <InputDeBusca placeholder="O que deseja encontrar?" onClick={fazBusca}/> : null}
+            {fazAparecer ? <InputDeBusca 
+                                placeholder="O que deseja encontrar?" onClick={fazBusca}
+                                type="search"
+                                /> : null}
 
             <BotaoAparece onClick={mostraBarra}> 
                     <IconePesquisa src={Lupa}/>

@@ -1,3 +1,4 @@
+import { config } from "config/config";
 import { useCarrinho } from "contextos/CarrinhoProvider/CarrinhoContext"
 import {useEffect, useState} from 'react';
 import { Button, Stack } from "react-bootstrap";
@@ -14,14 +15,6 @@ interface ItemCarrinhoProps {
 export function ItemCarrinho({id, quantidade}: ItemCarrinhoProps){
     const {removerDoCarrinho} = useCarrinho()
     const [produtos, setProdutos] = useState<IProdutos[]>();
-
-    let config = {
-		headers: {
-			'Authorization':
-				"Bearer " +
-				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tZSI6InVzdWFyaW8gYWRtaW4iLCJzb2JyZW5vbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3MTI4MjI2MCwiZXhwIjoxNjcxNjI3ODYwfQ.cfcxl5sbly7scDPUvRglDNR4NvxXT-RPcEKYhFd5Q4Q'
-			},
-	};
 
     useEffect(() => {
 		Api.get<ICategorias[], any>(`produtos/`, config)

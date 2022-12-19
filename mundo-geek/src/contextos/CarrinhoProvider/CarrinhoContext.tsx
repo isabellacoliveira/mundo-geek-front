@@ -18,7 +18,7 @@ interface ItemDoCarrinho {
 interface CarrinhoContext {
     abrirCarrinho: () => void; 
     fecharCarrinho: () => void; 
-    quantidadeDeItens: (id: number) => number 
+    getQuantidadeDeItens: (id: number) => void 
     aumentarQuantidadeCarrinho: (id: number) => void 
     diminuirQuantidadeCarrinho: (id: number) => void 
     removerDoCarrinho: (id: number) => void 
@@ -37,7 +37,7 @@ export function CarrinhoProvider({children}: CarrinhoProviderProps){
 
     const quantidadeCarrinho = itensDoCarrinho.reduce((quantidade, item) => item.quantidade + quantidade, 0)
 
-    function quantidadeDeItens(id: number){
+    function getQuantidadeDeItens(id: number){
         return itensDoCarrinho.find(item => item.id === id)?.quantidade || 0
     }
 
@@ -81,7 +81,7 @@ export function CarrinhoProvider({children}: CarrinhoProviderProps){
 
     return (
         <CarrinhoContext.Provider value={{
-            quantidadeDeItens,
+            getQuantidadeDeItens,
             aumentarQuantidadeCarrinho,
             diminuirQuantidadeCarrinho,
             removerDoCarrinho, 

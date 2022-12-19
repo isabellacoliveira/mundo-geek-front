@@ -15,7 +15,7 @@ export interface IUsuario {
 export interface IContexto {
     login: (email: string, senha: string) => void;
     logout: () => void; 
-    usuario: IUsuario | null | undefined;  
+    usuario: IUsuario | null | undefined; 
 }
 
 export interface IAutenticadoOuNao {

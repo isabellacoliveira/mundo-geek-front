@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { AdicionarCategoria, CadastroNovoProduto } from "../../styles";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { token } from "config/config";
+import { config } from "config/config";
 
 // precisa recarregar a pagina para aparecer a categoria 
 export default function CadastraNovaCategoria() {
@@ -25,13 +25,8 @@ export default function CadastraNovaCategoria() {
 	const navigate = useNavigate();
 	
 
-	let config = {
-        headers: {
-          'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tZSI6InVzdWFyaW8gYWRtaW4iLCJzb2JyZW5vbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3MTI4MjI2MCwiZXhwIjoxNjcxNjI3ODYwfQ.cfcxl5sbly7scDPUvRglDNR4NvxXT-RPcEKYhFd5Q4Q'
-        }
-      }
-
 	useEffect(() => {
+	
 		Api.get<ICategorias[]>("categorias", config)
 			.then((resposta) => {
 				setCategoriasMapeadas(resposta.data);
@@ -111,7 +106,7 @@ export default function CadastraNovaCategoria() {
 							onChange={(evento) =>
 								setCategoriaNova(evento.target.value)
 							}
-						></input>
+						/>
 						<button
 							type="button"
 							onClick={() => adicionaCategoria()}

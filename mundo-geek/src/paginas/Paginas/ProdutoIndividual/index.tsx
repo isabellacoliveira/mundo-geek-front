@@ -9,6 +9,7 @@ import ICategorias from "types/ICategorias";
 import { Api } from "services/api";
 import { useParams } from "react-router-dom";
 import Produto from "componentes/ProdutosPorCategoria/Produtos";
+import { config } from "config/config";
 
 interface ProdutoProps {
 	produto: IProdutos;
@@ -20,14 +21,6 @@ export default function ProdutoSelecionado(){
     const [produtos, setProdutos] = useState<IProdutos[]>();
     const parametros = useParams(); 
     console.log("parametros", parametros)
-
-	let config = {
-		headers: {
-			'Authorization':
-				"Bearer " +
-				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tZSI6InVzdWFyaW8gYWRtaW4iLCJzb2JyZW5vbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3MTM5MDI4NywiZXhwIjoxNjcxNzM1ODg3fQ.MJaYd65wNvsx1Om81HCO4xmva0Bgf0d4oIYQ8QbOHvo'
-			},
-	};
     
     const produto = produtos?.find((produto) => {
         return produto.id === Number(parametros.id);

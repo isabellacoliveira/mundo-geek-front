@@ -23,7 +23,7 @@ function Cliente(){
                     <Route path="/" element={<Entrar />} />
                     <Route path="/" element={<NavBar />}>
                         <Route path="/home" element={<PaginaPrincipal />} />
-=                        <Route path="/login" element={<LoginUsuario />} />
+=                       <Route path="/login" element={<LoginUsuario />} />
                         <Route path="*" element={<NaoEncontrada />} />
                         <Route path="/produtos" element={<TodosOsProdutos />} />
                         <Route path="/" element={<Footer />} />

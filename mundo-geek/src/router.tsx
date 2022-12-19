@@ -38,7 +38,7 @@ function Administrador(){
 
 						<Route path="produtos" element={<Administracao />}>
 							<Route path="novo" element={<CadastraNovoProduto />} />
-							<Route path="editar" element={<EditarProdutoAntigo />} />
+							<Route path="editar/:id" element={<EditarProdutoAntigo />} />
 						</Route>
 					</Route>
 				</Routes>

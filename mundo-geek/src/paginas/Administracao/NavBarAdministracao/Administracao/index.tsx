@@ -13,11 +13,6 @@ export const Administracao = () => {
 					Novo Produto
 				</button>
 				<button
-					onClick={() => navigate("/administracao/produtos/editar")}
-				>
-					Editar Produto
-				</button>
-				<button
 					onClick={() => navigate("/administracao/categorias/novo")}
 				>
 					Categorias

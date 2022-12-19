@@ -8,7 +8,7 @@ export const ListaDeProdutos = styled.ul`
     background-color: #E5E5E5;
 
     
- li {
+    li {
     list-style: none;
     padding-right: 8px;
     padding-top: 10px;

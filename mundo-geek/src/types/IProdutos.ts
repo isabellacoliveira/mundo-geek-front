@@ -1,3 +1,5 @@
+import { IUsuario } from "contextos/AutenticacaoProvider/Autenticacao"
+import ICategorias from "./ICategorias"
 
 export default interface IProdutos {
     nome: string, 
@@ -6,8 +8,6 @@ export default interface IProdutos {
     imagem: string, 
     id: number,
     quantidade: number,
-    categorias: {
-        id: number, 
-        titulo: string,
-    }
+    categorias: ICategorias[], 
+    usuario: IUsuario
 }

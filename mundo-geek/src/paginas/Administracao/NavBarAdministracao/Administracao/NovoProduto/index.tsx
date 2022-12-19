@@ -1,14 +1,14 @@
 import Footer from "componentes/Rodape";
 import { useNavigate } from "react-router-dom";
-import {useState, useEffect} from 'react'; 
+import { useState, useEffect } from "react";
 import ICategorias from "types/ICategorias";
 import { Api } from "services/api";
 import IProdutos from "types/IProdutos";
 import { CadastroNovoProduto, Categorias, InputsDaPagina } from "../../styles";
-import { token } from "config/config";
+import { config } from "config/config";
 
 export default function CadastraNovoProduto() {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 	const [imagemDoProduto, setImagemDoProduto] = useState("");
 	const [categoriaDoProduto, setCategoriaDoProduto] = useState("");
 	const [categoriasMapeadas, setCategoriasMapeadas] = useState<ICategorias[]>([]);
@@ -16,41 +16,25 @@ export default function CadastraNovoProduto() {
 	const [precoDoProduto, setPrecoDoProduto] = useState("");
 	const [descricaoDoProduto, setDescricaoDoProduto] = useState("");
 
-	let config = {
-		headers: {
-			Authorization:
-				"Bearer " +
-				token
-			},
-	};
-
 	const aoSubmeterForm = () => {
-		Api.post<ICategorias>(
-				"/categorias",
-				{
-					titulo: categoriaDoProduto,
-				},
-				config
-			)
-
-        Api.post<IProdutos>(
-                "/produtos",
-                {
-                    nome: nomeDoProduto,
-                    descricao: descricaoDoProduto,
-                    preco: precoDoProduto,
-                    imagem: imagemDoProduto
-                }, config
-        )
-        .then(() => {
-            sweetAlert("Produto cadastrado com sucesso.");
-            navigate("/home");
-        });
+		Api.post<IProdutos>(
+			"/produtos",
+			{
+				nome: nomeDoProduto,
+				categorias: categoriaDoProduto, 
+				descricao: descricaoDoProduto,
+				preco: precoDoProduto,
+				imagem: imagemDoProduto,
+			},
+			config
+		).then(() => {
+			sweetAlert("Produto cadastrado com sucesso.");
+			navigate("/home");
+		});
 	};
 
 	useEffect(() => {
-		Api
-			.get<ICategorias[]>("categorias", config)
+		Api.get<ICategorias[]>("categorias", config)
 			.then((resposta) => {
 				setCategoriasMapeadas(resposta.data);
 			})
@@ -73,20 +57,25 @@ export default function CadastraNovoProduto() {
 				/>
 
 				<Categorias>
-					<div>
-						<select 
-							multiple={true} 
-							size={2}
-							>
-							{/* retornar input com type checkbox */}
-							{categoriasMapeadas.map((categoria) => (
-								<option key={categoria.titulo}>
-									{categoria.titulo}
-								</option>
-							))}
-						</select>
-					</div>
+					<label>Selecione a(s) categoria(s)</label>
+					{categoriasMapeadas.map((categoria) => (
+						<div>
+							<label htmlFor="categoriaTitulo">
+								{categoria.titulo}
+							</label>
+							<input
+								key={categoria.id}
+								type="checkbox"
+								id="categoriaTitulo"
+								name={categoria.titulo}
+								onChange={(evento) =>
+									setCategoriaDoProduto(evento.target.value)
+								}
+							/>
+						</div>
+					))}
 				</Categorias>
+
 				<InputsDaPagina
 					placeholder="Nome do produto"
 					required
@@ -113,6 +102,7 @@ export default function CadastraNovoProduto() {
 					Adicionar Produto
 				</button>
 			</CadastroNovoProduto>
+
 			<Footer />
 		</>
 	);

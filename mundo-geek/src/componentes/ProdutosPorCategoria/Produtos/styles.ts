@@ -53,10 +53,20 @@ export const ImagemMais = styled.img`
         cursor: pointer;
     }
 `
+export const ImagemLixo = styled.img` 
+    width: 20px; 
+    height: 20px;
+    margin-left: 100px;
+    margin-top: 10px;
+
+    &:hover {
+        transform: translateY(-4px);
+        cursor: pointer;
+    }
+`
 
 export const ImagemLapis = styled.div` 
     width: 50%; 
-    padding-left: 70px;
 `
 export const CardDoProduto = styled.div`
     flex-direction: row;

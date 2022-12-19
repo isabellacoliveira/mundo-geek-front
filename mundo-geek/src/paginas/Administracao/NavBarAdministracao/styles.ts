@@ -63,6 +63,20 @@ export const CadastroNovoProduto = styled.form`
 	font-size: 32px;
 	line-height: 38px;
 
+	input, select {
+		background: #ffffff;
+		border: none;
+		display: block;
+		padding-left: 5px;
+		outline: none;
+		box-shadow: 0px 2px #c8c8c8;
+		margin-top: 20px;
+		padding-bottom: 20px;
+		box-sizing: border-box;
+		border-radius: 4px 4px 0px 0px;
+		padding-top: 20px;		
+	}
+
     .editaNova{
         margin-top: 200px;
     }
@@ -72,11 +86,12 @@ export const CadastroNovoProduto = styled.form`
             font-style: normal;
 			color: #A2A2A2;
 	}
+
 	@media (min-width: 900px) {
 		height: 660px;
 		input {
 			height: 50px;
-			width: 420px;
+			width: 840px;
 		}
 		button {
 			width: 420px;
@@ -110,20 +125,7 @@ export const CadastroNovoProduto = styled.form`
 		}
 	}
 
-	input, select {
-		background: #ffffff;
-		border: none;
-		display: block;
-		padding-left: 5px;
-		outline: none;
-		box-shadow: 0px 2px #c8c8c8;
-		margin-top: 20px;
-		padding-bottom: 20px;
-		box-sizing: border-box;
-		border-radius: 4px 4px 0px 0px;
-		padding-top: 20px;
-		
-	}
+
 	button {
 		color: #ffffff;
 		border: none;
@@ -139,6 +141,8 @@ export const CadastroNovoProduto = styled.form`
 `
 
 export const InputsDaPagina = styled.input`
+
+
 	::-webkit-input-placeholder {
             font-family: 'Raleway';
             font-style: normal;
@@ -154,29 +158,30 @@ export const InputCategoria = styled.textarea`
 	outline: none;
 `
 
-export const Categorias = styled.div` 
-	@media (min-width: 900px){
-		display: flex;
-		flex-direction: row;
-	}
-
-	@media (max-width: 900px){
+export const Categorias = styled.section` 
+		width: 840px;
+		overflow: auto;
+		font-size: 20px;
+		height: 90px;
 		display: flex;
 		flex-direction: column;
+
+		div{
+			width: 100%;
+		}
+		
+		label{
+			width: 100%;
+		}
+
+		input{
+			height: 30px;
+		}
+
+	@media (max-width: 900px){
+		
 	}
 
-	select {
-		width: 100%;
-		margin-left: 10px;
-	}
-
-	li{
-		list-style: none;
-	}
-
-	div{
-        width: 420px;
-    }
 `
 export const RemoverCategoria = styled.div` 
 	height: 300px;
@@ -224,7 +229,7 @@ export const DivDeleta = styled.div`
 export const Botoes = styled.div`
 	
     button{
-        width: 33.33%;
+        width: 50%;
         background-color: #4169E1;
         border: none;
         height: 40px;
@@ -258,5 +263,7 @@ export const AdicionarCategoria = styled.div`
 		flex-direction: column;
 	}
 `
-
+export const BotaoSalvar = styled.button` 
+	background-color: red;
+`
 
