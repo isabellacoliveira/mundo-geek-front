@@ -15,7 +15,6 @@ export default function Cadastro(){
   
     function cadastraUsuario(evento: React.FormEvent<HTMLFormElement>){
         evento.preventDefault()
-
         if(confirmacaoDaSenhaDoUsuario.length !== senhaDoUsuario.length){
             sweetAlert("as senhas devem ser iguais")
         } else {
@@ -65,7 +64,7 @@ export default function Cadastro(){
                 />
                 <label htmlFor="Nome">Sobrenome</label>
                 <InputGlobal
-                    placeholder="Digite seu nome"
+                    placeholder="Digite seu sobrenome"
                     type="text"
                     required
                     id="Nome"

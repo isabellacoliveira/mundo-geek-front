@@ -66,7 +66,11 @@ export const ImagemLixo = styled.img`
 `
 
 export const ImagemLapis = styled.div` 
-    width: 50%; 
+    display: flex;
+    flex-direction: column;
+    img {
+        margin-top: 30px;
+    }
 `
 export const CardDoProduto = styled.div`
     flex-direction: row;

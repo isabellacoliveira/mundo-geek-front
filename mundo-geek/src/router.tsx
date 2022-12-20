@@ -1,4 +1,5 @@
 import NavBar from "componentes/Cabecalho";
+import ScrollToTop from "componentes/ScrollToTop";
 import { AutenticadoProvider } from "contextos/AutenticacaoProvider/Autenticacao";
 import { CarrinhoProvider } from "contextos/CarrinhoProvider/CarrinhoContext";
 import NavBarAdministracao from "paginas/Administracao/NavBarAdministracao";
@@ -20,6 +21,7 @@ function Administrador(){
 		<AutenticadoProvider>
 			<CarrinhoProvider>
 				<Router>
+				<ScrollToTop /> 
 				<Routes>
 					<Route path="/" element={<Entrar />} />
 					<Route path="/" element={<NavBar />}>

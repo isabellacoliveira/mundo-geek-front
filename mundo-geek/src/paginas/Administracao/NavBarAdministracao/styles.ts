@@ -176,6 +176,7 @@ export const Categorias = styled.section`
 
 		input{
 			height: 30px;
+			width: 50px;
 		}
 
 	@media (max-width: 900px){

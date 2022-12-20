@@ -15,44 +15,40 @@ import {
 	ImagemLixo,
 } from "./styles";
 import Lapis from "assets/editar.png";
-import { Button } from "react-bootstrap";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
-import { useCarrinho } from "contextos/CarrinhoProvider/CarrinhoContext";
 import { formatCurrency } from "componentes/Cabecalho/Carrinho/FormatCurency";
 import Lixo from 'assets/lixinho.png';
-import { config } from "config/config";
-import { Api } from "services/api";
 import {useState} from 'react'; 
+import { Api } from "services/api";
 
 interface ProdutoProps {
 	produto: IProdutos;
 }
 
 const Produto = ({ produto }: ProdutoProps) => {
+
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
 	const { usuario } = useAutenticacao();
-	const [produtosMapeados, setProdutosMapeados] = useState<IProdutos[]>(
-		[]
-	);
-	const {
-		getQuantidadeDeItens,
-		aumentarQuantidadeCarrinho,
-		diminuirQuantidadeCarrinho,
-		removerDoCarrinho,
-	} = useCarrinho();
-	const quantidade = 0;
-	// var quantidade = ;
-	
+	const [produtosMapeados, setProdutosMapeados] = useState<IProdutos[]>([]);
+	const {config} = useAutenticacao(); 
+
 	function paraEditarProduto() {
 		navigate(`/administracao/produtos/editar/${produto.id}`);
 	}
 
-
-	function aumentarQuantidade(id: number, evento: React.FormEvent<HTMLFormElement>){
-		evento.preventDefault(); 
-		aumentarQuantidadeCarrinho(id)
+	const deletaProduto = (produtoASerExcluido: IProdutos) => {
+		Api.delete(`produtos/${produtoASerExcluido.id}/`, config)
+		.then(
+			() => {
+				const listaProdutos = produtosMapeados.filter(
+					(produto) => produto.id !== produtoASerExcluido.id
+				);
+				setProdutosMapeados([...listaProdutos]);
+			}
+		);
 	}
+
 	return (
 		<>
 			<CardDoProduto>
@@ -74,6 +70,7 @@ const Produto = ({ produto }: ProdutoProps) => {
 							<ImagemLixo 
 								src={Lixo}
 								alt="Icone de Lixo"
+								onClick={() => deletaProduto(produto)}
 							/>
 							</>
 							
@@ -86,7 +83,7 @@ const Produto = ({ produto }: ProdutoProps) => {
 							<VerProduto>Ver Produto</VerProduto>
 						</Link>
 						{/* o botao de adicionar ao carrinho só deve aparecer quando a pessoa esta logada  */}
-						{usuario && quantidade === 0 ? (
+						{usuario ? (
 							<BotaoAdicionarAoCarrinho
 							// onClick={() => adicionaNoCarrinho}
 							>
@@ -94,7 +91,6 @@ const Produto = ({ produto }: ProdutoProps) => {
 							</BotaoAdicionarAoCarrinho>
 						) : (
 							''
-
 							// <div
 							// 	className="d-flex align-items-center flex-column"
 							// 	style={{ gap: ".5rem" }}

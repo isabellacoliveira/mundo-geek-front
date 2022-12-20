@@ -6,7 +6,7 @@ import Produto from "../Produtos";
 import { Cima, ListaDeProdutos, Titulos } from "./styles";
 import { Link, useLocation } from "react-router-dom";
 import IconeSeta from "assets/iconeSeta.png";
-import { config } from "config/config";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 interface CategoriaProps {
 	categoria: ICategorias;
@@ -14,25 +14,27 @@ interface CategoriaProps {
 const Categoria = ({ categoria }: CategoriaProps) => {
 	const [produtos, setProdutos] = useState<IProdutos[]>();
 	const { pathname } = useLocation();
+	const {config} = useAutenticacao(); 
 
 	useEffect(() => {
 		Api.get<ICategorias[], any>(`produtos/`, config)
-			// .then((resposta) => {
-			// 	  setProdutos(resposta.data)
-			// });
 			.then((resposta) => {
-				const listaProdutos = resposta.data.filter(
-					(
-						categoria: ICategorias,
-						produto: IProdutos | undefined
-					) => produto?.categorias?.includes(categoria)
-				);
-				setProdutos(listaProdutos);
+				  setProdutos(resposta.data)
 			});
+			// .then((resposta) => {
+			// 	const listaProdutos = resposta.data.filter(
+			// 		(
+			// 			categoria: ICategorias,
+			// 			produto: IProdutos | undefined
+			// 		) => produto?.categorias?.includes(categoria)
+			// 	);
+			// 	setProdutos(listaProdutos);
+			// });
 	}, [categoria.id]);
 
 	return (
 		<>
+	
 			<Cima>
 				{pathname === "/produtos" || pathname === "/perfil" ? (
 					""

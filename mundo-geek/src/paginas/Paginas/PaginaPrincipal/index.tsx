@@ -7,8 +7,8 @@ function PaginaPrincipal(){
     const ScrollTo = () => {
         const sessao = document.querySelector('#faleConosco')
         return sessao ? sessao.scrollIntoView() : null
-        
     }
+
     return (
             <>
                 <BannerTodo>
@@ -20,6 +20,7 @@ function PaginaPrincipal(){
                         </VerConsole>
                     </BannerHero>
                 </BannerTodo>
+             
                 <ListaCategorias />
                 <FaleConosco/>
                 <Footer />

@@ -13,11 +13,9 @@ import { useNavigate } from "react-router-dom";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 import { message } from "antd";
 import { useEffect, useState } from "react";
-import { Api } from "services/api";
+import { getProdutos } from "services/api";
 import ICategorias from "types/ICategorias";
 import Categoria from "componentes/ProdutosPorCategoria/Categorias";
-import IProdutos from "types/IProdutos";
-import { config } from "config/config";
 
 function MeuPerfil() {
 	const navigate = useNavigate();
@@ -26,15 +24,11 @@ function MeuPerfil() {
 	const [produtos, setProdutos] = useState<ICategorias[]>([]);
 	
 	useEffect(() => {
-		Api.get<IProdutos[], any>("/produtos", config)
-			.then((resposta) => {
-				setProdutos(resposta.data);
-				console.log(resposta.data);
-			})
-			.catch((erro) => {
-				console.log(erro);
-			});
-	}, []);
+		getProdutos().then(api => {
+			setProdutos(api)
+			return api
+		})
+	})
 
 	function fotoDoPerfil() {
 		sweetAlert("em produção...");

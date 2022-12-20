@@ -57,7 +57,7 @@ export default function CarrinhoDeCompras(){
 					</Button>
 				</Container>
 			</NavbarBs>
-			{/* {!fazAparecer ?  '' : <CarrinhoAba /> } */}
+			{!fazAparecer ?  '' : <CarrinhoAba /> }
 		</>
 	);
 		

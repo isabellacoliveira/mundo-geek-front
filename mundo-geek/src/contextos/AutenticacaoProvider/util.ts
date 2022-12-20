@@ -9,7 +9,8 @@ export function setUsuarioNoLocalStorage(usuario: IUsuario | null, token: string
 
 export function getUsuarioNoLocalStorage() {
     const json = localStorage.getItem('u'); 
-
+    console.log(json)
+    
     if(!json){
         return null
     }

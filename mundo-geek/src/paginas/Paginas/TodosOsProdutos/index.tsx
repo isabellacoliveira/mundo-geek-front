@@ -12,8 +12,7 @@ import {
 
 function TodosOsProdutos() {
 	const navigate = useNavigate();
-	const { usuario } = useAutenticacao();
-
+	const { token, usuario } = useAutenticacao();
 
 	function vaiParaAdm() {
 		navigate("/administracao/categorias/novo");
@@ -24,11 +23,12 @@ function TodosOsProdutos() {
 			<Produtos>
 				<Titulo>Todos os produtos</Titulo>
 
-				{usuario && usuario.role === 'admin' && 
+				{/* && usuario.role === "admin" */}
+				{usuario && (
 					<BotaoCadastraProduto onClick={vaiParaAdm}>
 						Administração
 					</BotaoCadastraProduto>
-				}
+				)}
 			</Produtos>
 			<ListaDeProdutos>
 				<ListaCategorias />

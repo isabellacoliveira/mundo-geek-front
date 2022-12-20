@@ -1,7 +1,7 @@
 import Footer from "componentes/Rodape"
 import { Api } from "services/api";
 import { useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ICategorias from "types/ICategorias";
 import { CadastroNovoProduto } from "../../styles";
 import {useEffect} from 'react'; 

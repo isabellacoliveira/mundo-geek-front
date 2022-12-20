@@ -1,3 +1,4 @@
+import { BarLoader } from 'react-spinners';
 import {Carregamento} from './styles'; 
 
 export const Carregando = () => {
@@ -6,7 +7,7 @@ export const Carregando = () => {
         <Carregamento
             className='loading-overlay centralize'
             data-testid="loading">
-            Aguarde...
+            <BarLoader />
         </Carregamento>
         </>
      

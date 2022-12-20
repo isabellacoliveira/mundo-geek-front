@@ -1,33 +1,34 @@
-import Footer from "componentes/Rodape";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import ICategorias from "types/ICategorias";
-import { Api } from "services/api";
-import IProdutos from "types/IProdutos";
-import { CadastroNovoProduto, Categorias, InputsDaPagina } from "../../styles";
-import { config } from "config/config";
+import Footer from 'componentes/Rodape';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import ICategorias from 'types/ICategorias';
+import { Api } from 'services/api';
+import IProdutos from 'types/IProdutos';
+import { CadastroNovoProduto, Categorias, InputsDaPagina } from '../../styles';
+import { config } from 'config/config';
 
 export default function CadastraNovoProduto() {
 	const navigate = useNavigate();
 	const [imagemDoProduto, setImagemDoProduto] = useState("");
-	const [categoriaDoProduto, setCategoriaDoProduto] = useState("");
 	const [categoriasMapeadas, setCategoriasMapeadas] = useState<ICategorias[]>([]);
 	const [nomeDoProduto, setNomeDoProduto] = useState("");
 	const [precoDoProduto, setPrecoDoProduto] = useState("");
 	const [descricaoDoProduto, setDescricaoDoProduto] = useState("");
 
 	const aoSubmeterForm = () => {
+
 		Api.post<IProdutos>(
 			"/produtos",
 			{
 				nome: nomeDoProduto,
-				categorias: categoriaDoProduto, 
+				categorias: categoriasMapeadas.filter((categoria) => categoria.ativo === true), 
 				descricao: descricaoDoProduto,
 				preco: precoDoProduto,
 				imagem: imagemDoProduto,
 			},
-			config
-		).then(() => {
+			
+		)
+		.then(() => {
 			sweetAlert("Produto cadastrado com sucesso.");
 			navigate("/home");
 		});
@@ -36,6 +37,9 @@ export default function CadastraNovoProduto() {
 	useEffect(() => {
 		Api.get<ICategorias[]>("categorias", config)
 			.then((resposta) => {
+				if (resposta.data && resposta.status === 200) {
+					resposta.data.map((categoria) => (categoria.ativo = false));
+				  }
 				setCategoriasMapeadas(resposta.data);
 			})
 			.catch((erro) => {
@@ -56,25 +60,24 @@ export default function CadastraNovoProduto() {
 					}
 				/>
 
-				<Categorias>
-					<label>Selecione a(s) categoria(s)</label>
-					{categoriasMapeadas.map((categoria) => (
-						<div>
-							<label htmlFor="categoriaTitulo">
-								{categoria.titulo}
-							</label>
-							<input
-								key={categoria.id}
-								type="checkbox"
-								id="categoriaTitulo"
-								name={categoria.titulo}
-								onChange={(evento) =>
-									setCategoriaDoProduto(evento.target.value)
-								}
-							/>
-						</div>
-					))}
-				</Categorias>
+<Categorias>
+          <label>Selecione a(s) categoria(s)</label>
+          {categoriasMapeadas.map((categoria) => (
+            <div>
+              <label htmlFor='categoriaTitulo'>{categoria.titulo}</label>
+              <input
+                key={categoria.id}
+                type='checkbox'
+                id='categoriaTitulo'
+                name={categoria.titulo}
+                onChange={() => {
+                  console.log(categoriasMapeadas);
+                  return (categoria.ativo = !categoria.ativo);
+                }}
+              />
+            </div>
+          ))}
+        </Categorias>
 
 				<InputsDaPagina
 					placeholder="Nome do produto"

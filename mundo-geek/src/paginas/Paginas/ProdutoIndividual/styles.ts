@@ -101,6 +101,13 @@ export const PostConteudoContainer = styled.div`
 export const GrupoProdutosSimilares = styled.div` 
     padding-bottom: 100px;
     background-color: #E5E5E5;
+    display: flex;
+    flex-direction: row;
+
+    li {
+        list-style: none;
+        width: 15%;
+    }
 `
 export const ProdutosSimilares = styled.h2` 
         font-family: var(--fonte-secundaria);
@@ -110,6 +117,8 @@ export const ProdutosSimilares = styled.h2`
         font-weight: 700;
         font-size: 32px;
         line-height: 38px;
+        background-color: #E5E5E5;
+
 
         @media (min-width: 900px) {
             padding-left: 280px;
@@ -135,4 +144,20 @@ export const ProdutosRecomendados = styled.ul`
 }
 `
 
- 
+ export const ContemTudo = styled.div` 
+    background-color: #E5E5E5E5;
+ `
+export const ListaProdutosRecomendados = styled.ul` 
+@media (min-width: 900px){
+     display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+       
+
+    li:hover {
+    transform: translateY(-4px);
+    cursor: pointer;
+}
+`

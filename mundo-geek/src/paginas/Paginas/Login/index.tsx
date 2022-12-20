@@ -5,6 +5,7 @@ import Footer from "componentes/Rodape";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { http } from "services/api";
 import { CadastroInicioSessao } from "./styles";
 
 export default function LoginUsuario(){
@@ -22,9 +23,10 @@ export default function LoginUsuario(){
         setCarregando(true)
         try {
             await login(email, senha)
+            await http.pegaToken()
             navigate('/perfil')
         } catch (error) {
-            message.error('Email ou senha inválidosssss')
+            message.error('Email ou senha inválidos')
         } finally {
             setCarregando(false)
         }

@@ -16,7 +16,7 @@ import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 const NavBar = () => {
 	const navigate = useNavigate();
-	const { usuario } = useAutenticacao();
+	const { token, usuario } = useAutenticacao();
 
 	function vaiParaMeuPerfil() {
 		navigate("/perfil");

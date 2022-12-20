@@ -3,12 +3,11 @@ import AdministradorRoutes from "router";
 import ClienteRoutes from 'routes'; 
 
 function App() {
-  const { usuario } = useAutenticacao();
+  const { usuario, token } = useAutenticacao();
 
   return (
         <>
-        {usuario ? <ClienteRoutes /> :  <AdministradorRoutes /> }
-        {/* {!usuario ? <ClienteRoutes /> :  <AdministradorRoutes /> } */}
+          {token !== null ? <AdministradorRoutes /> : <ClienteRoutes />}
         </>
   );
 }
