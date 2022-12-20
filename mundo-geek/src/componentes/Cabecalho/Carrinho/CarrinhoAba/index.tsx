@@ -2,10 +2,18 @@ import { Button, Stack } from "react-bootstrap";
 import { formatCurrency } from "../FormatCurency";
 import { DivCarrinho } from "../styles";
 import Controle from 'assets/controle.png'; 
+import {useState} from 'react'; 
 
-export function CarrinhoAba(){
+export function CarrinhoAba() {
+    const [ fazAparecer, setFazAparecer ] = useState(true);
+
+    function fechaCarrinho(){
+        setFazAparecer(!fazAparecer)
+    }
+
     return (
         <>
+        {!fazAparecer ?  '' : <CarrinhoAba /> }
         <DivCarrinho>
         <Stack direction="horizontal" gap={2} className="d-flex align-items-center">
       <img
@@ -22,7 +30,7 @@ export function CarrinhoAba(){
         
         </div>
         <div className="text-muted" style={{ fontSize: ".75rem" }}>
-          {/* {formatCurrency(9.00)} */}
+          {formatCurrency(9.00)}
         </div>
       </div>
       <div> {formatCurrency(9.00)}</div>
@@ -34,6 +42,7 @@ export function CarrinhoAba(){
       </Button>
     </Stack>
         </DivCarrinho>
+        <button onClick={fechaCarrinho}>fechar carrinho</button>
         </>
         
 	);

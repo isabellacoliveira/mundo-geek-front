@@ -15,7 +15,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // aqui estão as rotas disponiveis ao cliente 
 function Cliente(){
     return (
-         <AutenticadoProvider>
             <CarrinhoProvider>
             <Router>
                 <ScrollToTop /> 
@@ -35,7 +34,6 @@ function Cliente(){
                 </Routes>
             </Router>
             </CarrinhoProvider>
-         </AutenticadoProvider>
     )
 }
 

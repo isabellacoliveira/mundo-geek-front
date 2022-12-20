@@ -35,10 +35,11 @@ export const useAutenticacao = () => {
 };
 
 export const CriaUsuarioContext = createContext<IContexto>({} as IContexto);
+CriaUsuarioContext.displayName = "Cria Usuario Context"
 
 export const AutenticadoProvider = ({ children }: IAutenticacaoProvider) => {
 	const [usuario, setUsuario] = useState<IUsuario | null>();
-	const [token, setToken] = useState<string | null | undefined>("");
+	const [token, setToken] = useState<string | null | undefined>(localStorage.getItem('token'));
 	const [config, setConfig] = useState<AxiosRequestConfig>({});
 
 	useEffect(() => {
@@ -75,15 +76,16 @@ export const AutenticadoProvider = ({ children }: IAutenticacaoProvider) => {
 			const user = response.data.usuario;
 			const token = response.data.token;
 			setUsuario(user);
-			setUsuarioNoLocalStorage(user, token);
+            setToken(token)
+			await setUsuarioNoLocalStorage(user, token);
 		} catch (error) {
 			return null;
 		}
 	}
 
 	async function logout() {
-		setUsuario(null);
-		setUsuarioNoLocalStorage(null, null);
+		setUsuario({} as IUsuario);
+        setToken('')
 		localStorage.clear();
 	}
 

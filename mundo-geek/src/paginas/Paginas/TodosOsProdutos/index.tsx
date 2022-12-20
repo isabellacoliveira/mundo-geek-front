@@ -23,15 +23,14 @@ function TodosOsProdutos() {
 			<Produtos>
 				<Titulo>Todos os produtos</Titulo>
 
-				{/* && usuario.role === "admin" */}
-				{usuario && (
+				{usuario?.role === "admin" && (
 					<BotaoCadastraProduto onClick={vaiParaAdm}>
 						Administração
 					</BotaoCadastraProduto>
 				)}
 			</Produtos>
 			<ListaDeProdutos>
-				<ListaCategorias />
+				oioioiioiiii
 			</ListaDeProdutos>
 			<FaleConosco />
 			<Footer />

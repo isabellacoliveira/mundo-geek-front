@@ -13,6 +13,7 @@ export const getProdutos = async () => {
 // essa função pega as categorias e os produtos dela 
 export const getCategorias = async () => {
     const resposta = await Api.get('/categorias')
+    console.log(resposta.data) 
     return resposta.data
 }
 

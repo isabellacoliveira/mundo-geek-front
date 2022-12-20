@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { AdicionarCategoria, CadastroNovoProduto } from "../../styles";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { config } from "config/config";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 // precisa recarregar a pagina para aparecer a categoria 
 export default function CadastraNovaCategoria() {
@@ -23,8 +23,8 @@ export default function CadastraNovaCategoria() {
 	);
 	const [categoriaNova, setCategoriaNova] = useState(""); 
 	const navigate = useNavigate();
+	const {usuario, config} = useAutenticacao(); 
 	
-
 	useEffect(() => {
 	
 		Api.get<ICategorias[]>("categorias", config)
@@ -56,6 +56,10 @@ export default function CadastraNovaCategoria() {
 				navigate('/home')
 			})
     }
+
+	if (!usuario) {
+		window.location.pathname = '/login'
+	}
 
 	return (
 		<>

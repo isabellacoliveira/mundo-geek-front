@@ -61,6 +61,10 @@ export default function ProdutoSelecionado() {
 		.sort((a, b) => b.id - a.id)
 		.slice(0, 6);
 
+	// if(!produto){
+	// 	window.location.pathname = '*'
+	// }
+
 	return (
 		<>
 		<ContemTudo>

@@ -12,7 +12,7 @@ export default function LoginUsuario(){
     const [email, setEmail] = useState<string>('');
     const [senha, setSenha] = useState<string>('');
     const[carregando, setCarregando] = useState(false); 
-    const { login } = useAutenticacao()
+    const { login, usuario } = useAutenticacao()
 
     const navigate = useNavigate();
 
@@ -33,6 +33,10 @@ export default function LoginUsuario(){
     }
 
     if(carregando) return <Carregando />
+
+    if (usuario) {
+		window.location.pathname = '/home'
+	}
 
     return(
         <>      

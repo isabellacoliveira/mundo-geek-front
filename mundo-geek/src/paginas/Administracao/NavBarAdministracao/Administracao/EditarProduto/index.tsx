@@ -5,7 +5,7 @@ import { Api } from "services/api";
 import ICategorias from "types/ICategorias";
 import { useNavigate, useParams } from "react-router-dom";
 import IProdutos from "types/IProdutos";
-import { config } from "config/config";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 export default function EditarProdutoAntigo() {
 	const [imagemDoProduto, setImagemDoProduto] = useState("");
@@ -14,7 +14,9 @@ export default function EditarProdutoAntigo() {
 	const [nomeDoProduto, setNomeDoProduto] = useState("");
 	const [precoDoProduto, setPrecoDoProduto] = useState("");
 	const [descricaoDoProduto, setDescricaoDoProduto] = useState("");
+	const [quantidade, setQuantidade] = useState("");
 	const parametros = useParams();
+	const {usuario, config} = useAutenticacao(); 
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -24,6 +26,7 @@ export default function EditarProdutoAntigo() {
 				(resposta) => {
 					setNomeDoProduto(resposta.data.nome);
 					setCategoriaDoProduto(resposta.data.categorias);
+					setQuantidade(resposta.data.quantidade);
 					setImagemDoProduto(resposta.data.imagem);
 					setDescricaoDoProduto(resposta.data.descricao);
 					setPrecoDoProduto(resposta.data.preco);
@@ -38,6 +41,7 @@ export default function EditarProdutoAntigo() {
 			{
 				nome: nomeDoProduto,
 				descricao: descricaoDoProduto,
+				quantidade: quantidade, 
 				imagem: imagemDoProduto,
 				preco: precoDoProduto,
 				categorias: categoriaDoProduto,
@@ -58,6 +62,10 @@ export default function EditarProdutoAntigo() {
 				console.log(erro);
 			});
 	}, []);
+
+	if (!usuario) {
+		window.location.pathname = '/login'
+	}
 
 	return (
 		<>
@@ -93,6 +101,11 @@ export default function EditarProdutoAntigo() {
 					placeholder="Altere o nome"
 					value={nomeDoProduto}
 					onChange={(evento) => setNomeDoProduto(evento.target.value)}
+				></input>
+				<input
+					placeholder="Altere a quantidade"
+					value={quantidade}
+					onChange={(evento) => setQuantidade(evento.target.value)}
 				></input>
 				<input
 					placeholder="Altere o preço"

@@ -5,7 +5,7 @@ import ICategorias from 'types/ICategorias';
 import { Api } from 'services/api';
 import IProdutos from 'types/IProdutos';
 import { CadastroNovoProduto, Categorias, InputsDaPagina } from '../../styles';
-import { config } from 'config/config';
+import { useAutenticacao } from 'contextos/AutenticacaoProvider/Autenticacao';
 
 export default function CadastraNovoProduto() {
 	const navigate = useNavigate();
@@ -14,6 +14,12 @@ export default function CadastraNovoProduto() {
 	const [nomeDoProduto, setNomeDoProduto] = useState("");
 	const [precoDoProduto, setPrecoDoProduto] = useState("");
 	const [descricaoDoProduto, setDescricaoDoProduto] = useState("");
+	const [quantidade, setQuantidade] = useState("");
+	const {usuario, config} = useAutenticacao()
+
+	interface IKeys {
+		id: number
+	}
 
 	const aoSubmeterForm = () => {
 
@@ -21,11 +27,13 @@ export default function CadastraNovoProduto() {
 			"/produtos",
 			{
 				nome: nomeDoProduto,
-				categorias: categoriasMapeadas.filter((categoria) => categoria.ativo === true), 
+				categorias: categoriasMapeadas?.filter((categoria) => categoria.ativo === true)?.map((x: any): IKeys => ({ id: x.id })), 
 				descricao: descricaoDoProduto,
-				preco: precoDoProduto,
+				quantidade: Number(quantidade),
+				preco: Number(precoDoProduto),
 				imagem: imagemDoProduto,
-			},
+				usuario: usuario?.id
+			}, config 
 			
 		)
 		.then(() => {
@@ -47,6 +55,10 @@ export default function CadastraNovoProduto() {
 			});
 	}, []);
 
+	if (!usuario) {
+		window.location.pathname = '/login'
+	}
+
 	return (
 		<>
 			<CadastroNovoProduto>
@@ -60,7 +72,7 @@ export default function CadastraNovoProduto() {
 					}
 				/>
 
-<Categorias>
+		<Categorias>
           <label>Selecione a(s) categoria(s)</label>
           {categoriasMapeadas.map((categoria) => (
             <div>
@@ -70,8 +82,8 @@ export default function CadastraNovoProduto() {
                 type='checkbox'
                 id='categoriaTitulo'
                 name={categoria.titulo}
+				required
                 onChange={() => {
-                  console.log(categoriasMapeadas);
                   return (categoria.ativo = !categoria.ativo);
                 }}
               />
@@ -84,6 +96,13 @@ export default function CadastraNovoProduto() {
 					required
 					type="text"
 					onChange={(evento) => setNomeDoProduto(evento.target.value)}
+				/>
+
+				<InputsDaPagina
+					placeholder="Quantidade"
+					required
+					type="text"
+					onChange={(evento) => setQuantidade(evento.target.value)}
 				/>
 				<InputsDaPagina
 					placeholder="Preço do produto (ex: R$ 0.00)"

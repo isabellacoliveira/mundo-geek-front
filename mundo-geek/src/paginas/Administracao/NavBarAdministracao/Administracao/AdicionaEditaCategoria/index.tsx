@@ -6,11 +6,13 @@ import ICategorias from "types/ICategorias";
 import { CadastroNovoProduto } from "../../styles";
 import {useEffect} from 'react'; 
 import { config } from "config/config";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 export default function EditarCategoriaAntiga(){
     const [categoriaDoProduto, setCategoriaDoProduto] = useState("");
     const parametros = useParams()
     const navigate = useNavigate(); 
+    const {usuario} = useAutenticacao(); 
 
     useEffect(() => {
         if (parametros.id) {
@@ -28,6 +30,10 @@ export default function EditarCategoriaAntiga(){
                     navigate('/administracao/categorias/novo')
                 })
     
+    }
+
+    if(!usuario){
+        window.location.pathname = '/login'
     }
 
     return (

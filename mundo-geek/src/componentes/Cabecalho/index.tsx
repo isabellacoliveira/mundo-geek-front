@@ -22,6 +22,8 @@ const NavBar = () => {
 		navigate("/perfil");
 	}
 
+	console.log('renderizou navbar:', token)
+
 	return (
 		<>
 			<Cabecalho>

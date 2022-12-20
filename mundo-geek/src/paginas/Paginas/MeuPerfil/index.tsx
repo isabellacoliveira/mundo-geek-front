@@ -19,12 +19,13 @@ import Categoria from "componentes/ProdutosPorCategoria/Categorias";
 
 function MeuPerfil() {
 	const navigate = useNavigate();
-	const { usuario } = useAutenticacao();
+	const { token, usuario } = useAutenticacao();
 	const autenticacao = useAutenticacao();
 	const [produtos, setProdutos] = useState<ICategorias[]>([]);
 	
 	useEffect(() => {
-		getProdutos().then(api => {
+		getProdutos()
+		.then(api => {
 			setProdutos(api)
 			return api
 		})
@@ -44,7 +45,7 @@ function MeuPerfil() {
 			if (willDelete) {
 				try {
 					autenticacao.logout();
-					navigate("/home");
+					navigate("/login");
 				} catch (error) {
 					message.error("erro");
 				}
@@ -55,6 +56,10 @@ function MeuPerfil() {
 				sweetAlert("Você continua logado");
 			}
 		});
+	}
+
+	if (!token) {
+		window.location.pathname = '/login'
 	}
 	
 	return (
@@ -69,7 +74,7 @@ function MeuPerfil() {
 						alt="perfil da pessoa"
 						onClick={fotoDoPerfil}
 					/>
-					<h1> Olá {usuario?.nome}</h1>
+					<h1> Olá, {usuario?.nome} !</h1>
 					<IconeSair
 						src={Sair}
 						alt="icone de sair"
@@ -79,7 +84,7 @@ function MeuPerfil() {
 				<h1>Meus Produtos</h1>
 				{/* colocar só os produtos que a pessoa cadastrou  */}
 				<ListaDeProdutosIndividual>
-				{produtos?.map(item => <Categoria categoria={item} key={item.id}/>)}
+					oioioioi
 				</ListaDeProdutosIndividual>
 			</Perfil>
 			<Footer />

@@ -1,15 +1,17 @@
-import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import {
+	AutenticadoProvider
+} from "contextos/AutenticacaoProvider/Autenticacao";
 import AdministradorRoutes from "router";
-import ClienteRoutes from 'routes'; 
 
 function App() {
-  const { usuario, token } = useAutenticacao();
 
-  return (
-        <>
-          {token !== null ? <AdministradorRoutes /> : <ClienteRoutes />}
-        </>
-  );
+	return (
+		<>
+			<AutenticadoProvider>
+        <AdministradorRoutes />
+			</AutenticadoProvider>
+		</>
+	);
 }
 
 export default App;

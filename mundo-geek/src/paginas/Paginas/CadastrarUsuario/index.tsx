@@ -4,6 +4,7 @@ import FaleConosco from "componentes/FaleConosco";
 import Footer from "componentes/Rodape";
 import { useNavigate } from "react-router-dom";
 import { Api } from "services/api";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 export default function Cadastro(){
     const[nomeDoUsuario, setNomeDoUsuario] = useState("");
@@ -12,6 +13,7 @@ export default function Cadastro(){
     const[senhaDoUsuario, setSenhaDoUsuario] = useState("");
     const[confirmacaoDaSenhaDoUsuario, setConfirmacaoDaSenhaDoUsuario] = useState("");
     const navigate = useNavigate(); 
+    const {usuario} = useAutenticacao(); 
   
     function cadastraUsuario(evento: React.FormEvent<HTMLFormElement>){
         evento.preventDefault()
@@ -49,6 +51,10 @@ export default function Cadastro(){
         .catch(erro => sweetAlert(erro))
     }
 
+    if (usuario) {
+		window.location.pathname = '/home'
+	}
+    
     return (
         <>
             <CadastroDoUsuario>

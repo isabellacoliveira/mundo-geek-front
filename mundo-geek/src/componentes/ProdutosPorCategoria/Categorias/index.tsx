@@ -14,27 +14,27 @@ interface CategoriaProps {
 const Categoria = ({ categoria }: CategoriaProps) => {
 	const [produtos, setProdutos] = useState<IProdutos[]>();
 	const { pathname } = useLocation();
-	const {config} = useAutenticacao(); 
+	const { config } = useAutenticacao();
+
+	const GetProdutos = () => {
+		Api.get<ICategorias[], any>(`produtos/`, config)
+		.then((resposta) => {
+			const listaProdutos = resposta.data.filter(
+				(produto: IProdutos | undefined) => {
+					let ids = produto?.categorias.map((x) => x.id);
+					if (ids?.includes(categoria.id)) return produto;
+				}
+			);
+			setProdutos(listaProdutos);
+		});
+	};
 
 	useEffect(() => {
-		Api.get<ICategorias[], any>(`produtos/`, config)
-			.then((resposta) => {
-				  setProdutos(resposta.data)
-			});
-			// .then((resposta) => {
-			// 	const listaProdutos = resposta.data.filter(
-			// 		(
-			// 			categoria: ICategorias,
-			// 			produto: IProdutos | undefined
-			// 		) => produto?.categorias?.includes(categoria)
-			// 	);
-			// 	setProdutos(listaProdutos);
-			// });
-	}, [categoria.id]);
+		GetProdutos();
+	}, []);
 
 	return (
 		<>
-	
 			<Cima>
 				{pathname === "/produtos" || pathname === "/perfil" ? (
 					""
