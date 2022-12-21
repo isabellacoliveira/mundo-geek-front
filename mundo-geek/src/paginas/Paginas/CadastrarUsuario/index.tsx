@@ -14,9 +14,9 @@ export default function Cadastro(){
     const[confirmacaoDaSenhaDoUsuario, setConfirmacaoDaSenhaDoUsuario] = useState("");
     const navigate = useNavigate(); 
     const {usuario} = useAutenticacao(); 
-  
+
     function cadastraUsuario(evento: React.FormEvent<HTMLFormElement>){
-        evento.preventDefault()
+        evento.preventDefault();
         if(confirmacaoDaSenhaDoUsuario.length !== senhaDoUsuario.length){
             sweetAlert("as senhas devem ser iguais")
         } else {
@@ -108,7 +108,7 @@ export default function Cadastro(){
                
                 <button 
                     type="submit"
-                    disabled={nomeDoUsuario.length < 4}
+                    disabled={confirmacaoDaSenhaDoUsuario !== senhaDoUsuario}
                 >Cadastrar</button>
                 </form>
             </CadastroDoUsuario>

@@ -1,22 +1,14 @@
-import { Button, Container, Navbar as NavbarBs } from "react-bootstrap"
+import { Button, Container, Navbar as NavbarBs } from "react-bootstrap";
 import { useCarrinho } from "contextos/CarrinhoProvider/CarrinhoContext";
-import { useState } from "react";
-import { CarrinhoAba } from "./CarrinhoAba";
+import { useNavigate } from "react-router-dom";
 
-export default function CarrinhoDeCompras(){
-	const { quantidadeCarrinho} = useCarrinho(); 
-	const [ fazAparecer, setFazAparecer ] = useState(true);
+export default function CarrinhoDeCompras() {
+	const {quantidadeNoCarrinho} = useCarrinho(); 
+	const navigate = useNavigate(); 
 
-
-	function abreCarrinho(){
-		setFazAparecer(!fazAparecer)
-	}
-
-    return (
+	return (
 		<>
-			<NavbarBs sticky="top" className="bg-white shadow-sm mb-3"
-									onClick={abreCarrinho}
-									>
+			<NavbarBs sticky="top" className="bg-white shadow-sm mb-3" onClick={() => navigate('/carrinho')}>
 				<Container>
 					<Button
 						style={{
@@ -25,7 +17,7 @@ export default function CarrinhoDeCompras(){
 							position: "relative",
 							borderRadius: "50%",
 							border: "none",
-							padding: "10px"
+							padding: "10px",
 						}}
 						variant="outline-primary"
 					>
@@ -52,14 +44,11 @@ export default function CarrinhoDeCompras(){
 								paddingTop: "3px",
 							}}
 						>
-							{quantidadeCarrinho}
+							{quantidadeNoCarrinho}
 						</div>
 					</Button>
 				</Container>
 			</NavbarBs>
-			{!fazAparecer ?  '' : <CarrinhoAba /> }
 		</>
 	);
-		
 }
-

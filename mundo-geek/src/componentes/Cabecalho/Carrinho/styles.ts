@@ -5,6 +5,7 @@ import styled from 'styled-components';
 export const PerfilUsuario = styled.div`
     display: flex;
     flex-direction: row;
+    margin-top: 8px;
     h2 {
         padding-left: 10px;
     }
@@ -89,8 +90,6 @@ export const CarrinhoDiv = styled.div`
         margin-bottom: 10px;
     }
 
-   
-
     h3{
         display: flex;
         flex-direction: row;
@@ -105,9 +104,40 @@ export const Quantidade = styled.div`
     flex-direction: column;
 `
 export const DivCarrinho = styled.div` 
-    position: absolute;
-    background-color: #fff;
-    width: 320px;
-    height: 100%;
+    background-color: #E5E5E5;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+    
+    @media (max-width: 900px){
+        display: flex;
+        flex-direction: column;
+        width: 200px; 
+        height: 300px;
+        padding-top: 20px;
 
+        img {
+            width: 90px;
+            height: 90px;
+        }
+    }
+    
+    @media (min-width: 900px){
+        display: flex;
+    flex-direction: row;
+        width: 900px;
+        height: 250px;
+        img {
+            width: 190px;
+            height: 190px;
+        }
+    }
+
+`
+
+export const ImagemDoProdutoDoCarrinho = styled.div`
+    margin: auto;
 `

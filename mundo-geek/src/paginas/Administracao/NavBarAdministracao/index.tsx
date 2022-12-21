@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { CabecalhoAdm, Logo } from "./styles";
-import MundoGeek from "assets/controle.png";
+import MundoGeek from "assets/mundo-geek.png";
 
 const NavBarAdministracao = () => {
 	const navigate = useNavigate();

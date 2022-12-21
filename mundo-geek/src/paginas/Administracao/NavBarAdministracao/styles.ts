@@ -42,7 +42,7 @@ export const Logo = styled.img`
 
     @media(min-width: 900px){
         margin-left: 100px;
-        width: 50px;
+        width: 100px;
         height: 50px;
        
     }
@@ -176,7 +176,7 @@ export const Categorias = styled.section`
 
 		input{
 			height: 30px;
-			width: 50px;
+			width: 20px;
 		}
 
 	@media (max-width: 900px){

@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import { createContext, useState, useEffect, useContext } from "react";
+import IProdutos from "types/IProdutos";
 import { Api, http } from "../../services/api";
 import { getUsuarioNoLocalStorage, setUsuarioNoLocalStorage } from "./util";
 
@@ -18,7 +19,7 @@ export interface IContexto {
 	logout: () => void;
 	usuario: IUsuario | null | undefined;
 	config: AxiosRequestConfig;
-    token: string | null | undefined
+    token: string | null | undefined,
 }
 
 export interface IAutenticadoOuNao {
@@ -41,12 +42,11 @@ export const AutenticadoProvider = ({ children }: IAutenticacaoProvider) => {
 	const [usuario, setUsuario] = useState<IUsuario | null>();
 	const [token, setToken] = useState<string | null | undefined>(localStorage.getItem('token'));
 	const [config, setConfig] = useState<AxiosRequestConfig>({});
-
+	
 	useEffect(() => {
 		async function pegaToken() {
 			const res = await http.pegaToken();
 			setToken(res);
-			console.log("o token é", res);
 		}
 		pegaToken();
 	}, []);
@@ -88,6 +88,8 @@ export const AutenticadoProvider = ({ children }: IAutenticacaoProvider) => {
         setToken('')
 		localStorage.clear();
 	}
+
+
 
 	return (
 		<CriaUsuarioContext.Provider value={{ usuario, login, logout, config, token}}>

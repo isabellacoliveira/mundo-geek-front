@@ -16,13 +16,11 @@ import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 const NavBar = () => {
 	const navigate = useNavigate();
-	const { token, usuario } = useAutenticacao();
+	const { usuario } = useAutenticacao();
 
 	function vaiParaMeuPerfil() {
 		navigate("/perfil");
 	}
-
-	console.log('renderizou navbar:', token)
 
 	return (
 		<>

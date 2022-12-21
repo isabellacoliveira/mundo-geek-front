@@ -13,6 +13,13 @@ export const Container = styled.div`
 			margin-bottom: 30px;
 		}
 	}
+	@media(max-width: 900px){
+		margin-top: 300px;
+		img{
+			width: 300px;
+			margin-bottom: 30px;
+		}
+	}
 `
 
 export const Progresso = styled.div`
@@ -57,28 +64,6 @@ export const BotaoComecar = styled.button`
 	}
 `
 
-// .BotaoComecar{
-//     background: #2A7AE4;
-//     text-decoration: none;
-//     width: 500px;
-//     height: 40px;
-//     border-radius: 8px;
-//     color: #fff;
-//     padding-top: 20px;
-//     margin-top: 30px;
-// }
-
-// .Comecar{
-//     background-color: #fff;
-//     text-align: center;
-//     justify-content: center;
-//     display: flex;
-//     align-items: center;
-//     flex-direction: column;
-//     padding-top: 190px;
-//     padding-bottom: 360px;
-    
-// }
 
 
 

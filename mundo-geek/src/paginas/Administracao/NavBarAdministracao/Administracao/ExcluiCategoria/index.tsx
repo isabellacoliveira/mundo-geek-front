@@ -52,8 +52,8 @@ export default function CadastraNovaCategoria() {
 			titulo: categoriaNova,            
 		}, config)
 			.then(() => {
-				sweetAlert("Categoria cadastrada com sucesso!")
-				navigate('/home')
+				sweetAlert("Categoria cadastrada com sucesso! Por favor adicione um produto")
+				navigate('/administracao/produtos/novo')
 			})
     }
 

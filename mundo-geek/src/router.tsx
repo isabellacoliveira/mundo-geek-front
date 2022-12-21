@@ -1,4 +1,5 @@
 import NavBar from "componentes/Cabecalho";
+import CarrinhoPagina from "componentes/Cabecalho/Carrinho/CarrinhoPagina";
 import ScrollToTop from "componentes/ScrollToTop";
 import { CarrinhoProvider } from "contextos/CarrinhoProvider/CarrinhoContext";
 import NavBarAdministracao from "paginas/Administracao/NavBarAdministracao";
@@ -19,7 +20,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function Administrador() {
 	return (
-		<CarrinhoProvider>
 			<Router>
 				<ScrollToTop />
 				<Routes>
@@ -37,6 +37,7 @@ function Administrador() {
 						<Route path="/cadastro/usuario" element={<Cadastro />} />
 						{/* sumir com o botao de login (e em cadastro usuario)   */}
 						<Route path="/login" element={<LoginUsuario />} />
+						<Route path="/carrinho" element={<CarrinhoPagina />} />
 					</Route>
 
 					<Route
@@ -68,7 +69,6 @@ function Administrador() {
 					</Route>
 				</Routes>
 			</Router>
-		</CarrinhoProvider>
 	);
 }
 

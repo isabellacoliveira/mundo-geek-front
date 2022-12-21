@@ -7,7 +7,12 @@ export const Carregando = () => {
         <Carregamento
             className='loading-overlay centralize'
             data-testid="loading">
-            <BarLoader />
+            <BarLoader 
+                style={{
+                    width: "900px", 
+                    height: "90px"
+                }}
+            />
         </Carregamento>
         </>
      

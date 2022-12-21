@@ -1,11 +1,8 @@
 import styled from 'styled-components'; 
 
 export const Perfil = styled.div`
-    background-color: #E5E5E5;
-
-    h1{
-        margin-left: 90px;
-    }
+    background-color: #E5E5E5;  
+    padding-left: 90px;
 `
 export const CabecalhoMeuPerfil = styled.div`
     background-color: #E5E5E5;
@@ -15,7 +12,7 @@ export const CabecalhoMeuPerfil = styled.div`
         flex-direction: row;
         align-items: center;
         flex-wrap: wrap;
-        justify-content: center; // mexer aqui
+        justify-content: center; 
         text-align: center;
     }
 

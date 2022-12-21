@@ -88,3 +88,42 @@ export const BotaoAparece = styled.button`
         display: none;
     }
 `
+
+export const DivBusca = styled.div`
+    background-color: 	#C0C0C0;
+    border-radius: 10px;
+    position: absolute; 
+    overflow: auto;
+    margin-top: 30px;
+    margin-left: 40px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+
+    li{
+        list-style: none;
+        width: 100%; 
+    }
+
+    @media (min-width: 900px){
+        width: 500px;
+        height: 200px;
+    }
+
+    @media (max-width: 900px){
+        margin-top: 60px;
+        margin-right: 500px;
+        width: 190px;
+        height: 200px;
+
+        img{
+            width: 100%;
+        }
+    }
+`
+
+export const BotaoFechar = styled.button` 
+    background-color: red;
+`

@@ -1,4 +1,3 @@
-import { CarrinhoAba } from "componentes/Cabecalho/Carrinho/CarrinhoAba";
 import { useContext, createContext, ReactNode, useState } from "react";
 
 export function useCarrinho(){
@@ -18,17 +17,29 @@ interface ItemDoCarrinho {
 interface CarrinhoContext {
     abrirCarrinho: () => void; 
     fecharCarrinho: () => void; 
+    numeroDeItensAdicionados: () => void; 
     getQuantidadeDeItens: (id: number) => void 
     aumentarQuantidadeCarrinho: (id: number) => void 
     diminuirQuantidadeCarrinho: (id: number) => void 
     removerDoCarrinho: (id: number) => void 
-    quantidadeCarrinho: number, 
+    quantidadeCarrinho: number | undefined | null, 
     itensDoCarrinho: ItemDoCarrinho[]
+    quantidadeNoCarrinho: number,
+    setQuantidadeNoCarrinho: React.Dispatch<React.SetStateAction<number>>
 }
 
 const CarrinhoContext = createContext({} as CarrinhoContext)
 
 export function CarrinhoProvider({children}: CarrinhoProviderProps){
+	const[quantidadeNoCarrinho, setQuantidadeNoCarrinho] = useState<number>(0);
+	
+    function numeroDeItensAdicionados(){
+        const contador = 0; 
+        const itensContados = contador + 1;
+        console.log(itensContados)
+        setQuantidadeNoCarrinho(itensContados)
+    }
+
     const[estaAberto, setEstaAberto] = useState<boolean>(false)
     const[itensDoCarrinho, setItensDoCarrinho] = useState<ItemDoCarrinho[]>([])
 
@@ -88,7 +99,10 @@ export function CarrinhoProvider({children}: CarrinhoProviderProps){
             itensDoCarrinho,
             quantidadeCarrinho,
             abrirCarrinho,
-            fecharCarrinho
+            fecharCarrinho,
+            numeroDeItensAdicionados, 
+            quantidadeNoCarrinho,
+            setQuantidadeNoCarrinho
           }}>
            
             {children}

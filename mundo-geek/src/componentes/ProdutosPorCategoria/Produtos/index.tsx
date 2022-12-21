@@ -20,18 +20,19 @@ import { formatCurrency } from "componentes/Cabecalho/Carrinho/FormatCurency";
 import Lixo from 'assets/lixinho.png';
 import {useState} from 'react'; 
 import { Api } from "services/api";
+import { useCarrinho } from "contextos/CarrinhoProvider/CarrinhoContext";
 
 interface ProdutoProps {
 	produto: IProdutos;
 }
 
 const Produto = ({ produto }: ProdutoProps) => {
-
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
 	const { usuario } = useAutenticacao();
 	const [produtosMapeados, setProdutosMapeados] = useState<IProdutos[]>([]);
 	const {config} = useAutenticacao(); 
+	const{numeroDeItensAdicionados, setQuantidadeNoCarrinho} = useCarrinho(); 
 
 	function paraEditarProduto() {
 		navigate(`/administracao/produtos/editar/${produto.id}`);
@@ -44,7 +45,10 @@ const Produto = ({ produto }: ProdutoProps) => {
 				const listaProdutos = produtosMapeados.filter(
 					(produto) => produto.id !== produtoASerExcluido.id
 				);
+				console.log(listaProdutos)
 				setProdutosMapeados([...listaProdutos]);
+				sweetAlert("produto deletado")
+				navigate('/home')
 			}
 		);
 	}
@@ -82,44 +86,14 @@ const Produto = ({ produto }: ProdutoProps) => {
 						<Link to={`/produtos/${produto.id}`}>
 							<VerProduto>Ver Produto</VerProduto>
 						</Link>
-						{/* o botao de adicionar ao carrinho só deve aparecer quando a pessoa esta logada  */}
 						{usuario ? (
 							<BotaoAdicionarAoCarrinho
-							// onClick={() => adicionaNoCarrinho}
 							>
 								+ Adicionar ao Carrinho
 							</BotaoAdicionarAoCarrinho>
 						) : (
 							''
-							// <div
-							// 	className="d-flex align-items-center flex-column"
-							// 	style={{ gap: ".5rem" }}
-							// >
-							// 	<div
-							// 		className="d-flex align-items-center justify-content-center"
-							// 		style={{ gap: ".5rem" }}
-							// 	>
-							// 		<Button>
-							// 			-
-							// 		</Button>
-							// 		<div>
-							// 			<span className="fs-3">
-							// 				{quantidade}
-							// 			</span>{" "}
-							// 			no carrinho
-							// 		</div>
-							// 		{/* onClick={() => aumentarQuantidadeCarrinho(id)} */}
-							// 		<Button
-							// 			onClick={() =>
-							// 				aumentarQuantidade
-							// 			}
-							// 		>+</Button>
-							// 	</div>
-							// 	{/* onClick={() => removerDoCarrinho(id)} */}
-							// 	<Button variant="danger" size="sm">
-							// 		Remover
-							// 	</Button>
-							// </div>
+							
 						)}
 					</BotaoVerProduto>
 				</DivImgBotao>

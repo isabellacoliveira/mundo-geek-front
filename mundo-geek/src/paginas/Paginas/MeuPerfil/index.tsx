@@ -12,24 +12,36 @@ import Sair from "assets/sair.png";
 import { useNavigate } from "react-router-dom";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 import { message } from "antd";
-import { useEffect, useState } from "react";
-import { getProdutos } from "services/api";
-import ICategorias from "types/ICategorias";
-import Categoria from "componentes/ProdutosPorCategoria/Categorias";
+import sweetAlert from 'sweetalert'; 
+import IProdutos from "types/IProdutos";
+import {useEffect, useState} from 'react'; 
+import { Api } from "services/api";
+import Produto from "componentes/ProdutosPorCategoria/Produtos";
 
 function MeuPerfil() {
 	const navigate = useNavigate();
-	const { token, usuario } = useAutenticacao();
+	const { token, usuario, config } = useAutenticacao();
+	console.log(usuario)
 	const autenticacao = useAutenticacao();
-	const [produtos, setProdutos] = useState<ICategorias[]>([]);
-	
+	const[todosOsProdutos, setTodosOsProdutos] = useState<IProdutos[]>([]); 
+
+	const pegaTodosOsProdutos = () => {
+		Api.get<IProdutos[], any>(`produtos/`, config)
+		.then((resposta) => {
+			const produtosFiltradosPorUsuario = resposta.data.filter(
+				(produto: IProdutos | undefined) => {
+					let produtosDoUsuario = produto?.usuario.id === usuario?.id
+					return produtosDoUsuario 
+				}
+			)
+			setTodosOsProdutos(produtosFiltradosPorUsuario);
+			console.log(produtosFiltradosPorUsuario);
+		});
+	};
+
 	useEffect(() => {
-		getProdutos()
-		.then(api => {
-			setProdutos(api)
-			return api
-		})
-	})
+		pegaTodosOsProdutos();
+	}, []);
 
 	function fotoDoPerfil() {
 		sweetAlert("em produção...");
@@ -41,7 +53,8 @@ function MeuPerfil() {
 			text: "Tem certeza que deseja sair da sua conta?",
 			icon: "warning",
 			buttons: ["Não!", "Sim"],
-		}).then((willDelete) => {
+		})
+		.then((willDelete) => {
 			if (willDelete) {
 				try {
 					autenticacao.logout();
@@ -81,11 +94,14 @@ function MeuPerfil() {
 						onClick={deslogar}
 					/>
 				</CabecalhoMeuPerfil>
+				{usuario?.role === "admin" ? 
+				<>
 				<h1>Meus Produtos</h1>
-				{/* colocar só os produtos que a pessoa cadastrou  */}
 				<ListaDeProdutosIndividual>
-					oioioioi
+					{todosOsProdutos?.map((item) => <Produto produto={item} key={item.id} /> )}
 				</ListaDeProdutosIndividual>
+				</>
+				 : ''}
 			</Perfil>
 			<Footer />
 		</>

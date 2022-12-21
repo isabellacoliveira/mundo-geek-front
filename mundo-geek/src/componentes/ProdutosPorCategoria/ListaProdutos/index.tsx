@@ -4,7 +4,6 @@ import ICategorias from "types/ICategorias";
 import Categoria from "../Categorias";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
-
 const ListaCategorias = () => {
 	const [categorias, setCategorias] = useState<ICategorias[]>([]);
     const {config} = useAutenticacao(); 
@@ -13,6 +12,7 @@ const ListaCategorias = () => {
 		Api.get<ICategorias[]>("categorias", config)
 			.then((resposta) => {
 				setCategorias(resposta.data);
+				console.log(resposta.data)
 			})
 			.catch((erro) => {
 				console.log(erro);

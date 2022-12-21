@@ -13,37 +13,39 @@ import {
 } from "./styles";
 import IProdutos from "types/IProdutos";
 import { useState, useEffect } from "react";
-import { Api, getCategorias } from "services/api";
+import { Api } from "services/api";
 import { useParams } from "react-router-dom";
-import { config } from "config/config";
-import ICategorias from "types/ICategorias";
-import Categoria from "componentes/ProdutosPorCategoria/Categorias";
 import Produto from "componentes/ProdutosPorCategoria/Produtos";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
 export default function ProdutoSelecionado() {
 	const [nome, setNome] = useState();
 	const [preco, setPreco] = useState();
 	const [descricao, setDescricao] = useState();
 	const [imagem, setImagem] = useState();
-	const [produtos, setProdutos] = useState<IProdutos[]>([]);
 	const parametros = useParams();
-	console.log("parametros", parametros);
+	const {config} = useAutenticacao();
+	const[todosOsProdutos, setTodosOsProdutos] = useState<IProdutos[]>([]); 
 
+	const pegaTodosOsProdutos = () => {
+		Api.get<IProdutos[], any>(`produtos/`, config)
+		.then((resposta) => {
+			setTodosOsProdutos(resposta.data);
+		});
+	};
 
 	useEffect(() => {
-		getCategorias()
-		.then(api => {
-			setProdutos(api)
-			return api
-		})
-	})
+		pegaTodosOsProdutos();
+	}, []);
+
 
 	useEffect(() => {
 		if (parametros.id) {
 			Api.get<IProdutos[] | any>(
 				`produtos/${parametros.id}`,
 				config
-			).then((resposta) => {
+			)
+			.then((resposta) => {
 				setNome(resposta.data.nome);
 				setPreco(resposta.data.preco);
 				setDescricao(resposta.data.descricao);
@@ -52,18 +54,12 @@ export default function ProdutoSelecionado() {
 		}
 	}, [parametros]);
 
-	const produto = produtos?.find((produto) => {
-		return produto.id === Number(parametros.id);
-	});
+	
 
-	const produtosRecomendados = produtos
+	const produtosRecomendados = todosOsProdutos
 		?.filter((produto) => produto.id !== Number(parametros.id))
 		.sort((a, b) => b.id - a.id)
 		.slice(0, 6);
-
-	// if(!produto){
-	// 	window.location.pathname = '*'
-	// }
 
 	return (
 		<>
@@ -90,7 +86,6 @@ export default function ProdutoSelecionado() {
 					))}	
 				</ListaProdutosRecomendados>
 					</GrupoProdutosSimilares>
-
 			<FaleConosco />
 			<Footer />
 		</ContemTudo>

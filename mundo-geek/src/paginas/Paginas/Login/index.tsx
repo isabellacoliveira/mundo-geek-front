@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { http } from "services/api";
 import { CadastroInicioSessao } from "./styles";
+import sweetalert from 'sweetalert';
 
 export default function LoginUsuario(){
     const [email, setEmail] = useState<string>('');
@@ -26,7 +27,8 @@ export default function LoginUsuario(){
             await http.pegaToken()
             navigate('/perfil')
         } catch (error) {
-            message.error('Email ou senha inválidos')
+            console.log(error)
+            sweetalert('Email ou senha inválidos')
         } finally {
             setCarregando(false)
         }

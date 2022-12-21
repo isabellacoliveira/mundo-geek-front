@@ -8,7 +8,7 @@ function App() {
 	return (
 		<>
 			<AutenticadoProvider>
-        <AdministradorRoutes />
+       			 <AdministradorRoutes />
 			</AutenticadoProvider>
 		</>
 	);
