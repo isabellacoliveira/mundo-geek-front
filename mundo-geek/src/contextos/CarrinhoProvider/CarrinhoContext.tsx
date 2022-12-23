@@ -119,7 +119,6 @@ export function CarrinhoProvider({children}: CarrinhoProviderProps){
                     quantidade: 0,
                     produtos: []
                 })
-                console.log('Compra finalizada!')
             })
         }
 

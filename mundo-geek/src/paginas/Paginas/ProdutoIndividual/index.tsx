@@ -54,8 +54,6 @@ export default function ProdutoSelecionado() {
 		}
 	}, [parametros]);
 
-	const soOsIds = todosOsProdutos.map((item: IProdutos) => item.id)
-	console.log('ids', soOsIds)
 
 	if(!produtoExiste){
 		return <NaoEncontrada />
