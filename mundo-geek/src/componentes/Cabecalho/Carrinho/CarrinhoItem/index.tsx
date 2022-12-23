@@ -8,7 +8,7 @@ interface ProdutoProps {
 }
 
 export function CarrinhoAba({produto} : ProdutoProps) {
-	const {quantidadeComprada, removerProduto} = useCarrinho(); 
+	const { removerProduto, carrinho, decresceValor} = useCarrinho(); 
 
 	return (
 		<>
@@ -20,10 +20,16 @@ export function CarrinhoAba({produto} : ProdutoProps) {
 				<InformacoesDoProduto>
 					<h3>Nome: {produto.nome}</h3>
 					<h3>Preco: R$ {produto.preco}</h3>
-					<h3>quantidade no carrinho: {quantidadeComprada}</h3>
+					{carrinho.produtos.map(item => (
+						item.id === produto.id && <h3> quantidade no carrinho: {item.quantidade} </h3>
+					))}
 	          <BotaoRemoverItem>
 					<button
-						onClick={() => removerProduto(produto.id)}
+						onClick={() => {
+							removerProduto(produto.id)
+							decresceValor(produto)
+						}
+						}
 					>remover item</button>
           </BotaoRemoverItem>
 				</InformacoesDoProduto>

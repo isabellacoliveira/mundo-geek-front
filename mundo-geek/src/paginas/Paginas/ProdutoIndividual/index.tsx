@@ -14,7 +14,7 @@ import {
 import IProdutos from "types/IProdutos";
 import { useState, useEffect } from "react";
 import { Api } from "services/api";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Produto from "componentes/ProdutosPorCategoria/Produtos";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 import { useProdutos } from "contextos/ProdutosProvider/ProdutosContext";

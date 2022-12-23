@@ -1,6 +1,8 @@
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import { useProdutos } from "contextos/ProdutosProvider/ProdutosContext";
 import { useContext, createContext, ReactNode, useState, useEffect } from "react";
 import { Api } from "services/api";
+import IProdutos from "types/IProdutos";
 
 export function useCarrinho(){
     const contextoCarrinho = useContext(CarrinhoContext)
@@ -20,47 +22,47 @@ export interface ItemDoCarrinho {
 export interface ICarrinho {
     usuario: number
     quantidade: number
-    produtos: Array<{id: number, quantidade: number}>
+    produtos: Array<{
+            id: number, 
+            quantidade: number, 
+            // preco: number
+        }>
+    
 }
 
 export interface CarrinhoContext {
     carrinho: ICarrinho
     setCarrinho: React.Dispatch<any>
-    quantidadeTotalaPagar: number 
-    setQuantidadeTotalaPagar: React.Dispatch<React.SetStateAction<number>>
     adicionaAoCarrinho: (idProduto: number) =>  void; 
     removerProduto: (idProduto: number) =>  void; 
-    quantidadeComprada: number | undefined; 
-    setQuantidadeComprada: React.Dispatch<React.SetStateAction<number | undefined>>;
     finalizarCompra: () => void; 
-    // precoTotalDaCompra: (carrinho: ICarrinho | any) => void; 
+    valorTotal: number
+    calculaValor: (produto: IProdutos) => void;
+    decresceValor: (produto: IProdutos) => void;
 }
 
 const CarrinhoContext = createContext({} as CarrinhoContext)
 CarrinhoContext.displayName = 'Carrinho Context'
 
 export function CarrinhoProvider({children}: CarrinhoProviderProps){
-        const { usuario } = useAutenticacao()
-        const [quantidadeTotalaPagar, setQuantidadeTotalaPagar] = useState<number>(0); 
-        const [quantidadeComprada, setQuantidadeComprada] = useState<number>(); 
+        const { usuario, config } = useAutenticacao()
+        const [valorTotal, setValorTotal] = useState<number>(0);
         const [carrinho, setCarrinho] = useState<ICarrinho>({
             usuario: usuario?.id,
             quantidade: 0,
-            produtos: []
+            precoTotal: 0,
+            produtos: [],
         } as ICarrinho);
-        const {config} = useAutenticacao(); 
 
         function adicionaAoCarrinho(idProduto: number){    
             const ExisteNoCarrinho = carrinho.produtos.find(item => item.id === idProduto)
+        
             if (!ExisteNoCarrinho) {
                 carrinho.produtos.push({id: idProduto, quantidade: 1})
+
             } else {
                 const novaListaDeProdutos = carrinho.produtos.map(produto => {
                     if (produto.id === idProduto) produto.quantidade = produto.quantidade + 1;
-                    
-                    const quantidadeComprada = produto.quantidade
-                    setQuantidadeComprada(quantidadeComprada)
-                    console.log('quantidade comprada', quantidadeComprada)
                     
                     return produto
                 })
@@ -73,21 +75,35 @@ export function CarrinhoProvider({children}: CarrinhoProviderProps){
         }
 
         function removerProduto(idProduto: number){    
-                    const novaListaDeProdutosFiltrados = carrinho.produtos.map(produto => {
-                    if (produto.id === idProduto) {
-                        if(produto.quantidade === 1){
-                            return carrinho.produtos.filter((item) => (item.id != idProduto))
-                        } else {
-                            produto.quantidade = produto.quantidade - 1;
-                        }
-                    } 
-                    return produto                    
+            const produto = carrinho.produtos.find(item => item.id === idProduto)
+            if (!produto) return false
+
+            if(produto.quantidade === 1){
+                const novaLista = carrinho.produtos.filter((item) => item.id !== idProduto)
+                setCarrinho({
+                    ...carrinho, 
+                    produtos: novaLista
                 })
-                // setCarrinho({produtos: novaListaDeProdutos})
-                console.log('sou a nova lista sem os produtos que você deletou', novaListaDeProdutosFiltrados)
+            } else {
+                produto.quantidade -= 1;
+                const novaLista = carrinho.produtos.filter((item) => item.id !== idProduto)
+                novaLista.push(produto)
+                setCarrinho({
+                    ...carrinho, 
+                    produtos: novaLista
+                })
+            }
         }
 
+        const calculaValor = (
+            produto: IProdutos) => {
+            setValorTotal((oldValue) => Number(oldValue) + Number(produto.preco));
+        };
 
+        const decresceValor = (
+            produto: IProdutos) => {
+            setValorTotal((oldValue) => Number(oldValue) - Number(produto.preco));
+        };
 
         async function finalizarCompra(){
             return new Promise(() => {
@@ -111,14 +127,12 @@ export function CarrinhoProvider({children}: CarrinhoProviderProps){
         <CarrinhoContext.Provider value={{
             carrinho, 
             setCarrinho,
-            quantidadeTotalaPagar, 
-            setQuantidadeTotalaPagar,
             adicionaAoCarrinho,
-            quantidadeComprada,
-            setQuantidadeComprada,
             removerProduto,
-            finalizarCompra
-            // precoTotalDaCompra
+            finalizarCompra,
+            valorTotal,
+            calculaValor,
+            decresceValor
           }}>
            
             {children}

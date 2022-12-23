@@ -13,11 +13,12 @@ import {
 	ProdutosAdicionadosAoCarrinho,
 } from "./styles";
 import sweetalert from "sweetalert";
+import { formatCurrency } from "../FormatCurency";
 
 export default function CarrinhoPagina() {
 	const { usuario } = useAutenticacao();
 	const navigate = useNavigate();
-	const { quantidadeTotalaPagar, carrinho, finalizarCompra } = useCarrinho();
+	const { carrinho, finalizarCompra, valorTotal } = useCarrinho();
 	const { todosOsProdutos, pegaProdutos } = useProdutos();
 
 	if (!usuario) {
@@ -34,7 +35,7 @@ export default function CarrinhoPagina() {
 			icon: "success",
 		});
 		navigate("/home");
-        carrinho.produtos.length = 0;
+		carrinho.produtos.length = 0;
 	}
 
 	return (
@@ -50,14 +51,15 @@ export default function CarrinhoPagina() {
 				<ProdutosAdicionadosAoCarrinho>
 					{carrinho.produtos && carrinho.produtos.length > 0 ? (
 						carrinho.produtos.map((itemCarrinho) =>
-							todosOsProdutos.map((item) => {
-								if (item.id === itemCarrinho.id)
+							todosOsProdutos.map((produto) => {
+								if (produto.id === itemCarrinho.id) {
 									return (
 										<CarrinhoAba
-											produto={item}
-											key={item.id}
+											produto={produto}
+											key={produto.id}
 										/>
 									);
+								}
 							})
 						)
 					) : (
@@ -70,7 +72,8 @@ export default function CarrinhoPagina() {
 				<FinalizarTudo>
 					{carrinho.produtos.length !== 0 ? (
 						<>
-							<h2>Total: {quantidadeTotalaPagar}</h2>
+							<h2>Total: {formatCurrency(valorTotal)}</h2>
+
 							<button onClick={aoTerminarACompra}>
 								Finalizar compra
 							</button>

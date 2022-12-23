@@ -144,7 +144,7 @@ export const VerProduto = styled.div`
 `
 
 export const SessoesCategorias = styled.section`
-    background-color: #E5E5E5;
+    background-color: red;
 
     @media (max-width: 900px){
         div{

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CadastroDoUsuario = styled.div`
     width: 100%;
-    height: 700px;
+    height: 800px;
     padding-top: 30px;
     background-color: #E5E5E5;
 
@@ -74,4 +74,11 @@ export const InputGlobal = styled.input`
 			color: #c8c8c8;
 	}
    
+`
+
+export const DivSenha = styled.div` 
+    h6{
+        font-size: 10px;
+        color: #FF6347	; 
+    }
 `

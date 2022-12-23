@@ -21,7 +21,7 @@ export default function EditarCategoriaAntiga(){
             Api.get<ICategorias[] | any>(`categorias/${parametros.id}/`, config)
                 .then(resposta => setCategoriaDoProduto(resposta.data.titulo))
         }
-            Api.put<ICategorias>(`categorias/${parametros.id}/`, {
+            Api.put<ICategorias[] | any>(`categorias/${parametros.id}/`, {
                 titulo: categoriaDoProduto
             }, config)
                 .then(() => {

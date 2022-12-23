@@ -33,7 +33,7 @@ const Produto = ({ produto }: ProdutoProps) => {
 	const { usuario } = useAutenticacao();
 	const [produtosMapeados, setProdutosMapeados] = useState<IProdutos[]>([]);
 	const { config } = useAutenticacao();
-	const { adicionaAoCarrinho } = useCarrinho();
+	const { adicionaAoCarrinho, calculaValor } = useCarrinho();
 
 	function paraEditarProduto() {
 		navigate(`/administracao/produtos/editar/${produto.id}`);
@@ -79,13 +79,18 @@ const Produto = ({ produto }: ProdutoProps) => {
 				</DivPrecoEditar>
 				<DivImgBotao>
 					<BotaoVerProduto>
+					<VerProduto>
 						<Link to={`/produtos/${produto.id}`}>
-							<VerProduto>Ver Produto</VerProduto>
+							Ver Produto
 						</Link>
+						</VerProduto>
 						{usuario ? <>
 						{produto?.quantidade > 0 ? (
 							<BotaoAdicionarAoCarrinho
-								onClick={() => adicionaAoCarrinho(produto.id)}
+								onClick={() => {
+									adicionaAoCarrinho(produto.id)
+									calculaValor(produto)
+								}}
 							>
 								+ Adicionar ao Carrinho
 							</BotaoAdicionarAoCarrinho>

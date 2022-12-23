@@ -1,4 +1,4 @@
-import { CadastroDoUsuario, InputGlobal } from "./styles";
+import { CadastroDoUsuario, DivSenha, InputGlobal } from "./styles";
 import {useState} from 'react'; 
 import FaleConosco from "componentes/FaleConosco";
 import Footer from "componentes/Rodape";
@@ -18,11 +18,6 @@ export default function Cadastro(){
 
     function cadastraUsuario(evento: React.FormEvent<HTMLFormElement>){
         evento.preventDefault();
-        if(confirmacaoDaSenhaDoUsuario.length !== senhaDoUsuario.length){
-            sweetAlert("as senhas devem ser iguais")
-        } else {
-            console.log("senhas iguais")
-        }
 
         const formData = new FormData();
 
@@ -56,10 +51,6 @@ export default function Cadastro(){
 		window.location.pathname = '/home'
 	}
     
-    if(confirmacaoDaSenhaDoUsuario.length !== senhaDoUsuario.length ){
-        sweetalert('as senhas devem ser iguais')
-    }
-
     return (
         <>
             <CadastroDoUsuario>
@@ -90,7 +81,9 @@ export default function Cadastro(){
                     value={email}
                     onChange={evento => setEmail(evento.target.value)}
                 />
-                <label>Senha</label>
+
+                    <label>Senha</label>
+                <DivSenha>
                 <InputGlobal
                     placeholder="Escolha uma senha"
                     type="password"
@@ -100,8 +93,13 @@ export default function Cadastro(){
                     onChange={evento => setSenhaDoUsuario(evento.target.value)}
 
                 />
-
-                <label htmlFor="confirmaSenha">Confirmação da senha</label>
+                {confirmacaoDaSenhaDoUsuario.length !== senhaDoUsuario.length ? 
+                    <h6>As senhas devem ser iguais</h6> : ''    
+                }  
+                </DivSenha>
+              
+                    <label htmlFor="confirmaSenha">Confirmação da senha</label>
+                <DivSenha>
                 <InputGlobal
                     placeholder="Repita a senha"
                     type="password"
@@ -110,10 +108,14 @@ export default function Cadastro(){
                     value={confirmacaoDaSenhaDoUsuario}
                     onChange={evento => setConfirmacaoDaSenhaDoUsuario(evento.target.value)}
                 />
+                  {confirmacaoDaSenhaDoUsuario.length !== senhaDoUsuario.length ? 
+                    <h6>As senhas devem ser iguais</h6> : ''    
+                } 
+                </DivSenha>
                
                 <button 
                     type="submit"
-                    disabled={confirmacaoDaSenhaDoUsuario !== senhaDoUsuario}
+                    disabled={confirmacaoDaSenhaDoUsuario.length !== senhaDoUsuario.length}
                 >Cadastrar</button>
                 </form>
             </CadastroDoUsuario>

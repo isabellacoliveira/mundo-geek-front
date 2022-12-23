@@ -42,10 +42,7 @@ export default function EditarProdutoAntigo() {
 					setPrecoDoProduto(resposta.data.preco);
 				}
 			);
-		} else {
-			setProdutoExiste(false)
 		} 
-		
 	}, [parametros]);
 
 	useEffect(() => {
@@ -61,7 +58,7 @@ export default function EditarProdutoAntigo() {
 			});
 	}, []);
 
-	if(!produtoExiste){
+	if(produtoExiste){
 		<NaoEncontrada />
 	}
 
