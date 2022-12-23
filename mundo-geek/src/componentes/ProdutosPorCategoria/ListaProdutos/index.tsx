@@ -1,31 +1,23 @@
-import { Api } from "services/api";
-import { useState, useEffect } from "react";
-import ICategorias from "types/ICategorias";
+import { useEffect } from "react";
 import Categoria from "../Categorias";
-import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import { SessoesCategorias } from "../Produtos/styles";
+import { useCategorias } from "contextos/CategoriasProvider/CategoriasContext";
+
 
 const ListaCategorias = () => {
-	const [categorias, setCategorias] = useState<ICategorias[]>([]);
-    const {config} = useAutenticacao(); 
+	const {todasAsCategorias, pegaCategorias} = useCategorias(); 
 
     useEffect(() => {
-		Api.get<ICategorias[]>("categorias", config)
-			.then((resposta) => {
-				setCategorias(resposta.data);
-				console.log(resposta.data)
-			})
-			.catch((erro) => {
-				console.log(erro);
-			});
+		pegaCategorias(); 
 	}, []);
 
 	return (
 		<>
-			<section>
-				{categorias?.map((item) => (
+			<SessoesCategorias>
+				{todasAsCategorias?.map((item) => (
 					<Categoria categoria={item} key={item.id} />
 				))}
-			</section>
+			</SessoesCategorias>
 		</>
 	);
 };

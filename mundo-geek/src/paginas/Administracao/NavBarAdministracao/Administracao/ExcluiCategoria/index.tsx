@@ -16,7 +16,6 @@ import { AdicionarCategoria, CadastroNovoProduto } from "../../styles";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 
-// precisa recarregar a pagina para aparecer a categoria 
 export default function CadastraNovaCategoria() {
 	const [categoriasMapeadas, setCategoriasMapeadas] = useState<ICategorias[]>(
 		[]
@@ -26,7 +25,6 @@ export default function CadastraNovaCategoria() {
 	const {usuario, config} = useAutenticacao(); 
 	
 	useEffect(() => {
-	
 		Api.get<ICategorias[]>("categorias", config)
 			.then((resposta) => {
 				setCategoriasMapeadas(resposta.data);

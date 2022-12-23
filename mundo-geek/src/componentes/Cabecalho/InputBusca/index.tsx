@@ -28,7 +28,7 @@ const InputBusca = () => {
 		setFazAparecerBarra(!fazAparecerBarra);
 	}
 
-    // const buscaLowerCase = busca.toLowerCase(); 
+    // nscot buscaLowerCase = busca.toLowerCase(); 
 
 	const produtosBuscados = todosOsProdutos.filter((produto) =>
 		produto.nome.includes(busca) || 

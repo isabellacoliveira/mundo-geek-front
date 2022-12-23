@@ -1,5 +1,4 @@
 import FaleConosco from "componentes/FaleConosco";
-import ListaCategorias from "componentes/ProdutosPorCategoria/ListaProdutos";
 import Footer from "componentes/Rodape";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 import { useNavigate } from "react-router-dom";
@@ -9,28 +8,21 @@ import {
 	Produtos,
 	Titulo,
 } from "./styles";
-import {useEffect, useState} from 'react'; 
+import {useEffect} from 'react'; 
 import Produto from "componentes/ProdutosPorCategoria/Produtos";
-import IProdutos from "types/IProdutos";
-import { Api } from "services/api";
+import { useProdutos } from "contextos/ProdutosProvider/ProdutosContext";
 
 function TodosOsProdutos() {
 	const navigate = useNavigate();
-	const { token, usuario, config } = useAutenticacao();
-	const[todosOsProdutos, setTodosOsProdutos] = useState<IProdutos[]>([]); 
+	const { usuario } = useAutenticacao();
+	const {pegaProdutos, todosOsProdutos} = useProdutos(); 
 
 	function vaiParaAdm() {
 		navigate("/administracao/categorias/novo");
 	}
 
-	const pegaTodosOsProdutos = () => {
-		Api.get<IProdutos[], any>(`produtos/`, config).then((resposta) => {
-			setTodosOsProdutos(resposta.data);
-		});
-	};
-
 	useEffect(() => {
-		pegaTodosOsProdutos();
+		pegaProdutos(); 
 	}, []);
 
 	return (

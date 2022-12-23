@@ -74,7 +74,7 @@ export const CadastroNovoProduto = styled.form`
 		padding-bottom: 20px;
 		box-sizing: border-box;
 		border-radius: 4px 4px 0px 0px;
-		padding-top: 20px;		
+		padding-top: 20px;	
 	}
 
     .editaNova{
@@ -91,7 +91,7 @@ export const CadastroNovoProduto = styled.form`
 		height: 660px;
 		input {
 			height: 50px;
-			width: 840px;
+			width: 900px;
 		}
 		button {
 			width: 420px;

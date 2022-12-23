@@ -1,25 +1,30 @@
 import { DivCarrinho, ImagemDoProdutoDoCarrinho } from "../styles";
-import Teste from "assets/Hero.png";
-import { BotaoRemoverItem, BotoesCarrinho, InformacoesDoProduto } from "../CarrinhoPagina/styles";
+import { BotaoRemoverItem, InformacoesDoProduto } from "../CarrinhoPagina/styles";
+import {  useCarrinho } from "contextos/CarrinhoProvider/CarrinhoContext";
+import IProdutos from "types/IProdutos";
 
-export function CarrinhoAba() {
+interface ProdutoProps {
+	produto: IProdutos;
+}
+
+export function CarrinhoAba({produto} : ProdutoProps) {
+	const {quantidadeComprada, removerProduto} = useCarrinho(); 
+
 	return (
 		<>
     <section>
 			<DivCarrinho>
 				<ImagemDoProdutoDoCarrinho>
-					<img alt="imagem do produto" src={Teste} />
+					<img alt="imagem do produto" src={produto.imagem} />
 				</ImagemDoProdutoDoCarrinho>
 				<InformacoesDoProduto>
-					<h3>Nome: Mini Yoda</h3>
-					<h3>Preco: R$ 90,00</h3>
-					<BotoesCarrinho>
-						<button>+</button>
-						<h3>20</h3>
-						<button>-</button>
-					</BotoesCarrinho>
-          <BotaoRemoverItem>
-					<button>remover item</button>
+					<h3>Nome: {produto.nome}</h3>
+					<h3>Preco: R$ {produto.preco}</h3>
+					<h3>quantidade no carrinho: {quantidadeComprada}</h3>
+	          <BotaoRemoverItem>
+					<button
+						onClick={() => removerProduto(produto.id)}
+					>remover item</button>
           </BotaoRemoverItem>
 				</InformacoesDoProduto>
 			</DivCarrinho>

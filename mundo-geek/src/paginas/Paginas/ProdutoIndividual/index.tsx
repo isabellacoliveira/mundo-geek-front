@@ -14,9 +14,11 @@ import {
 import IProdutos from "types/IProdutos";
 import { useState, useEffect } from "react";
 import { Api } from "services/api";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Produto from "componentes/ProdutosPorCategoria/Produtos";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import { useProdutos } from "contextos/ProdutosProvider/ProdutosContext";
+import NaoEncontrada from "../NaoEncontrada";
 
 export default function ProdutoSelecionado() {
 	const [nome, setNome] = useState();
@@ -25,17 +27,11 @@ export default function ProdutoSelecionado() {
 	const [imagem, setImagem] = useState();
 	const parametros = useParams();
 	const {config} = useAutenticacao();
-	const[todosOsProdutos, setTodosOsProdutos] = useState<IProdutos[]>([]); 
-
-	const pegaTodosOsProdutos = () => {
-		Api.get<IProdutos[], any>(`produtos/`, config)
-		.then((resposta) => {
-			setTodosOsProdutos(resposta.data);
-		});
-	};
+	const {todosOsProdutos, pegaProdutos} = useProdutos(); 
+	const [produtoExiste, setProdutoExiste] = useState<boolean>(true); 	
 
 	useEffect(() => {
-		pegaTodosOsProdutos();
+		pegaProdutos();
 	}, []);
 
 
@@ -50,16 +46,26 @@ export default function ProdutoSelecionado() {
 				setPreco(resposta.data.preco);
 				setDescricao(resposta.data.descricao);
 				setImagem(resposta.data.imagem);
-			});
+			})
+			.catch((error) => {
+				console.log(error)
+				setProdutoExiste(false)
+			})
 		}
 	}, [parametros]);
 
-	
+	const soOsIds = todosOsProdutos.map((item: IProdutos) => item.id)
+	console.log('ids', soOsIds)
+
+	if(!produtoExiste){
+		return <NaoEncontrada />
+	}
 
 	const produtosRecomendados = todosOsProdutos
 		?.filter((produto) => produto.id !== Number(parametros.id))
 		.sort((a, b) => b.id - a.id)
 		.slice(0, 6);
+
 
 	return (
 		<>

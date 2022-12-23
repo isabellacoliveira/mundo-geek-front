@@ -2,6 +2,8 @@ import NavBar from "componentes/Cabecalho";
 import CarrinhoPagina from "componentes/Cabecalho/Carrinho/CarrinhoPagina";
 import ScrollToTop from "componentes/ScrollToTop";
 import { CarrinhoProvider } from "contextos/CarrinhoProvider/CarrinhoContext";
+import { CategoriasProvider } from "contextos/CategoriasProvider/CategoriasContext";
+import { ProdutosProvider } from "contextos/ProdutosProvider/ProdutosContext";
 import NavBarAdministracao from "paginas/Administracao/NavBarAdministracao";
 import { Administracao } from "paginas/Administracao/NavBarAdministracao/Administracao";
 import EditarCategoriaAntiga from "paginas/Administracao/NavBarAdministracao/Administracao/AdicionaEditaCategoria";
@@ -20,6 +22,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function Administrador() {
 	return (
+		<CategoriasProvider>
+		<ProdutosProvider>
+		<CarrinhoProvider>
 			<Router>
 				<ScrollToTop />
 				<Routes>
@@ -69,6 +74,9 @@ function Administrador() {
 					</Route>
 				</Routes>
 			</Router>
+			</CarrinhoProvider>
+			</ProdutosProvider>
+			</CategoriasProvider>
 	);
 }
 

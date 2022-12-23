@@ -1,6 +1,5 @@
 import MundoGeek from "assets/mundo-geek.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import BotaoLogin from "./BotaoDeLogin";
 import InputBusca from "./InputBusca";
 import {
 	Cabecalho,
@@ -8,6 +7,7 @@ import {
 	Perfil,
 	TrocaLado,
 	LoginCarrinhoPerfil,
+	BotaoDeLogin,
 } from "./styles";
 import perfil from "assets/perfil.png";
 import { DivCarrinhoPerfil, PerfilUsuario } from "./Carrinho/styles";
@@ -31,10 +31,17 @@ const NavBar = () => {
 				<TrocaLado>
 					<InputBusca />
 					{!usuario ? (
-						<BotaoLogin /> ) : (
+						<BotaoDeLogin>
+							<Link to="/login" className="BotaoLogin">
+								<Link to="/login" className="BotaoLogin">
+									Login
+								</Link>
+							</Link>
+						</BotaoDeLogin>
+					) : (
 						<LoginCarrinhoPerfil>
 							<DivCarrinhoPerfil>
-							<CarrinhoDeCompras />
+								<CarrinhoDeCompras />
 								<PerfilUsuario>
 									<Perfil
 										src={perfil}
@@ -45,8 +52,7 @@ const NavBar = () => {
 								</PerfilUsuario>
 							</DivCarrinhoPerfil>
 						</LoginCarrinhoPerfil>
-						) 
-					}
+					)}
 				</TrocaLado>
 			</Cabecalho>
 			<Outlet />

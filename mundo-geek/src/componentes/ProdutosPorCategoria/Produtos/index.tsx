@@ -13,12 +13,13 @@ import {
 	BotaoAdicionarAoCarrinho,
 	VerProduto,
 	ImagemLixo,
+	ProdutoIndisponivel,
 } from "./styles";
 import Lapis from "assets/editar.png";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 import { formatCurrency } from "componentes/Cabecalho/Carrinho/FormatCurency";
-import Lixo from 'assets/lixinho.png';
-import {useState} from 'react'; 
+import Lixo from "assets/lixinho.png";
+import { useState } from "react";
 import { Api } from "services/api";
 import { useCarrinho } from "contextos/CarrinhoProvider/CarrinhoContext";
 
@@ -31,34 +32,30 @@ const Produto = ({ produto }: ProdutoProps) => {
 	const navigate = useNavigate();
 	const { usuario } = useAutenticacao();
 	const [produtosMapeados, setProdutosMapeados] = useState<IProdutos[]>([]);
-	const {config} = useAutenticacao(); 
-	const{numeroDeItensAdicionados, setQuantidadeNoCarrinho} = useCarrinho(); 
+	const { config } = useAutenticacao();
+	const { adicionaAoCarrinho } = useCarrinho();
 
 	function paraEditarProduto() {
 		navigate(`/administracao/produtos/editar/${produto.id}`);
 	}
 
 	const deletaProduto = (produtoASerExcluido: IProdutos) => {
-		Api.delete(`produtos/${produtoASerExcluido.id}/`, config)
-		.then(
-			() => {
-				const listaProdutos = produtosMapeados.filter(
-					(produto) => produto.id !== produtoASerExcluido.id
-				);
-				console.log(listaProdutos)
-				setProdutosMapeados([...listaProdutos]);
-				sweetAlert("produto deletado")
-				navigate('/home')
-			}
-		);
-	}
+		Api.delete(`produtos/${produtoASerExcluido.id}/`, config).then(() => {
+			const listaProdutos = produtosMapeados.filter(
+				(produto) => produto.id !== produtoASerExcluido.id
+			);
+			setProdutosMapeados([...listaProdutos]);
+			sweetAlert("produto deletado");
+			navigate("/home");
+		});
+	};
 
 	return (
 		<>
+			
 			<CardDoProduto>
 				<ImagemProduto src={produto.imagem} />
 				<NomeDoProduto>{produto.nome}</NomeDoProduto>
-				<h5>quantidade: {produto.quantidade}</h5>
 				<DivPrecoEditar>
 					<PrecoDoProduto>
 						{formatCurrency(produto.preco)}
@@ -67,17 +64,16 @@ const Produto = ({ produto }: ProdutoProps) => {
 						{pathname === "/perfil" ? (
 							<>
 								<ImagemMais
-								src={Lapis}
-								alt="icone de edição"
-								onClick={paraEditarProduto}
-							/>
-							<ImagemLixo 
-								src={Lixo}
-								alt="Icone de Lixo"
-								onClick={() => deletaProduto(produto)}
-							/>
+									src={Lapis}
+									alt="icone de edição"
+									onClick={paraEditarProduto}
+								/>
+								<ImagemLixo
+									src={Lixo}
+									alt="Icone de Lixo"
+									onClick={() => deletaProduto(produto)}
+								/>
 							</>
-							
 						) : null}
 					</ImagemLapis>
 				</DivPrecoEditar>
@@ -86,15 +82,20 @@ const Produto = ({ produto }: ProdutoProps) => {
 						<Link to={`/produtos/${produto.id}`}>
 							<VerProduto>Ver Produto</VerProduto>
 						</Link>
-						{usuario ? (
+						{usuario ? <>
+						{produto?.quantidade > 0 ? (
 							<BotaoAdicionarAoCarrinho
+								onClick={() => adicionaAoCarrinho(produto.id)}
 							>
 								+ Adicionar ao Carrinho
 							</BotaoAdicionarAoCarrinho>
 						) : (
-							''
-							
+							<ProdutoIndisponivel>
+								<h5>Produto indisponivel</h5>
+							</ProdutoIndisponivel>
 						)}
+						</> : ''}
+						
 					</BotaoVerProduto>
 				</DivImgBotao>
 			</CardDoProduto>

@@ -14,33 +14,18 @@ import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 import { message } from "antd";
 import sweetAlert from 'sweetalert'; 
 import IProdutos from "types/IProdutos";
-import {useEffect, useState} from 'react'; 
-import { Api } from "services/api";
+import {useEffect} from 'react'; 
 import Produto from "componentes/ProdutosPorCategoria/Produtos";
+import { useProdutos } from "contextos/ProdutosProvider/ProdutosContext";
 
 function MeuPerfil() {
 	const navigate = useNavigate();
-	const { token, usuario, config } = useAutenticacao();
-	console.log(usuario)
+	const { token, usuario } = useAutenticacao();
 	const autenticacao = useAutenticacao();
-	const[todosOsProdutos, setTodosOsProdutos] = useState<IProdutos[]>([]); 
-
-	const pegaTodosOsProdutos = () => {
-		Api.get<IProdutos[], any>(`produtos/`, config)
-		.then((resposta) => {
-			const produtosFiltradosPorUsuario = resposta.data.filter(
-				(produto: IProdutos | undefined) => {
-					let produtosDoUsuario = produto?.usuario.id === usuario?.id
-					return produtosDoUsuario 
-				}
-			)
-			setTodosOsProdutos(produtosFiltradosPorUsuario);
-			console.log(produtosFiltradosPorUsuario);
-		});
-	};
+	const {todosOsProdutos, pegaProdutos} = useProdutos(); 
 
 	useEffect(() => {
-		pegaTodosOsProdutos();
+		pegaProdutos(); 
 	}, []);
 
 	function fotoDoPerfil() {
@@ -98,7 +83,12 @@ function MeuPerfil() {
 				<>
 				<h1>Meus Produtos</h1>
 				<ListaDeProdutosIndividual>
-					{todosOsProdutos?.map((item) => <Produto produto={item} key={item.id} /> )}
+					{todosOsProdutos.filter(
+				(produto: IProdutos | undefined) => {
+					let produtosDoUsuario = produto?.usuario.id === usuario?.id
+					return produtosDoUsuario 
+				}
+			)?.map((item) =>  <Produto produto={item} key={item.id} />)}
 				</ListaDeProdutosIndividual>
 				</>
 				 : ''}

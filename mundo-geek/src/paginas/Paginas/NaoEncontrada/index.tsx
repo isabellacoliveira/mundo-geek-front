@@ -22,8 +22,6 @@ export default function NaoEncontrada() {
 
 				<Paragrafo>
 					Tem certeza de que era isso que você estava procurando?
-					Aguarde uns instantes e recarregue a página, ou volte para a
-					página inicial.
 				</Paragrafo>
 
 				<BotaoContainer onClick={() => navegar(-1)}>

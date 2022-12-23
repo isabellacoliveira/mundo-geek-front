@@ -1,4 +1,6 @@
-import { useContext, createContext, ReactNode, useState } from "react";
+import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import { useContext, createContext, ReactNode, useState, useEffect } from "react";
+import { Api } from "services/api";
 
 export function useCarrinho(){
     const contextoCarrinho = useContext(CarrinhoContext)
@@ -9,103 +11,119 @@ interface CarrinhoProviderProps {
     children: ReactNode; 
 }
 
-interface ItemDoCarrinho {
+export interface ItemDoCarrinho {
     id: number, 
-    quantidade: number
+    quantidade: number,
+    preco: number
 }
 
-interface CarrinhoContext {
-    abrirCarrinho: () => void; 
-    fecharCarrinho: () => void; 
-    numeroDeItensAdicionados: () => void; 
-    getQuantidadeDeItens: (id: number) => void 
-    aumentarQuantidadeCarrinho: (id: number) => void 
-    diminuirQuantidadeCarrinho: (id: number) => void 
-    removerDoCarrinho: (id: number) => void 
-    quantidadeCarrinho: number | undefined | null, 
-    itensDoCarrinho: ItemDoCarrinho[]
-    quantidadeNoCarrinho: number,
-    setQuantidadeNoCarrinho: React.Dispatch<React.SetStateAction<number>>
+export interface ICarrinho {
+    usuario: number
+    quantidade: number
+    produtos: Array<{id: number, quantidade: number}>
+}
+
+export interface CarrinhoContext {
+    carrinho: ICarrinho
+    setCarrinho: React.Dispatch<any>
+    quantidadeTotalaPagar: number 
+    setQuantidadeTotalaPagar: React.Dispatch<React.SetStateAction<number>>
+    adicionaAoCarrinho: (idProduto: number) =>  void; 
+    removerProduto: (idProduto: number) =>  void; 
+    quantidadeComprada: number | undefined; 
+    setQuantidadeComprada: React.Dispatch<React.SetStateAction<number | undefined>>;
+    finalizarCompra: () => void; 
+    // precoTotalDaCompra: (carrinho: ICarrinho | any) => void; 
 }
 
 const CarrinhoContext = createContext({} as CarrinhoContext)
+CarrinhoContext.displayName = 'Carrinho Context'
 
 export function CarrinhoProvider({children}: CarrinhoProviderProps){
-	const[quantidadeNoCarrinho, setQuantidadeNoCarrinho] = useState<number>(0);
-	
-    function numeroDeItensAdicionados(){
-        const contador = 0; 
-        const itensContados = contador + 1;
-        console.log(itensContados)
-        setQuantidadeNoCarrinho(itensContados)
-    }
+        const { usuario } = useAutenticacao()
+        const [quantidadeTotalaPagar, setQuantidadeTotalaPagar] = useState<number>(0); 
+        const [quantidadeComprada, setQuantidadeComprada] = useState<number>(); 
+        const [carrinho, setCarrinho] = useState<ICarrinho>({
+            usuario: usuario?.id,
+            quantidade: 0,
+            produtos: []
+        } as ICarrinho);
+        const {config} = useAutenticacao(); 
 
-    const[estaAberto, setEstaAberto] = useState<boolean>(false)
-    const[itensDoCarrinho, setItensDoCarrinho] = useState<ItemDoCarrinho[]>([])
-
-    const abrirCarrinho = () => setEstaAberto(true)
-    const fecharCarrinho = () => setEstaAberto(false)
-
-    const quantidadeCarrinho = itensDoCarrinho.reduce((quantidade, item) => item.quantidade + quantidade, 0)
-
-    function getQuantidadeDeItens(id: number){
-        return itensDoCarrinho.find(item => item.id === id)?.quantidade || 0
-    }
-
-    function aumentarQuantidadeCarrinho(id: number){
-        setItensDoCarrinho(itensAntigos => {
-            if(itensAntigos.find(item => item.id === id) == null) {
-                return [...itensAntigos, {id, quantidade: 1 }]
+        function adicionaAoCarrinho(idProduto: number){    
+            const ExisteNoCarrinho = carrinho.produtos.find(item => item.id === idProduto)
+            if (!ExisteNoCarrinho) {
+                carrinho.produtos.push({id: idProduto, quantidade: 1})
             } else {
-                return itensAntigos.map(item => {
-                    if(item.id === id){
-                        return {...item, quantidade: item.quantidade + 1}
-                    } else {
-                        return item
-                    }
+                const novaListaDeProdutos = carrinho.produtos.map(produto => {
+                    if (produto.id === idProduto) produto.quantidade = produto.quantidade + 1;
+                    
+                    const quantidadeComprada = produto.quantidade
+                    setQuantidadeComprada(quantidadeComprada)
+                    console.log('quantidade comprada', quantidadeComprada)
+                    
+                    return produto
                 })
-            } 
-        })
-    }
-
-    function diminuirQuantidadeCarrinho(id: number){
-        setItensDoCarrinho(itensAntigos => {
-            if(itensAntigos.find(item => item.id === id)?.quantidade === 1) {
-                return itensAntigos.filter(item => item.id !== id)
-            } else {
-                return itensAntigos.map(item => {
-                    if(item.id === id){
-                        return {...item, quantidade: item.quantidade - 1}
-                    } else {
-                        return item
-                    }
+                setCarrinho({
+                    ...carrinho,
+                    produtos: novaListaDeProdutos
                 })
-            } 
-        })
-    }
+            }
+            console.log(carrinho.produtos)  
+        }
 
-    function removerDoCarrinho(id: number){
-        setItensDoCarrinho(itensAntigos => {
-            return itensAntigos.filter(item => item.id !== id)
-        })
-    }
+        function removerProduto(idProduto: number){    
+                    const novaListaDeProdutosFiltrados = carrinho.produtos.map(produto => {
+                    if (produto.id === idProduto) {
+                        if(produto.quantidade === 1){
+                            return carrinho.produtos.filter((item) => (item.id != idProduto))
+                        } else {
+                            produto.quantidade = produto.quantidade - 1;
+                        }
+                    } 
+                    return produto                    
+                })
+                // setCarrinho({produtos: novaListaDeProdutos})
+                console.log('sou a nova lista sem os produtos que você deletou', novaListaDeProdutosFiltrados)
+        }
+
+
+
+        async function finalizarCompra(){
+            return new Promise(() => {
+                Api.post<ICarrinho[]>('/carrinhos', {
+                    usuario: usuario?.id,
+                    produtos: carrinho.produtos
+                },
+                config)
+            })
+            .then(() => {
+                setCarrinho({
+                    usuario: 0,
+                    quantidade: 0,
+                    produtos: []
+                })
+                console.log('Compra finalizada!')
+            })
+        }
 
     return (
         <CarrinhoContext.Provider value={{
-            getQuantidadeDeItens,
-            aumentarQuantidadeCarrinho,
-            diminuirQuantidadeCarrinho,
-            removerDoCarrinho, 
-            itensDoCarrinho,
-            quantidadeCarrinho,
-            abrirCarrinho,
-            fecharCarrinho,
-            numeroDeItensAdicionados, 
-            quantidadeNoCarrinho,
-            setQuantidadeNoCarrinho
+            carrinho, 
+            setCarrinho,
+            quantidadeTotalaPagar, 
+            setQuantidadeTotalaPagar,
+            adicionaAoCarrinho,
+            quantidadeComprada,
+            setQuantidadeComprada,
+            removerProduto,
+            finalizarCompra
+            // precoTotalDaCompra
           }}>
            
             {children}
         </CarrinhoContext.Provider>
     )
 }
+
+

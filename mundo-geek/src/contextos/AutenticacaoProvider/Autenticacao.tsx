@@ -1,6 +1,5 @@
 import { AxiosRequestConfig } from "axios";
 import { createContext, useState, useEffect, useContext } from "react";
-import IProdutos from "types/IProdutos";
 import { Api, http } from "../../services/api";
 import { getUsuarioNoLocalStorage, setUsuarioNoLocalStorage } from "./util";
 
@@ -20,10 +19,6 @@ export interface IContexto {
 	usuario: IUsuario | null | undefined;
 	config: AxiosRequestConfig;
     token: string | null | undefined,
-}
-
-export interface IAutenticadoOuNao {
-	hello: () => void;
 }
 
 export interface IAutenticacaoProvider {

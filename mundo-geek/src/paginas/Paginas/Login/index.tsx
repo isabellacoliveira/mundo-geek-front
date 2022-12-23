@@ -1,4 +1,3 @@
-import { message } from "antd";
 import { Carregando } from "componentes/Carregando";
 import FaleConosco from "componentes/FaleConosco";
 import Footer from "componentes/Rodape";
@@ -7,7 +6,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { http } from "services/api";
 import { CadastroInicioSessao } from "./styles";
-import sweetalert from 'sweetalert';
+import { message } from "antd";
 
 export default function LoginUsuario(){
     const [email, setEmail] = useState<string>('');
@@ -28,7 +27,7 @@ export default function LoginUsuario(){
             navigate('/perfil')
         } catch (error) {
             console.log(error)
-            sweetalert('Email ou senha inválidos')
+            message.error('Email ou senha inválidos')
         } finally {
             setCarregando(false)
         }

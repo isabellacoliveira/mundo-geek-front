@@ -6,6 +6,7 @@ import ICategorias from "types/ICategorias";
 import { useNavigate, useParams } from "react-router-dom";
 import IProdutos from "types/IProdutos";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import NaoEncontrada from "paginas/Paginas/NaoEncontrada";
 
 export default function EditarProdutoAntigo() {
 	const [imagemDoProduto, setImagemDoProduto] = useState("");
@@ -16,6 +17,7 @@ export default function EditarProdutoAntigo() {
 	const [precoDoProduto, setPrecoDoProduto] = useState("");
 	const [descricaoDoProduto, setDescricaoDoProduto] = useState("");
 	const [quantidade, setQuantidade] = useState("");
+	const [produtoExiste, setProdutoExiste] = useState<boolean>(true); 
 	const parametros = useParams();
 	const { usuario, config } = useAutenticacao();
 	const navigate = useNavigate();
@@ -26,7 +28,8 @@ export default function EditarProdutoAntigo() {
 
 	useEffect(() => {
 		if (parametros.id) {
-			Api.get<IProdutos | any>(`produtos/${parametros.id}/`, config).then(
+			Api.get<IProdutos | any>(`produtos/${parametros.id}/`, config)
+			.then(
 				(resposta) => { 
 					if (resposta.data && resposta.status === 200) {
 						resposta.data.map((categoria : any | ICategorias) => (categoria.ativo = false));
@@ -39,9 +42,10 @@ export default function EditarProdutoAntigo() {
 					setPrecoDoProduto(resposta.data.preco);
 				}
 			);
-
-
+		} else {
+			setProdutoExiste(false)
 		} 
+		
 	}, [parametros]);
 
 	useEffect(() => {
@@ -57,6 +61,9 @@ export default function EditarProdutoAntigo() {
 			});
 	}, []);
 
+	if(!produtoExiste){
+		<NaoEncontrada />
+	}
 
 	const aoSubmeterForm = () => {
 		Api.put<IProdutos>(
@@ -75,7 +82,7 @@ export default function EditarProdutoAntigo() {
 			config
 		).then(() => {
 			sweetAlert("Produto atualizado com sucesso!");
-			navigate("/perfil");
+			navigate("/home");
 		});
 	};
 

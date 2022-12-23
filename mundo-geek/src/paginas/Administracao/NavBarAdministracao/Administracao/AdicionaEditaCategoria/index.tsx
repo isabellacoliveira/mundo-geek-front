@@ -1,7 +1,7 @@
 import Footer from "componentes/Rodape"
 import { Api } from "services/api";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ICategorias from "types/ICategorias";
 import { CadastroNovoProduto } from "../../styles";
 import {useEffect} from 'react'; 
@@ -10,7 +10,6 @@ import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
 export default function EditarCategoriaAntiga(){
     const [categoriaDoProduto, setCategoriaDoProduto] = useState("");
     const parametros = useParams()
-    const navigate = useNavigate(); 
     const {usuario, config} = useAutenticacao(); 
 
     useEffect(() => {
@@ -22,13 +21,11 @@ export default function EditarCategoriaAntiga(){
             Api.get<ICategorias[] | any>(`categorias/${parametros.id}/`, config)
                 .then(resposta => setCategoriaDoProduto(resposta.data.titulo))
         }
-            Api.put<ICategorias[] | any>(`categorias/${parametros.id}/`, {
+            Api.put<ICategorias>(`categorias/${parametros.id}/`, {
                 titulo: categoriaDoProduto
             }, config)
-            
                 .then(() => {
                     sweetAlert("Categoria atualizada com sucesso!")
-                    navigate('/administracao/categorias/novo')
                 })
     
     }

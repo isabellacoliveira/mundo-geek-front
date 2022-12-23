@@ -26,6 +26,8 @@ export const LinkParaOutraPagina = styled.div `
 
 export const NomeDoProduto = styled.h1` 
     font-size: 20px;
+
+
 `
 export const PrecoDoProduto = styled.h2` 
     font-size: 18px;
@@ -74,12 +76,15 @@ export const ImagemLapis = styled.div`
 `
 export const CardDoProduto = styled.div`
     flex-direction: row;
-    background-color: #E5E5E5;
     margin-right: 20px;
     background-color: #A9A9A9;
     border-radius: 10px 10px 10px 10px;
     padding: 10px;
     margin-bottom: 20px;
+
+    img{
+        border-radius: 8px;
+    }
 
     @media (max-width: 900px){
         display: flex;
@@ -87,6 +92,10 @@ export const CardDoProduto = styled.div`
         align-items: flex-start;
         padding: 0px;
         gap: 8px;
+    }
+
+    .teste{
+        background-color: red;
     }
 `
 
@@ -110,6 +119,20 @@ export const BotaoAdicionarAoCarrinho = styled.button`
         cursor: pointer;
     }
 `
+export const ProdutoIndisponivel = styled.div`
+    border: none;
+    font-size: 20px;
+    border-radius: 8px;
+    width: 190px;
+    height: 60px;
+    color: #fff;
+    margin-top: 15px;
+
+    h5{
+            color: #000;
+
+    }
+`
 
 export const VerProduto = styled.div` 
     text-decoration: none;
@@ -117,5 +140,22 @@ export const VerProduto = styled.div`
     &:hover {
         transform: translateY(-4px);
         cursor: pointer;
+    }
+`
+
+export const SessoesCategorias = styled.section`
+    background-color: #E5E5E5;
+
+    @media (max-width: 900px){
+        div{
+            margin: auto;
+            margin-bottom: 10px;
+
+
+            img {
+                margin-top: 10px;
+                margin-left: 5px;
+            }
+        }
     }
 `

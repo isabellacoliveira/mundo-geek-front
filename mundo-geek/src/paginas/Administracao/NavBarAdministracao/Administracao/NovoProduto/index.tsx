@@ -82,7 +82,6 @@ export default function CadastraNovoProduto() {
                 type='checkbox'
                 id='categoriaTitulo'
                 name={categoria.titulo}
-				required
                 onChange={() => {
                   return (categoria.ativo = !categoria.ativo);
                 }}

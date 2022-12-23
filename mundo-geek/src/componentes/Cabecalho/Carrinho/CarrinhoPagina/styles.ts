@@ -193,3 +193,7 @@ export const BotaoRemoverItem = styled.div`
     }
 
 `
+
+export const NadaParaMostrar = styled.h2` 
+    padding-left: 10px;
+`

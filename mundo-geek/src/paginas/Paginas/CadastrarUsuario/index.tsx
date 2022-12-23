@@ -5,6 +5,7 @@ import Footer from "componentes/Rodape";
 import { useNavigate } from "react-router-dom";
 import { Api } from "services/api";
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
+import sweetalert from 'sweetalert'; 
 
 export default function Cadastro(){
     const[nomeDoUsuario, setNomeDoUsuario] = useState("");
@@ -55,6 +56,10 @@ export default function Cadastro(){
 		window.location.pathname = '/home'
 	}
     
+    if(confirmacaoDaSenhaDoUsuario.length !== senhaDoUsuario.length ){
+        sweetalert('as senhas devem ser iguais')
+    }
+
     return (
         <>
             <CadastroDoUsuario>
