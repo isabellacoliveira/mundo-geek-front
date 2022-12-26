@@ -82,7 +82,7 @@ Nessa tela,  terá a responsabilidade de cadastrar (de acordo com a categoria), 
 
 ## Carrinho "/carrinho"
 
-Caso você seja um administrador ou um cliente, você pode adicionar produtos ao carrinho e efetuar sua compra. 
+Caso você seja um administrador ou um cliente, você pode adicionar produtos ao carrinho e efetuar sua compra
 
 ![CARRINHO](./prints/gif16.gif)
 ![CARRINHO](./prints/gif17.gif)
