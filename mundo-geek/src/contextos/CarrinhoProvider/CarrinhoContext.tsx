@@ -1,8 +1,8 @@
 import { useAutenticacao } from "contextos/AutenticacaoProvider/Autenticacao";
-import { useProdutos } from "contextos/ProdutosProvider/ProdutosContext";
-import { useContext, createContext, ReactNode, useState, useEffect } from "react";
-import { Api } from "services/api";
+import { useContext, createContext, ReactNode, useState } from "react";
 import IProdutos from "types/IProdutos";
+import sweetalert from 'sweetalert'; 
+import { useNavigate } from "react-router-dom";
 
 export function useCarrinho(){
     const contextoCarrinho = useContext(CarrinhoContext)
@@ -25,7 +25,6 @@ export interface ICarrinho {
     produtos: Array<{
             id: number, 
             quantidade: number, 
-            // preco: number
         }>
     
 }
@@ -35,7 +34,6 @@ export interface CarrinhoContext {
     setCarrinho: React.Dispatch<any>
     adicionaAoCarrinho: (idProduto: number) =>  void; 
     removerProduto: (idProduto: number) =>  void; 
-    finalizarCompra: () => void; 
     valorTotal: number
     calculaValor: (produto: IProdutos) => void;
     decresceValor: (produto: IProdutos) => void;
@@ -45,7 +43,7 @@ const CarrinhoContext = createContext({} as CarrinhoContext)
 CarrinhoContext.displayName = 'Carrinho Context'
 
 export function CarrinhoProvider({children}: CarrinhoProviderProps){
-        const { usuario, config } = useAutenticacao()
+        const { usuario } = useAutenticacao()
         const [valorTotal, setValorTotal] = useState<number>(0);
         const [carrinho, setCarrinho] = useState<ICarrinho>({
             usuario: usuario?.id,
@@ -55,6 +53,9 @@ export function CarrinhoProvider({children}: CarrinhoProviderProps){
         } as ICarrinho);
 
         function adicionaAoCarrinho(idProduto: number){    
+            if(carrinho.produtos.length === 0){
+                sweetalert('o produto foi adicionado ao carrinho')
+            }
             const ExisteNoCarrinho = carrinho.produtos.find(item => item.id === idProduto)
         
             if (!ExisteNoCarrinho) {
@@ -105,31 +106,12 @@ export function CarrinhoProvider({children}: CarrinhoProviderProps){
             setValorTotal((oldValue) => Number(oldValue) - Number(produto.preco));
         };
 
-        async function finalizarCompra(){
-            return new Promise(() => {
-                Api.post<ICarrinho[]>('/carrinhos', {
-                    usuario: usuario?.id,
-                    produtos: carrinho.produtos
-                },
-                config)
-            })
-            .then(() => {
-                setCarrinho({
-                    usuario: 0,
-                    quantidade: 0,
-                    produtos: []
-                })
-                console.log('Compra finalizada!')
-            })
-        }
-
     return (
         <CarrinhoContext.Provider value={{
             carrinho, 
             setCarrinho,
             adicionaAoCarrinho,
             removerProduto,
-            finalizarCompra,
             valorTotal,
             calculaValor,
             decresceValor

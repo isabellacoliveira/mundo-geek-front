@@ -8,21 +8,21 @@ import {
 	Produtos,
 	Titulo,
 } from "./styles";
-import {useEffect} from 'react'; 
+import { useEffect } from "react";
 import Produto from "componentes/ProdutosPorCategoria/Produtos";
 import { useProdutos } from "contextos/ProdutosProvider/ProdutosContext";
 
 function TodosOsProdutos() {
 	const navigate = useNavigate();
 	const { usuario } = useAutenticacao();
-	const {pegaProdutos, todosOsProdutos} = useProdutos(); 
+	const { pegaProdutos, todosOsProdutos } = useProdutos();
 
 	function vaiParaAdm() {
 		navigate("/administracao/categorias/novo");
 	}
 
 	useEffect(() => {
-		pegaProdutos(); 
+		pegaProdutos();
 	}, []);
 
 	return (
@@ -37,7 +37,9 @@ function TodosOsProdutos() {
 				)}
 			</Produtos>
 			<ListaDeProdutos>
-			{todosOsProdutos?.map((item) => <Produto produto={item} key={item.id} /> )}
+				{todosOsProdutos?.map((item) => (
+					<Produto produto={item} key={item.id} />
+				))}
 			</ListaDeProdutos>
 			<FaleConosco />
 			<Footer />

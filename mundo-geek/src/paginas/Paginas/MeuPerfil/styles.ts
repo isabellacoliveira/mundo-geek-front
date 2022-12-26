@@ -22,8 +22,8 @@ export const CabecalhoMeuPerfil = styled.div`
         flex-wrap: wrap;
 
         h1{
-             margin-right: 100px;
-             margin-left: 20px;
+             padding-right: 60px;
+             padding-left: 10px;
         }
     }
   
@@ -41,7 +41,6 @@ export const PerfilImagem = styled.img`
     }
 
     @media (max-width: 900px){
-        margin-left: 110px;
         margin-right: 100px;
     }
 
@@ -57,6 +56,10 @@ export const IconeSair = styled.img`
 
     @media (min-width: 900px){
         margin-left: 300px;
+    }
+
+    @media (max-width: 900px){
+        margin-right: 90px;
     }
 
     &:hover {
@@ -75,7 +78,6 @@ export const BotaoVoltar = styled.button`
 
     @media (max-width: 900px){
         padding-bottom: 20px;
-        margin-left: 100px;
     }
 
   

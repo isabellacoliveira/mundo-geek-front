@@ -6,6 +6,7 @@ import { Api } from 'services/api';
 import IProdutos from 'types/IProdutos';
 import { CadastroNovoProduto, Categorias, InputsDaPagina } from '../../styles';
 import { useAutenticacao } from 'contextos/AutenticacaoProvider/Autenticacao';
+import sweetalert from 'sweetalert'; 
 
 export default function CadastraNovoProduto() {
 	const navigate = useNavigate();
@@ -39,7 +40,12 @@ export default function CadastraNovoProduto() {
 		.then(() => {
 			sweetAlert("Produto cadastrado com sucesso.");
 			navigate("/home");
-		});
+		})
+		.catch((error) => {
+            console.log({data: error}) 
+            sweetalert('não foi possivel cadastrar o produto!')   
+         })
+		
 	};
 
 	useEffect(() => {

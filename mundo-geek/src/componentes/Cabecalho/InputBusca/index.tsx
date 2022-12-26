@@ -28,14 +28,10 @@ const InputBusca = () => {
 		setFazAparecerBarra(!fazAparecerBarra);
 	}
 
-    // nscot buscaLowerCase = busca.toLowerCase(); 
-
 	const produtosBuscados = todosOsProdutos.filter((produto) =>
 		produto.nome.includes(busca) || 
 		produto.preco.toString().includes(busca) || 
 		produto.quantidade.toString().includes(busca) 
-		// produto.preco.toString().includes(busca) ||
-		// produto.quantidade.toString().includes(busca) 
 	);
 
 	const pegaTodosOsProdutos = () => {

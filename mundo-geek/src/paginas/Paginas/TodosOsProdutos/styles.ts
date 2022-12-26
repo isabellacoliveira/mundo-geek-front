@@ -45,7 +45,7 @@ export const BotaoCadastraProduto = styled.div `
     @media(max-width: 900px){
         margin: 20px 20px;
         height: 80px;
-        padding: 20px 10px 10px 10px;
+        padding: 30px 20px 20px 20px;
     }
 
     @media(min-width: 900px){

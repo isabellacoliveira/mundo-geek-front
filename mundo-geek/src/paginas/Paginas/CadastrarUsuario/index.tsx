@@ -44,7 +44,11 @@ export default function Cadastro(){
             sweetAlert('usuario cadastrado com sucesso!')
             navigate('/login')
         })
-        .catch(erro => sweetAlert(erro))
+        .catch((error) => {
+            console.log({data: error}) 
+            sweetalert('esse email já existe!')   
+            navigate('/login') 
+         })
     }
 
     if (usuario) {

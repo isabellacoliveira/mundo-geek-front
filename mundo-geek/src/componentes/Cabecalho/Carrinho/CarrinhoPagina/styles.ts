@@ -92,12 +92,9 @@ export const ContemTudo = styled.div`
 `
 
 export const ProdutosAdicionadosAoCarrinho = styled.div` 
-    background-color: #D3D3D3;
     overflow: auto;
     height: 500px;
   
-
-
     @media (max-width: 900px){
         margin: auto;
         section{
@@ -109,7 +106,7 @@ export const ProdutosAdicionadosAoCarrinho = styled.div`
     }
 
     @media (min-width: 900px){
-
+        background-color: #D3D3D3;
         section{
             height: 280px;
             width: 100%;

@@ -2,7 +2,7 @@ import ICategorias from "types/ICategorias";
 import { useEffect } from "react";
 import IProdutos from "types/IProdutos";
 import Produto from "../Produtos";
-import { Cima, ListaDeProdutos, Titulos } from "./styles";
+import { Cima, ListaDeProdutos, Titulos, VerTudinho } from "./styles";
 import { Link, useLocation } from "react-router-dom";
 import IconeSeta from "assets/iconeSeta.png";
 import { useProdutos } from "contextos/ProdutosProvider/ProdutosContext";
@@ -27,8 +27,10 @@ const Categoria = ({ categoria }: CategoriaProps) => {
 					<>
 						<Titulos>{categoria.titulo}</Titulos>
 						<Link to="/produtos" className="BotaoVerTudo">
-							Ver tudo
+							<VerTudinho>
+								Ver tudo
 							<img src={IconeSeta} alt="icone de uma seta" />
+							</VerTudinho>
 						</Link>
 					</>
 				)}

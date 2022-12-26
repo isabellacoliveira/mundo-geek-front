@@ -17,7 +17,7 @@ export default function EditarProdutoAntigo() {
 	const [precoDoProduto, setPrecoDoProduto] = useState("");
 	const [descricaoDoProduto, setDescricaoDoProduto] = useState("");
 	const [quantidade, setQuantidade] = useState("");
-	const [produtoExiste, setProdutoExiste] = useState<boolean>(true); 
+	const [produtoExiste, setProdutoExiste] = useState<boolean>(true);
 	const parametros = useParams();
 	const { usuario, config } = useAutenticacao();
 	const navigate = useNavigate();
@@ -28,11 +28,13 @@ export default function EditarProdutoAntigo() {
 
 	useEffect(() => {
 		if (parametros.id) {
-			Api.get<IProdutos | any>(`produtos/${parametros.id}/`, config)
-			.then(
-				(resposta) => { 
+			Api.get<IProdutos | any>(`produtos/${parametros.id}/`, config).then(
+				(resposta) => {
 					if (resposta.data && resposta.status === 200) {
-						resposta.data.map((categoria : any | ICategorias) => (categoria.ativo = false));
+						resposta.data.map(
+							(categoria: any | ICategorias) =>
+								(categoria.ativo = false)
+						);
 					}
 					setNomeDoProduto(resposta.data.nome);
 					setCategoriasMapeadas(resposta.data.categorias);
@@ -42,7 +44,7 @@ export default function EditarProdutoAntigo() {
 					setPrecoDoProduto(resposta.data.preco);
 				}
 			);
-		} 
+		}
 	}, [parametros]);
 
 	useEffect(() => {
@@ -50,7 +52,7 @@ export default function EditarProdutoAntigo() {
 			.then((resposta) => {
 				if (resposta.data && resposta.status === 200) {
 					resposta.data.map((categoria) => (categoria.ativo = false));
-				  }
+				}
 				setCategoriasMapeadas(resposta.data);
 			})
 			.catch((erro) => {
@@ -58,8 +60,8 @@ export default function EditarProdutoAntigo() {
 			});
 	}, []);
 
-	if(produtoExiste){
-		<NaoEncontrada />
+	if (produtoExiste) {
+		<NaoEncontrada />;
 	}
 
 	const aoSubmeterForm = () => {
@@ -87,6 +89,7 @@ export default function EditarProdutoAntigo() {
 		Api.get<ICategorias[]>("categorias", config)
 			.then((resposta) => {
 				setCategoriasMapeadas(resposta.data);
+				console.log("aqui as categorias", resposta.data);
 			})
 			.catch((erro) => {
 				console.log(erro);

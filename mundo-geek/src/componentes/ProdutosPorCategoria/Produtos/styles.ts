@@ -76,11 +76,16 @@ export const ImagemLapis = styled.div`
 `
 export const CardDoProduto = styled.div`
     flex-direction: row;
-    margin-right: 20px;
+   
     background-color: #A9A9A9;
     border-radius: 10px 10px 10px 10px;
-    padding: 10px;
-    margin-bottom: 20px;
+   
+
+    @media (min-width: 900px){
+        margin-right: 20px;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
 
     img{
         border-radius: 8px;
@@ -90,8 +95,11 @@ export const CardDoProduto = styled.div`
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 0px;
         gap: 8px;
+        padding-top: 10px;
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-bottom: 15px;
     }
 
     .teste{
@@ -144,7 +152,7 @@ export const VerProduto = styled.div`
 `
 
 export const SessoesCategorias = styled.section`
-    background-color: red;
+    background-color: #E5E5E5;
 
     @media (max-width: 900px){
         div{

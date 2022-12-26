@@ -14,11 +14,13 @@ import {
 } from "./styles";
 import sweetalert from "sweetalert";
 import { formatCurrency } from "../FormatCurency";
+import { Api } from "services/api";
+import ICarrinho from "types/ICarrinho";
 
 export default function CarrinhoPagina() {
-	const { usuario } = useAutenticacao();
+	const { usuario, config } = useAutenticacao();
 	const navigate = useNavigate();
-	const { carrinho, finalizarCompra, valorTotal } = useCarrinho();
+	const { carrinho, valorTotal, setCarrinho } = useCarrinho();
 	const { todosOsProdutos, pegaProdutos } = useProdutos();
 
 	if (!usuario) {
@@ -29,13 +31,29 @@ export default function CarrinhoPagina() {
 		pegaProdutos();
 	}, []);
 
-	function aoTerminarACompra() {
-		finalizarCompra();
-		sweetalert("Compra finalizada!", {
-			icon: "success",
-		});
-		navigate("/home");
-		carrinho.produtos.length = 0;
+	async function aoTerminarACompra() {
+		Api.post<ICarrinho[]>('/carrinhos', {
+			usuario: usuario?.id,
+			produtos: carrinho.produtos
+		},
+		config)
+		.then(() => {
+			sweetalert("Compra finalizada!", {
+				icon: "success",
+			});
+			navigate("/home");
+			carrinho.produtos.length = 0;
+			setCarrinho({
+				usuario: 0,
+				quantidade: 0,
+				produtos: []
+			}) 
+		}) 
+		.catch((error) => {
+			console.log({ data: error})
+			sweetalert('Não foi possível concluir a compra, quantidade insuficiente no estoque')
+		})
+	
 	}
 
 	return (

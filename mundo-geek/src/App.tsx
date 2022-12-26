@@ -1,14 +1,14 @@
 import {
 	AutenticadoProvider
 } from "contextos/AutenticacaoProvider/Autenticacao";
-import AdministradorRoutes from "router";
+import AppRoutes from "router";
 
 function App() {
 
 	return (
 		<>
 			<AutenticadoProvider>
-       			 <AdministradorRoutes />
+       			 <AppRoutes />
 			</AutenticadoProvider>
 		</>
 	);

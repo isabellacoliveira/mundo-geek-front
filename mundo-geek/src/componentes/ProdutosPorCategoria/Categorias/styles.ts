@@ -42,6 +42,7 @@ export const Titulos = styled.h1`
         @media (max-width: 900px) {
             padding-left: 20px;
             font-size: 20px;
+            padding-top: 10px;
         }
 `
 export const Cima = styled.div`
@@ -59,7 +60,7 @@ export const Cima = styled.div`
             width: 100%;
             
             @media (max-width: 900px){
-                font-size: 15px;
+                font-size: 16px;
                 padding-bottom: 10px;
                 margin-bottom: 10px;
             }
@@ -81,6 +82,20 @@ export const Cima = styled.div`
         .BotaoVerTudo img {
             margin-left: 10px;
             }
+`
+
+export const VerTudinho = styled.div`
+@media (max-width: 900px){
+      display: flex;
+    flex-direction: row;
+
+    img{
+        display: none;
+    }
+}
+
+
+  
 `
 
 export const BotaoVerProduto = styled.button` 

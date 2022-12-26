@@ -154,6 +154,14 @@ export const ListaProdutosRecomendados = styled.ul`
     justify-content: center;
     flex-wrap: wrap;
 }
+
+@media (max-width: 900px){
+    margin: 0 auto;
+    li{
+        width: 230px;
+        padding-top: 10px;
+    }
+}
        
 
     li:hover {

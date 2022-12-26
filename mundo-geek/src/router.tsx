@@ -20,7 +20,7 @@ import ProdutoSelecionado from "paginas/Paginas/ProdutoIndividual";
 import TodosOsProdutos from "paginas/Paginas/TodosOsProdutos";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function Administrador() {
+function AppRoutes() {
 	return (
 		<CategoriasProvider>
 		<ProdutosProvider>
@@ -34,13 +34,11 @@ function Administrador() {
 						<Route path="/perfil" element={<MeuPerfil />} />
 						<Route path="*" element={<NaoEncontrada />} />
 						<Route path="/produtos" element={<TodosOsProdutos />} />
-						{/* quando a pessoa digita a url de um produto inexistente ele deve retornar a pagina de notfound */}
 						<Route
 							path="/produtos/:id"
 							element={<ProdutoSelecionado />}
 						/>
 						<Route path="/cadastro/usuario" element={<Cadastro />} />
-						{/* sumir com o botao de login (e em cadastro usuario)   */}
 						<Route path="/login" element={<LoginUsuario />} />
 						<Route path="/carrinho" element={<CarrinhoPagina />} />
 					</Route>
@@ -80,4 +78,4 @@ function Administrador() {
 	);
 }
 
-export default Administrador;
+export default AppRoutes;

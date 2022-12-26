@@ -65,12 +65,15 @@ input{
 @media (min-width: 900px){
    button {
         width: 420px;
+        margin-right: 20px;
+        margin-bottom: 10px;
    }
 }
 @media (max-width: 900px){
     button {
         width: 100px;
-        margin-top: 20px;
+        margin-right: 20px;
+        margin-bottom: 20px;
     }
 }
 
@@ -144,9 +147,26 @@ button{
     }
 }
 
-.cadastreSe {
-    text-decoration: none;
-    color: #FFFFFF; 
+`
 
-}
+export const CadastreSe = styled.div` 
+    display: flex;
+    flex-direction: row;
+    
+
+`
+
+export const BotaoCadastreSe = styled.div` 
+    background-color: #E5E5E5;
+    @media (max-width: 900px){
+           padding-left: 40px;
+         margin-top: 7px;
+    }
+
+    @media (min-width: 900px){
+           padding-left: 90px;
+    margin-top: 7px;
+    }
+
+ 
 `

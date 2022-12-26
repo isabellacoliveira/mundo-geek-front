@@ -25,40 +25,38 @@ export default function ProdutoSelecionado() {
 	const [preco, setPreco] = useState();
 	const [descricao, setDescricao] = useState();
 	const [imagem, setImagem] = useState();
+	const [quantidadeEmEstoque, setQuantidadeEmEstoque] = useState();
 	const parametros = useParams();
-	const {config} = useAutenticacao();
-	const {todosOsProdutos, pegaProdutos} = useProdutos(); 
-	const [produtoExiste, setProdutoExiste] = useState<boolean>(true); 	
+	const { config } = useAutenticacao();
+	const { todosOsProdutos, pegaProdutos } = useProdutos();
+	const [produtoExiste, setProdutoExiste] = useState<boolean>(true);
 
 	useEffect(() => {
 		pegaProdutos();
 	}, []);
 
-
 	useEffect(() => {
 		if (parametros.id) {
-			Api.get<IProdutos[] | any>(
-				`produtos/${parametros.id}`,
-				config
-			)
-			.then((resposta) => {
-				setNome(resposta.data.nome);
-				setPreco(resposta.data.preco);
-				setDescricao(resposta.data.descricao);
-				setImagem(resposta.data.imagem);
-			})
-			.catch((error) => {
-				console.log(error)
-				setProdutoExiste(false)
-			})
+			Api.get<IProdutos[] | any>(`produtos/${parametros.id}`, config)
+				.then((resposta) => {
+					setNome(resposta.data.nome);
+					setPreco(resposta.data.preco);
+					setDescricao(resposta.data.descricao);
+					setImagem(resposta.data.imagem);
+					setQuantidadeEmEstoque(resposta.data.quantidade);
+				})
+				.catch((error) => {
+					console.log(error);
+					setProdutoExiste(false);
+				});
 		}
 	}, [parametros]);
 
-	const soOsIds = todosOsProdutos.map((item: IProdutos) => item.id)
-	console.log('ids', soOsIds)
+	const soOsIds = todosOsProdutos.map((item: IProdutos) => item.id);
+	console.log("ids", soOsIds);
 
-	if(!produtoExiste){
-		return <NaoEncontrada />
+	if (!produtoExiste) {
+		return <NaoEncontrada />;
 	}
 
 	const produtosRecomendados = todosOsProdutos
@@ -66,36 +64,45 @@ export default function ProdutoSelecionado() {
 		.sort((a, b) => b.id - a.id)
 		.slice(0, 6);
 
-
 	return (
 		<>
-		<ContemTudo>
-			<PostConteudoContainer>
-				<DivDaImagem>
-					<img src={imagem} alt="capa do produto" />
-				</DivDaImagem>
-				<ConteudoDoProduto>
-					<Titulo>{nome}</Titulo>
-					<Preco> R$ {preco}</Preco>
-					<PostConteudoContainer>{descricao}</PostConteudoContainer>
-				</ConteudoDoProduto>
-			</PostConteudoContainer>
+			<ContemTudo>
+				<PostConteudoContainer>
+					<DivDaImagem>
+						<img src={imagem} alt="capa do produto" />
+					</DivDaImagem>
+					<ConteudoDoProduto>
+						<Titulo>{nome}</Titulo>
+						<Preco> R$ {preco}</Preco>
+						{quantidadeEmEstoque === 0 ? (
+							<Preco>Produto indisponível</Preco>
+						) : (
+							<Preco>
+								{" "}
+								Quantidade disponível: {quantidadeEmEstoque}
+							</Preco>
+						)}
+
+						<PostConteudoContainer>
+							{descricao}
+						</PostConteudoContainer>
+					</ConteudoDoProduto>
+				</PostConteudoContainer>
 				<ProdutosSimilares>Produtos similares:</ProdutosSimilares>
-			<GrupoProdutosSimilares>
-				<ListaProdutosRecomendados>
-					{produtosRecomendados &&
-					produtosRecomendados.length > 0 &&
-					produtosRecomendados?.map((item) => (
-						<li  key={item.id}>
-							<Produto produto={item} />
-						</li>
-					))}	
-				</ListaProdutosRecomendados>
-					</GrupoProdutosSimilares>
-			<FaleConosco />
-			<Footer />
-		</ContemTudo>
-			
+				<GrupoProdutosSimilares>
+					<ListaProdutosRecomendados>
+						{produtosRecomendados &&
+							produtosRecomendados.length > 0 &&
+							produtosRecomendados?.map((item) => (
+								<li key={item.id}>
+									<Produto produto={item} />
+								</li>
+							))}
+					</ListaProdutosRecomendados>
+				</GrupoProdutosSimilares>
+				<FaleConosco />
+				<Footer />
+			</ContemTudo>
 		</>
 	);
 }

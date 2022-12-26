@@ -77,8 +77,15 @@ export const InputGlobal = styled.input`
 `
 
 export const DivSenha = styled.div` 
-    h6{
+h6{
         font-size: 10px;
         color: #FF6347	; 
     }
+    @media (max-width: 900px){
+        input{
+            width: 200px;
+        }
+    }
+   
+   
 `
